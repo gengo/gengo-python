@@ -83,7 +83,7 @@ setup(
     author='Gengo',
     author_email='api@gengo.com',
     license='LGPL License',
-    url='https://github.com/myGengo/mygengo-python',
+    url='https://github.com/gengo/gengo-python',
     keywords='gengo translation language api',
     description='Official Python library for interfacing with the Gengo API.',
     long_description=open('README.md').read(),
