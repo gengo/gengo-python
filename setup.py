@@ -38,7 +38,7 @@ from setuptools import setup
 from setuptools import find_packages
 from subprocess import call
 
-__version__ = '1.3.4'
+__version__ = '0.1.0'
 
 # Command based on Libcloud setup.py:
 # https://github.com/apache/libcloud/blob/trunk/setup.py
