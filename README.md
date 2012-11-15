@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/myGengo/mygengo-python.png)](http://travis-ci.org/myGengo/mygengo-python)
+[![Build Status](https://secure.travis-ci.org/gengo/gengo-python.png)](http://travis-ci.org/gengo/gengo-python)
 
 Gengo Python Library (for the [Gengo API](http://gengo.com/))
 ========================================================================================================
