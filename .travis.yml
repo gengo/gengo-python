@@ -5,7 +5,7 @@ python:
 
 env:
   global:
-    - secure: "d416hNc96tFt33zvBi/pb2Y+0fsjknNuaYFjTmZ27muYRQRo90aL8n7weLaM\nK8WMtR0+BxFCKaIpaTWleXRzAUHvpmfV1Ofp9ZQ3OBSKryIhm64rd5EGJNvX\njEnYfINlGRdjXMAdaBvQIjKuJdqMB1Z83N3Ci9P3a/nN4NB2oOg="
+    - secure: "QjATpARM95dFsDqvD6bQ5qLPmkXcpO8O3FjkxPKlJzv9wroHa+lDkaY8FKnz\nAOBZSKVbMV4069JphYbTNaNIG3m8GLW/0YymR+fr8bTbjBfw/ptVlhsg07iv\na69vbldG9D1iNoa2MLXl2LWGde8/R0DNIOf8fjOEb2FvVWs4hXk="
     - GENGO_PUBKEY='pubkeyfortests'
 
 # command to install dependencies
