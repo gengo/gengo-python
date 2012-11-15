@@ -1,3 +1,2 @@
 include LICENSE.txt README.md
-recursive-include *
-recursive-exclude *.pyc test_keys.py
+recursive-exclude gengo/ *.pyc
