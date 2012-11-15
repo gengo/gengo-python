@@ -1,0 +1,19 @@
+language: python
+python:
+  - "2.6"
+  - "2.7"
+
+env:
+  global:
+    - secure: "d416hNc96tFt33zvBi/pb2Y+0fsjknNuaYFjTmZ27muYRQRo90aL8n7weLaM\nK8WMtR0+BxFCKaIpaTWleXRzAUHvpmfV1Ofp9ZQ3OBSKryIhm64rd5EGJNvX\njEnYfINlGRdjXMAdaBvQIjKuJdqMB1Z83N3Ci9P3a/nN4NB2oOg="
+    - GENGO_PUBKEY='pubkeyfortests'
+
+# command to install dependencies
+install: "pip install -r requirements.txt --use-mirrors"
+# command to run pep8
+before_script: python setup.py pep8
+# command to run tests
+script: python gengo/tests.py
+
+notifications:
+  irc: "irc.freenode.net#Gengo"
