@@ -39,6 +39,10 @@ Then grab the source, head into the gengo directory, and execute the tests file 
 
 Note that some of the tests rely on some deferred actions so there are timeouts (sleep) which you might have to adjust.
 
+To run a single test, such as TestTranslationJobFlowFileUpload:
+
+python -m unittest -v gengo.tests.TestTranslationJobFlowFileUpload
+
 Question, Comments, Complaints, Praise?
 ------------------------------------------------------------------------------------------------------
 If you have questions or comments and would like to reach us directly, please feel free to do
