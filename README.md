@@ -13,7 +13,7 @@ Installing the library is fairly simple:
 
 Get the repo:
 
-    git clone git://github.com/myGengo/mygengo-python.git
+    git clone git://github.com/gengo/gengo-python.git
 
 And then install the library:
 
@@ -41,7 +41,7 @@ Note that some of the tests rely on some deferred actions so there are timeouts 
 
 To run a single test, such as TestTranslationJobFlowFileUpload:
 
-python -m unittest -v gengo.tests.TestTranslationJobFlowFileUpload
+    python -m unittest -v gengo.tests.TestTranslationJobFlowFileUpload
 
 Question, Comments, Complaints, Praise?
 ------------------------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ so at the following outlets. We love hearing from developers!
 Email: api [at] gengo dot com
 Twitter: **[@gengoit](https://twitter.com/gengoit)**
 
-If you come across any issues, please file them on the **[Github project issue tracker](https://github.com/myGengo/mygengo-python/issues)**. Thanks!
+If you come across any issues, please file them on the **[Github project issue tracker](https://github.com/gengo/gengo-python/issues)**. Thanks!
 
 
 Documentation
