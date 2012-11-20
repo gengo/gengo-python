@@ -55,7 +55,8 @@ class TestGengoCore(unittest.TestCase):
     """
     def test_MethodDoesNotExist(self):
         gengo = Gengo(public_key=API_PUBKEY,
-                      private_key=API_PRIVKEY)
+                      private_key=API_PRIVKEY,
+                      sandbox=True)
         # With how we do functions, AttributeError is a bit tricky to
         # catch...
         self.assertRaises(AttributeError, getattr, Gengo, 'bert')
@@ -79,8 +80,8 @@ class TestAccountMethods(unittest.TestCase):
     """
     def setUp(self):
         self.gengo = Gengo(public_key=API_PUBKEY,
-                           private_key=API_PRIVKEY)
-        self.gengo.api_url = 'http://api.staging.gengo.com/%(version)s'
+                           private_key=API_PRIVKEY,
+                           sandbox=True)
 
     def test_getAccountStats(self):
         stats = self.gengo.getAccountStats()
@@ -98,8 +99,8 @@ class TestLanguageServiceMethods(unittest.TestCase):
     """
     def setUp(self):
         self.gengo = Gengo(public_key=API_PUBKEY,
-                           private_key=API_PRIVKEY)
-        self.gengo.api_url = 'http://api.staging.gengo.com/%(version)s'
+                           private_key=API_PRIVKEY,
+                           sandbox=True)
 
     def test_getServiceLanguagePairs(self):
         resp = self.gengo.getServiceLanguagePairs()
@@ -117,8 +118,8 @@ class TestTranslationSingleJobFlow(unittest.TestCase):
     """
     def setUp(self):
         self.gengo = Gengo(public_key=API_PUBKEY,
-                           private_key=API_PRIVKEY)
-        self.gengo.api_url = 'http://api.staging.gengo.com/%(version)s'
+                           private_key=API_PRIVKEY,
+                           sandbox=True)
         self.created_job_ids = []
 
         single_job = {
@@ -209,8 +210,8 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         to operate on.
         """
         self.gengo = Gengo(public_key=API_PUBKEY,
-                           private_key=API_PRIVKEY)
-        self.gengo.api_url = 'http://api.staging.gengo.com/%(version)s'
+                           private_key=API_PRIVKEY,
+                           sandbox=True)
         self.created_job_ids = []
 
         multiple_jobs_quote = {
@@ -343,8 +344,8 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         # First we'll create three jobs - one regular, and two at the same
         # time...
         self.gengo = Gengo(public_key=API_PUBKEY,
-                           private_key=API_PRIVKEY)
-        self.gengo.api_url = 'http://api.staging.gengo.com/%(version)s'
+                           private_key=API_PRIVKEY,
+                           sandbox=True)
         self.created_job_ids = []
 
         multiple_jobs_quote = {
@@ -498,8 +499,8 @@ class TestGlossaryFunctions(unittest.TestCase):
         # First we'll create three jobs - one regular, and two at the same
         # time...
         self.gengo = Gengo(public_key=API_PUBKEY,
-                           private_key=API_PRIVKEY)
-        self.gengo.api_url = 'http://api.staging.gengo.com/%(version)s'
+                           private_key=API_PRIVKEY,
+                           sandbox=True)
 
     def test_getGlossaryList(self):
         resp = self.gengo.getGlossaryList()
