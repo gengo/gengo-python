@@ -51,7 +51,7 @@ at conversion time).
 
 # Gengo API urls. %(version)s gets replaced with v1/etc at run time.
 api_urls = {
-    'sandbox': 'http://api.sandbox.mygengo.com/%(version)s',
+    'sandbox': 'http://api.sandbox.gengo.com/%(version)s',
     'base': 'http://api.gengo.com/%(version)s',
 }
 
