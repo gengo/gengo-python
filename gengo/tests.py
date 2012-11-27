@@ -234,7 +234,7 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         # Now that we've got the jobs, let's go ahead and see how much it'll
         # cost.
         cost_assessment = self.gengo.determineTranslationCost(
-            jobs={'jobs': multiple_jobs_quote})
+            jobs=multiple_jobs_quote)
         self.assertEqual(cost_assessment['opstat'], 'ok')
 
         multiple_jobs = {}
@@ -249,7 +249,7 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
             }
 
         jobs = self.gengo.postTranslationJobs(
-            jobs={'jobs': multiple_jobs})
+            jobs=multiple_jobs)
         self.assertEqual(jobs['opstat'], 'ok')
         self.assertTrue('order_id' in jobs['response'])
         self.assertTrue('credits_used' in jobs['response'])
@@ -381,7 +381,7 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         # Now that we've got the job, let's go ahead and see how much it'll
         # cost.
         cost_assessment = self.gengo.determineTranslationCost(
-            jobs={'jobs': multiple_jobs_quote})
+            jobs=multiple_jobs_quote)
         self.assertEqual(cost_assessment['opstat'], 'ok')
 
         multiple_jobs = {}
@@ -405,7 +405,7 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
                 multiple_jobs[k]['force'] = 1
 
         jobs = self.gengo.postTranslationJobs(
-            jobs={'jobs': multiple_jobs})
+            jobs=multiple_jobs)
         self.assertEqual(jobs['opstat'], 'ok')
         self.assertTrue('order_id' in jobs['response'])
         self.assertTrue('credits_used' in jobs['response'])

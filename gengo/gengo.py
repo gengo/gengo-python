@@ -231,7 +231,7 @@ class Gengo(object):
             # jobs payloads
             if 'upload' in fn:
                 file_data = {}
-                for k, j in post_data['jobs']['jobs'].iteritems():
+                for k, j in post_data['jobs'].iteritems():
                     if j['type'] == 'file' and 'file_path' in j:
                         file_data['file_' + k] = open(j['file_path'], 'rb')
                         j['file_key'] = 'file_' + k
