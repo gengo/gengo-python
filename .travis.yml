@@ -6,8 +6,7 @@ python:
 
 env:
   global:
-    - secure: "QjATpARM95dFsDqvD6bQ5qLPmkXcpO8O3FjkxPKlJzv9wroHa+lDkaY8FKnz\nAOBZSKVbMV4069JphYbTNaNIG3m8GLW/0YymR+fr8bTbjBfw/ptVlhsg07iv\na69vbldG9D1iNoa2MLXl2LWGde8/R0DNIOf8fjOEb2FvVWs4hXk="
-    - GENGO_PUBKEY='pubkeyfortests'
+    - GENGO_PUBKEY='pubkeyfortests' GENGO_PRIVKEY='privatekeyfortestuserthatcontainsonlyletters'
 
 # command to install dependencies
 install: "pip install -r requirements.txt --use-mirrors"
