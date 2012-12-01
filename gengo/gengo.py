@@ -4,7 +4,7 @@
 # noted. Details are below.
 #
 # New BSD License
-# Copyright (c) 2009-2012, myGengo, Inc.
+# Copyright (c) 2009-2012, Gengo, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
 # Redistributions in binary form must reproduce the above copyright notice,
 # this list of conditions and the following disclaimer in the documentation
 # and/or other materials provided with the distribution.
-# Neither the name of myGengo, Inc. nor the names of its contributors may
+# Neither the name of Gengo, Inc. nor the names of its contributors may
 # be used to endorse or promote products derived from this software
 # without specific prior written permission.
 #
@@ -111,10 +111,10 @@ class GengoAuthError(GengoError):
 
 class Gengo(object):
     def __init__(self, public_key=None, private_key=None, sandbox=False,
-                 api_version='2', headers=None, debug=False):
+                 api_version='2', headers=None, debug=False, api_url=None):
         """
         Gengo(public_key = None, private_key = None, sandbox = False,
-        headers = None)
+        headers = None, debug=False, api_url=None)
 
         Instantiates an instance of Gengo.
 
@@ -129,9 +129,13 @@ class Gengo(object):
         'Bert'}
         debug - a flag (True/False) which will cause the library to print
         useful debugging info.
+        api_url - you can override the API url to which to send calls if needed
         """
-        self.api_url = \
-            api_urls['sandbox'] if sandbox is True else api_urls['base']
+        if api_url is None:
+            self.api_url = api_urls['sandbox'] if sandbox is True else api_urls['base']
+        else:
+            self.api_url = api_url
+
         self.api_version = str(api_version)
         if self.api_version not in ('1.1', '2'):
             raise Exception("gengo-python library only supports " +
@@ -217,7 +221,7 @@ class Gengo(object):
             #
             # Note: for further information on what's going on here, it's
             # best to familiarize yourself  with the Gengo authentication
-            # API. (http://gengo.com/services/api/dev-docs/authentication)
+            # API. (http://developers.gengo.com/)
             query_params = dict([k, quote(str(v).encode('utf-8'))] for k, v
                                 in kwargs.items())
             if self.public_key is not None:
