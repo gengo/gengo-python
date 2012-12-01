@@ -129,7 +129,8 @@ class Gengo(object):
         'Bert'}
         debug - a flag (True/False) which will cause the library to print
         useful debugging info.
-        api_url - you can override the API url to which to send calls if needed
+        api_url - you can override the API url to which to send calls if needed.
+        Version must be either append with '/%(version)s' or hardcoded ('/v2')
         """
         if api_url is None:
             self.api_url = api_urls['sandbox'] if sandbox is True else api_urls['base']
@@ -335,7 +336,9 @@ class Gengo(object):
             if self.debug is True:
                 print base + '?%s' % query_string
             return req_method(base + '?%s' % query_string,
-                              headers=self.headers)
+                              headers=self.headers,
+                              # Don't know why by requests is trying to verify SSL here ...
+                              verify=False)
 
     @staticmethod
     def unicode2utf8(text):
