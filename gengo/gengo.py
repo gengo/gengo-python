@@ -133,8 +133,8 @@ class Gengo(object):
         Version must be either append with '/%(version)s' or hardcoded ('/v2')
         """
         if api_url is None:
-            self.api_url = api_urls['sandbox'] if sandbox is True else
-                           api_urls['base']
+            self.api_url = api_urls['sandbox'] if sandbox is True else \
+                api_urls['base']
         else:
             self.api_url = api_url
 
