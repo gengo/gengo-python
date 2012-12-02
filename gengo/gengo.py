@@ -129,11 +129,12 @@ class Gengo(object):
         'Bert'}
         debug - a flag (True/False) which will cause the library to print
         useful debugging info.
-        api_url - you can override the API url to which to send calls if needed.
+        api_url - you can override the API url for calls if needed.
         Version must be either append with '/%(version)s' or hardcoded ('/v2')
         """
         if api_url is None:
-            self.api_url = api_urls['sandbox'] if sandbox is True else api_urls['base']
+            self.api_url = api_urls['sandbox'] if sandbox is True else
+                           api_urls['base']
         else:
             self.api_url = api_url
 
@@ -337,7 +338,8 @@ class Gengo(object):
                 print base + '?%s' % query_string
             return req_method(base + '?%s' % query_string,
                               headers=self.headers,
-                              # Don't know why by requests is trying to verify SSL here ...
+                              # Don't know why but requests is trying to verify
+                              # SSL here ...
                               verify=False)
 
     @staticmethod
