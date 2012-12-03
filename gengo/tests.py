@@ -5,7 +5,7 @@
 # noted. Details are below.
 #
 # New BSD License
-# Copyright (c) 2009-2012, myGengo, Inc.
+# Copyright (c) 2009-2012, Gengo, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
 # Redistributions in binary form must reproduce the above copyright notice,
 # this list of conditions and the following disclaimer in the documentation
 # and/or other materials provided with the distribution.
-# Neither the name of myGengo, Inc. nor the names of its contributors may
+# Neither the name of Gengo, Inc. nor the names of its contributors may
 # be used to endorse or promote products derived from this software
 # without specific prior written permission.
 #
@@ -125,7 +125,7 @@ class TestTranslationSingleJobFlow(unittest.TestCase):
         single_job = {
             'type': 'text',
             'slug': 'Single :: English to Japanese',
-            'body_src': 'Test%ding myGe%dngo A%dPI li%dbrary calls.' %
+            'body_src': 'Test%ding Ge%dngo A%dPI li%dbrary calls.' %
                     (int(random.randrange(1, 226, 1)),
                      int(random.randrange(1, 226, 1)),
                      int(random.randrange(1, 226, 1)),
