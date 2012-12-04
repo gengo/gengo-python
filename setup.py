@@ -67,6 +67,21 @@ class Pep8Command(Command):
         retcode = call(('pep8 %s/gengo/' % (cwd)).split(' '))
         sys.exit(retcode)
 
+class TestCommand(Command):
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import sys
+        import subprocess
+        errno = subprocess.call([sys.executable, 'gengo/tests.py'])
+        raise SystemExit(errno)
+
 setup(
     # Basic package information.
     name='gengo',
@@ -89,6 +104,7 @@ setup(
     long_description=open('README.md').read(),
     cmdclass={
         'pep8': Pep8Command,
+        'test': TestCommand,
     },
     classifiers=[
         'Development Status :: 4 - Beta',
