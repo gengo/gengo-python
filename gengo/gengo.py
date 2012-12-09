@@ -111,7 +111,7 @@ class GengoAuthError(GengoError):
 
 class Gengo(object):
     def __init__(self, public_key=None, private_key=None, sandbox=False,
-                 api_version='2', headers=None, debug=False, api_url=None):
+                 api_version=2, headers=None, debug=False, api_url=None):
         """
         Gengo(public_key = None, private_key = None, sandbox = False,
         headers = None, debug=False, api_url=None)

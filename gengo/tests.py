@@ -257,7 +257,7 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
 
         # get some order information - in v2 the jobs need to have gone
         # through a queueing system so we wait a little bit
-        time.sleep(10)
+        time.sleep(20)
         resp = self.gengo.getTranslationOrderJobs(
             id=jobs['response']['order_id'])
         self.assertEqual(len(resp['response']['order']['jobs_available']), 2)
@@ -411,12 +411,28 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         self.assertTrue('credits_used' in jobs['response'])
         self.assertEqual(jobs['response']['job_count'], 2)
 
-        # get some order information - in v2 the jobs need to have gone
-        # through a queueing system so we wait a little bit
-        time.sleep(10)
-        resp = self.gengo.getTranslationOrderJobs(
-            id=jobs['response']['order_id'])
-        self.assertEqual(len(resp['response']['order']['jobs_available']), 2)
+        cleared_queue = False
+        ping_count = 0
+
+        # Get some order information - in v2 the jobs need to have gone
+        # through a queueing system so we'll try up to 10 times, with 10 second
+        # breaks
+        while False == cleared_queue and ping_count < 10:
+            time.sleep(10)
+            resp = self.gengo.getTranslationOrderJobs(
+                id=jobs['response']['order_id'])
+
+            if len(resp['response']['order']['jobs_available']) != 2:
+                print "\nJobs still queued; pausing 10s and checking again..."
+                ping_count += 1
+                continue
+
+            cleared_queue = True
+
+        if ping_count == 10:
+            self.assertTrue(False, "API Queue not processing jobs!")
+
+        # We'll use the job ids in another test
         self.created_job_ids.\
             extend(resp['response']['order']['jobs_available'])
 
