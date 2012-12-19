@@ -3,7 +3,7 @@
 # noted. Details are below.
 #
 # New BSD License
-# Copyright (c) 2009-2012, myGengo, Inc.
+# Copyright (c) 2009-2012, Gengo, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ from setuptools import setup
 from setuptools import find_packages
 from subprocess import call
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 # Command based on Libcloud setup.py:
 # https://github.com/apache/libcloud/blob/trunk/setup.py
