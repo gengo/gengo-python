@@ -114,6 +114,16 @@ apihash = {
         # file upload. for now this is tied to jobs data only.
     },
 
+    # Note: v1.1 specific : Get a quote for how much a given job will cost. 
+    'determineFileTranslationCost': {
+        'url': '/translate/service/quote/file',
+        'method': 'POST',
+        'upload': True,  # with this being set the payload will be checked
+        # for file_path args and - if found - modified in a way so that
+        # opened file descriptors are passed to requests to do a multi part
+        # file upload. for now this is tied to jobs data only.
+    },
+
     # Deal with comments and other metadata about a TranslationJob in
     # progress.
     'postTranslationJobComment': {
@@ -173,5 +183,11 @@ apihash = {
     'getTranslationOrderJobs': {
         'url': '/translate/order/{{id}}',
         'method': 'GET',
+    },
+
+   # Delete an order
+    'deleteTranslationJob': {
+        'url': '/translate/order/{{id}}',
+        'method': 'DELETE',
     },
 }
