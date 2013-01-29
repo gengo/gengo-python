@@ -185,8 +185,8 @@ apihash = {
         'method': 'GET',
     },
 
-   # Delete an order
-    'deleteTranslationJob': {
+   # Delete Translation order
+    'deleteTranslationOrder': {
         'url': '/translate/order/{{id}}',
         'method': 'DELETE',
     },
