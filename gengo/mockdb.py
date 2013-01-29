@@ -174,4 +174,10 @@ apihash = {
         'url': '/translate/order/{{id}}',
         'method': 'GET',
     },
+
+   # Delete Translation order
+    'deleteTranslationOrder': {
+        'url': '/translate/order/{{id}}',
+        'method': 'DELETE',
+    },
 }
