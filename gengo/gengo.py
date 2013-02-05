@@ -249,7 +249,11 @@ class Gengo(object):
             # fork here...
             response = self.signAndRequestAPILatest(fn, base, query_params,
                                                     post_data, file_data)
-            results = response.json()
+            try:
+                results = response.json()
+            except TypeError:
+                # requests<1.0
+                results = response.json
 
             # See if we got any errors back that we can cleanly raise on
             if 'opstat' in results and results['opstat'] != 'ok':
