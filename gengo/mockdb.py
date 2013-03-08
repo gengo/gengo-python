@@ -69,11 +69,6 @@ apihash = {
         'method': 'GET',
     },
 
-    # Creating new translation requests.
-    'postTranslationJob': {
-        'url': '/translate/job',
-        'method': 'POST',
-    },
     'postTranslationJobs': {
         'url': '/translate/jobs',
         'method': 'POST',
