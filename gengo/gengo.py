@@ -259,7 +259,8 @@ class Gengo(object):
             if 'opstat' in results and results['opstat'] != 'ok':
                 # In cases of multiple errors, the keys for results['err']
                 # will be the job IDs.
-                if not 'msg' and 'code' in results['err']:
+                if 'msg' not in results['err'] and\
+                        'code' not in results['err']:
                     concatted_msg = ''
                     for job_key, msg_code_list in results['err'].iteritems():
                         concatted_msg += '<%s: %s> ' % \
