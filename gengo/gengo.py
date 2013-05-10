@@ -246,21 +246,16 @@ class Gengo(object):
                             j['file_key'] = 'file_' + k
                             del j['file_path']
 
-            print post_data
             # If any further APIs require their own special signing needs,
             # fork here...
             response = self.signAndRequestAPILatest(fn, base, query_params,
                                                     post_data, file_data)
-            print response.url
-            print unicode(response.raw)
-            print response.text
             try:
                 results = response.json()
             except TypeError:
                 # requests<1.0
                 results = response.json
 
-            print results
             # See if we got any errors back that we can cleanly raise on
             if 'opstat' in results and results['opstat'] != 'ok':
                 # In cases of multiple errors, the keys for results['err']
