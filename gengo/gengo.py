@@ -195,6 +195,9 @@ class Gengo(object):
                 post_data['job'] = {'job': kwargs.pop('job')}
             if 'jobs' in kwargs:
                 post_data['jobs'] = {'jobs': kwargs.pop('jobs')}
+                # for backwards-compatibility:
+                if 'jobs' in post_data['jobs']['jobs']:
+                    post_data['jobs']['jobs'] = post_data['jobs']['jobs']['jobs'] 
             if 'comment' in kwargs:
                 post_data['comment'] = kwargs.pop('comment')
             if 'action' in kwargs:
@@ -241,7 +244,7 @@ class Gengo(object):
                 jobs = post_data.get('jobs', {}).get('jobs', {})
                 for k, j in jobs.items():
                     if isinstance(j, dict):
-                        if j['type'] == 'file' and 'file_path' in j:
+                        if j.get('type') == 'file' and 'file_path' in j:
                             file_data['file_' + k] = open(j['file_path'], 'rb')
                             j['file_key'] = 'file_' + k
                             del j['file_path']
