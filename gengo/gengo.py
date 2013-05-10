@@ -194,7 +194,7 @@ class Gengo(object):
             if 'job' in kwargs:
                 post_data['job'] = {'job': kwargs.pop('job')}
             if 'jobs' in kwargs:
-                post_data['jobs'] = kwargs.pop('jobs')
+                post_data['jobs'] = {'jobs': kwargs.pop('jobs')}
             if 'comment' in kwargs:
                 post_data['comment'] = kwargs.pop('comment')
             if 'action' in kwargs:
@@ -235,26 +235,32 @@ class Gengo(object):
             # needs to be refactored to a more general handling once we
             # also want to support ie glossary upload. for now it's tied to
             # jobs payloads
+            file_data = False
             if 'upload' in fn:
                 file_data = {}
-                for k, j in post_data['jobs']['jobs'].iteritems():
-                    if j['type'] == 'file' and 'file_path' in j:
-                        file_data['file_' + k] = open(j['file_path'], 'rb')
-                        j['file_key'] = 'file_' + k
-                        del j['file_path']
-            else:
-                file_data = False
+                jobs = post_data.get('jobs', {}).get('jobs', {})
+                for k, j in jobs.items():
+                    if isinstance(j, dict):
+                        if j['type'] == 'file' and 'file_path' in j:
+                            file_data['file_' + k] = open(j['file_path'], 'rb')
+                            j['file_key'] = 'file_' + k
+                            del j['file_path']
 
+            print post_data
             # If any further APIs require their own special signing needs,
             # fork here...
             response = self.signAndRequestAPILatest(fn, base, query_params,
                                                     post_data, file_data)
+            print response.url
+            print unicode(response.raw)
+            print response.text
             try:
                 results = response.json()
             except TypeError:
                 # requests<1.0
                 results = response.json
 
+            print results
             # See if we got any errors back that we can cleanly raise on
             if 'opstat' in results and results['opstat'] != 'ok':
                 # In cases of multiple errors, the keys for results['err']
