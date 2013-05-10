@@ -196,8 +196,9 @@ class Gengo(object):
             if 'jobs' in kwargs:
                 post_data['jobs'] = {'jobs': kwargs.pop('jobs')}
                 # for backwards-compatibility:
-                if 'jobs' in post_data['jobs']['jobs']:
-                    post_data['jobs']['jobs'] = post_data['jobs']['jobs']['jobs'] 
+                jobs_dict = post_data['jobs']['jobs']
+                if 'jobs' in jobs_dict:
+                    post_data['jobs']['jobs'] = jobs_dict['jobs']
             if 'comment' in kwargs:
                 post_data['comment'] = kwargs.pop('comment')
             if 'action' in kwargs:
