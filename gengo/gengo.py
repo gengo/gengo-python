@@ -36,8 +36,8 @@
 Official Python library for interfacing with the Gengo API.
 """
 
-__author__ = 'Shawn Smith <shawn.smith@gengo.com>'
-__version__ = '0.1.0'
+__author__ = 'Gengo <api@gengo.com>'
+__version__ = '0.1.3'
 
 import re
 import hmac
@@ -88,6 +88,7 @@ class GengoError(Exception):
     """
     def __init__(self, msg, error_code=None):
         self.msg = msg
+        self.error_code = error_code
         if error_code == 1000:
             # Auth errors tend to be the most requested for their own
             # Exception instances, so give it to the masses, yo.
@@ -104,6 +105,7 @@ class GengoAuthError(GengoError):
     """
     def __init__(self, msg):
         self.msg = msg
+        self.error_code = 1000
 
     def __str__(self):
         return repr(self.msg)
