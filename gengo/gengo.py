@@ -201,6 +201,10 @@ class Gengo(object):
                 jobs_dict = post_data['jobs']['jobs']
                 if 'jobs' in jobs_dict:
                     post_data['jobs']['jobs'] = jobs_dict['jobs']
+                if 'as_group' in jobs_dict:
+                    post_data['jobs']['as_group'] = jobs_dict.pop('as_group')
+                if 'allow_fork' in jobs_dict:
+                    post_data['jobs']['allow_fork'] = jobs_dict.pop('allow_fork')
             if 'comment' in kwargs:
                 post_data['comment'] = kwargs.pop('comment')
             if 'action' in kwargs:

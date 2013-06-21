@@ -149,9 +149,9 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
             jobs=multiple_jobs_quote)
         self.assertEqual(cost_assessment['opstat'], 'ok')
 
-        multiple_jobs = {}
+        self.multiple_jobs = {}
         for k, j in cost_assessment['response']['jobs'].iteritems():
-            multiple_jobs[k] = {
+            self.multiple_jobs[k] = {
                 'type': 'file',
                 'identifier': j['identifier'],
                 'comment': 'Test comment for %s' % (k,),
@@ -161,7 +161,7 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
             }
 
         jobs = self.gengo.postTranslationJobs(
-            jobs=multiple_jobs)
+            jobs={'jobs': self.multiple_jobs, 'as_group': 0})
         self.assertEqual(jobs['opstat'], 'ok')
         self.assertTrue('order_id' in jobs['response'])
         self.assertTrue('credits_used' in jobs['response'])
@@ -172,9 +172,11 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         time.sleep(20)
         resp = self.gengo.getTranslationOrderJobs(
             id=jobs['response']['order_id'])
+        self.assertEqual(resp['response']['order']['as_group'], 0)
         self.assertEqual(len(resp['response']['order']['jobs_available']), 2)
         self.created_job_ids.\
             extend(resp['response']['order']['jobs_available'])
+
 
     def test_postJobComment(self):
         """
@@ -238,6 +240,84 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         """
         Delete every job we've created.
         """
+        for id in self.created_job_ids:
+            deleted_job = self.gengo.deleteTranslationJob(id=id)
+            self.assertEqual(deleted_job['opstat'], 'ok')
+
+
+
+
+class TestTranslationJobFlowGroupJob(unittest.TestCase):
+    """
+    Tests the flow of creating a job, updating one of them, getting the
+    details, and then deleting the jobs.
+    """
+    def setUp(self):
+        """
+        Creates the initial batch of jobs for the other test functions here
+        to operate on.
+        """
+        """
+        Creates the initial batch of jobs for the other test functions here
+        to operate on.
+        """
+        self.gengo = Gengo(public_key=API_PUBKEY,
+                           private_key=API_PRIVKEY,
+                           sandbox=True)
+        self.created_job_ids = []
+
+        multiple_jobs_quote = {
+            'job_3': {
+                'type': 'text',
+                'body_src': 'This is a group job test job 1.',
+                'lc_src': 'en',
+                'lc_tgt': 'zh',
+                'tier': 'standard',
+            },
+            'job_4': {
+                'type': 'text',
+                'body_src': 'This is a group job test job 2.',
+                'lc_src': 'en',
+                'lc_tgt': 'zh',
+                'tier': 'standard',
+            },
+        }
+
+        # Now that we've got the jobs, let's go ahead and see how much it'll
+        # cost.
+        self.jobs = jobs = self.gengo.postTranslationJobs(
+            jobs={'jobs': multiple_jobs_quote, 'as_group': 1})
+
+        self.assertEqual(jobs['opstat'], 'ok')
+        self.assertTrue('order_id' in jobs['response'])
+        self.assertTrue('credits_used' in jobs['response'])
+        self.assertEqual(jobs['response']['job_count'], 2)
+
+        time.sleep(20)
+        resp = self.gengo.getTranslationOrderJobs(
+            id=self.jobs['response']['order_id'])
+
+        self.created_job_ids.\
+            extend(resp['response']['order']['jobs_available'])
+
+
+    def test_postTranslationJobs_as_group(self):
+        """
+        Make sure that the as_group setting gets interpreted by the API correctly.
+        """
+        print "running test"
+        resp = self.gengo.getTranslationOrderJobs(
+            id=self.jobs['response']['order_id'])
+
+        self.assertEqual(resp['response']['order']['as_group'], 1)
+        self.assertEqual(len(resp['response']['order']['jobs_available']), 2)
+
+
+    def tearDown(self):
+        """
+        Delete every job we've created.
+        """
+        print "teardown"
         for id in self.created_job_ids:
             deleted_job = self.gengo.deleteTranslationJob(id=id)
             self.assertEqual(deleted_job['opstat'], 'ok')
