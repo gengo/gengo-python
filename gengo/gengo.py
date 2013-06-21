@@ -78,6 +78,7 @@ except ImportError:
 
 
 class GengoError(Exception):
+
     """
     Generic error class, catch-all for most Gengo issues.
     Special cases are handled by APILimit and AuthError.
@@ -99,6 +100,7 @@ class GengoError(Exception):
 
 
 class GengoAuthError(GengoError):
+
     """
     Raised when you try to access a protected resource and it fails due
     to some issue with your authentication.
@@ -112,6 +114,7 @@ class GengoAuthError(GengoError):
 
 
 class Gengo(object):
+
     def __init__(self, public_key=None, private_key=None, sandbox=False,
                  api_version=2, headers=None, debug=False, api_url=None):
         """
@@ -204,7 +207,8 @@ class Gengo(object):
                 if 'as_group' in jobs_dict:
                     post_data['jobs']['as_group'] = jobs_dict.pop('as_group')
                 if 'allow_fork' in jobs_dict:
-                    post_data['jobs']['allow_fork'] = jobs_dict.pop('allow_fork')
+                    post_data['jobs'][
+                        'allow_fork'] = jobs_dict.pop('allow_fork')
             if 'comment' in kwargs:
                 post_data['comment'] = kwargs.pop('comment')
             if 'action' in kwargs:

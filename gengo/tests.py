@@ -49,6 +49,7 @@ API_PRIVKEY = os.getenv('GENGO_PRIVKEY')
 
 
 class TestGengoCore(unittest.TestCase):
+
     """
     Handles testing the core parts of Gengo (i.e, authentication
     signing, etc).
@@ -73,6 +74,7 @@ class TestGengoCore(unittest.TestCase):
 
 
 class TestAccountMethods(unittest.TestCase):
+
     """
     Tests the methods that deal with retrieving basic information about
     the account you're authenticating as. Checks for one property on
@@ -93,6 +95,7 @@ class TestAccountMethods(unittest.TestCase):
 
 
 class TestLanguageServiceMethods(unittest.TestCase):
+
     """
     Tests the methods that deal with getting information about language-
     translation service support from Gengo.
@@ -112,6 +115,7 @@ class TestLanguageServiceMethods(unittest.TestCase):
 
 
 class TestTranslationJobFlowFileUpload(unittest.TestCase):
+
     """
     Tests the flow of creating a job, updating one of them, getting the
     details, and then deleting the jobs.
@@ -176,7 +180,6 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         self.assertEqual(len(resp['response']['order']['jobs_available']), 2)
         self.created_job_ids.\
             extend(resp['response']['order']['jobs_available'])
-
 
     def test_postJobComment(self):
         """
@@ -245,9 +248,8 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
             self.assertEqual(deleted_job['opstat'], 'ok')
 
 
-
-
 class TestTranslationJobFlowGroupJob(unittest.TestCase):
+
     """
     Tests the flow of creating a job, updating one of them, getting the
     details, and then deleting the jobs.
@@ -300,17 +302,16 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
         self.created_job_ids.\
             extend(resp['response']['order']['jobs_available'])
 
-
     def test_postTranslationJobs_as_group(self):
         """
-        Make sure that the as_group setting gets interpreted by the API correctly.
+        Make sure that the as_group setting gets interpreted by the API
+        correctly.
         """
         resp = self.gengo.getTranslationOrderJobs(
             id=self.jobs['response']['order_id'])
 
         self.assertEqual(resp['response']['order']['as_group'], 1)
         self.assertEqual(len(resp['response']['order']['jobs_available']), 2)
-
 
     def tearDown(self):
         """
@@ -322,6 +323,7 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
 
 
 class TestTranslationJobFlowMixedOrder(unittest.TestCase):
+
     """
     Tests the flow of creating a file job and a text job, updating one of them,
     getting the details, and then deleting the job.
@@ -495,6 +497,7 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
 
 
 class TestGlossaryFunctions(unittest.TestCase):
+
     """
     """
     def setUp(self):
