@@ -305,7 +305,6 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
         """
         Make sure that the as_group setting gets interpreted by the API correctly.
         """
-        print "running test"
         resp = self.gengo.getTranslationOrderJobs(
             id=self.jobs['response']['order_id'])
 
@@ -317,7 +316,6 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
         """
         Delete every job we've created.
         """
-        print "teardown"
         for id in self.created_job_ids:
             deleted_job = self.gengo.deleteTranslationJob(id=id)
             self.assertEqual(deleted_job['opstat'], 'ok')
