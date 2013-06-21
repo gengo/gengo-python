@@ -199,8 +199,10 @@ class Gengo(object):
             if 'job' in kwargs:
                 post_data['job'] = {'job': kwargs.pop('job')}
             if 'jobs' in kwargs:
+                # there are two cases to handle; one where there is
+                # a dictionary passed in with a `jobs` key, the other
+                # where that key is not present.
                 post_data['jobs'] = {'jobs': kwargs.pop('jobs')}
-                # for backwards-compatibility:
                 jobs_dict = post_data['jobs']['jobs']
                 if 'jobs' in jobs_dict:
                     post_data['jobs']['jobs'] = jobs_dict['jobs']
