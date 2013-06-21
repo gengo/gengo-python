@@ -42,33 +42,34 @@ gengo = Gengo(
     sandbox=True,
 )
 
-# Exhaustive view, chances are your code will never be quite this verbose (programatically build this).
+# Exhaustive view, chances are your code will never be quite this verbose
+# (programatically build this).
 jobs_data = {
     'job_1': {
-        'type': 'text', # REQUIRED. Type to translate, you'll probably always put 'text' here. ;P
-        'slug': 'Single :: English to Japanese', # REQUIRED. Slug for internally storing, can be generic.
-        'body_src': 'Testing Gengo API library calls.', # REQUIRED. The text you're translating. ;P
-        'lc_src': 'en', # REQUIRED. source_language_code (see getServiceLanguages() for a list of codes)
-        'lc_tgt': 'ja', # REQUIRED. target_language_code (see getServiceLanguages() for a list of codes)
-        'tier': 'standard', # REQUIRED. tier type ("machine", "standard", "pro", or "ultra")
+        'type': 'text',  # REQUIRED. Type to translate, you'll probably always put 'text' here. ;P
+        'slug': 'Single :: English to Japanese',  # REQUIRED. Slug for internally storing, can be generic.
+        'body_src': 'Testing Gengo API library calls.',  # REQUIRED. The text you're translating. ;P
+        'lc_src': 'en',  # REQUIRED. source_language_code (see getServiceLanguages() for a list of codes)
+        'lc_tgt': 'ja',  # REQUIRED. target_language_code (see getServiceLanguages() for a list of codes)
+        'tier': 'standard',  # REQUIRED. tier type ("machine", "standard", "pro", or "ultra")
 
-        'auto_approve': 0, # OPTIONAL. Hopefully self explanatory (1 = yes, 0 = no),
-        'comment': 'HEY THERE TRANSLATOR', # OPTIONAL. Comment to leave for translator.
-        'callback_url': 'http://...', # OPTIONAL. Callback URL that updates are sent to.
-        'custom_data': 'your optional custom data, limited to 1kb.' # OPTIONAL
+        'auto_approve': 0,  # OPTIONAL. Hopefully self explanatory (1 = yes, 0 = no),
+        'comment': 'HEY THERE TRANSLATOR',  # OPTIONAL. Comment to leave for translator.
+        'callback_url': 'http://...',  # OPTIONAL. Callback URL that updates are sent to.
+        'custom_data': 'your optional custom data, limited to 1kb.'  # OPTIONAL
     },
     'job_2': {
-        'type': 'text', # REQUIRED. Type to translate, you'll probably always put 'text' here. ;P
-        'slug': 'Single :: English to Japanese', # REQUIRED. Slug for internally storing, can be generic.
-        'body_src': 'Testing Gengo API library calls.', # REQUIRED. The text you're translating. ;P
-        'lc_src': 'en', # REQUIRED. source_language_code (see getServiceLanguages() for a list of codes)
-        'lc_tgt': 'ja', # REQUIRED. target_language_code (see getServiceLanguages() for a list of codes)
-        'tier': 'standard', # REQUIRED. tier type ("machine", "standard", "pro", or "ultra")
+        'type': 'text',  # REQUIRED. Type to translate, you'll probably always put 'text' here. ;P
+        'slug': 'Single :: English to Japanese',  # REQUIRED. Slug for internally storing, can be generic.
+        'body_src': 'Testing Gengo API library calls.',  # REQUIRED. The text you're translating. ;P
+        'lc_src': 'en',  # REQUIRED. source_language_code (see getServiceLanguages() for a list of codes)
+        'lc_tgt': 'ja',  # REQUIRED. target_language_code (see getServiceLanguages() for a list of codes)
+        'tier': 'standard',  # REQUIRED. tier type ("machine", "standard", "pro", or "ultra")
 
-        'auto_approve': 0, # OPTIONAL. Hopefully self explanatory (1 = yes, 0 = no),
-        'comment': 'HEY THERE TRANSLATOR', # OPTIONAL. Comment to leave for translator.
-        'callback_url': 'http://...', # OPTIONAL. Callback URL that updates are sent to.
-        'custom_data': 'your optional custom data, limited to 1kb.' # OPTIONAL
+        'auto_approve': 0,  # OPTIONAL. Hopefully self explanatory (1 = yes, 0 = no),
+        'comment': 'HEY THERE TRANSLATOR',  # OPTIONAL. Comment to leave for translator.
+        'callback_url': 'http://...',  # OPTIONAL. Callback URL that updates are sent to.
+        'custom_data': 'your optional custom data, limited to 1kb.'  # OPTIONAL
     },
 }
 
