@@ -175,4 +175,10 @@ apihash = {
         'url': '/translate/order/{{id}}',
         'method': 'DELETE',
     },
+
+    # get list of preferred translators
+    'getPreferredTranslators': {
+        'url': '/account/preferred_translators',
+        'method': 'GET',
+    }
 }

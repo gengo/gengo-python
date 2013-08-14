@@ -37,7 +37,7 @@ Official Python library for interfacing with the Gengo API.
 """
 
 __author__ = 'Gengo <api@gengo.com>'
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 
 import re
 import hmac
@@ -261,6 +261,7 @@ class Gengo(object):
 
             # If any further APIs require their own special signing needs,
             # fork here...
+            print base, query_params, post_data
             response = self.signAndRequestAPILatest(fn, base, query_params,
                                                     post_data, file_data)
             try:
