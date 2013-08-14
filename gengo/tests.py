@@ -516,5 +516,24 @@ class TestGlossaryFunctions(unittest.TestCase):
         self.assertEqual(resp['opstat'], 'ok')
 
 
+class TestPreferredTranslatorsFunction(unittest.TestCase):
+
+    """
+    """
+    def setUp(self):
+        """
+        Creates the initial batch of jobs for the other test functions here
+        to operate on.
+        """
+        self.gengo = Gengo(public_key=API_PUBKEY,
+                           private_key=API_PRIVKEY,
+                           sandbox=False,
+                           )
+
+    def test_getPreferredTranslators(self):
+        resp = self.gengo.getPreferredTranslators()
+        self.assertEqual(resp['opstat'], 'ok')
+
+
 if __name__ == '__main__':
     unittest.main()
