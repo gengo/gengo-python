@@ -33,9 +33,9 @@ export GENGO_PUBKEY='your public key here'
 export GENGO_PRIVKEY='your private key here'
 ```
 
-Then grab the source, then from the parent directory execute the tests file like so:
+Then grab the source, and from the parent directory run the tests like so:
 
-    python gengo/tests.py
+    python setup.py test
 
 Note that some of the tests rely on some deferred actions so there are timeouts (sleep) which you might have to adjust.
 

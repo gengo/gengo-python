@@ -8,7 +8,9 @@ env:
     - GENGO_PUBKEY='pubkeyfortests' GENGO_PRIVKEY='privatekeyfortestuserthatcontainsonlyletters'
 
 # command to install dependencies
-install: "pip install -r requirements.txt --use-mirrors"
+install: 
+- pip install -r requirements.txt --use-mirrors
+
 # command to run pep8
 before_script: python setup.py pep8
 # command to run tests
