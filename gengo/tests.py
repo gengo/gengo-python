@@ -1,3 +1,4 @@
+
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 # All code provided from the http://gengo.com site, such as API example code
@@ -41,7 +42,9 @@ import unittest
 import os
 import random
 import time
+import mock
 
+import mockdb
 from gengo import Gengo, GengoError, GengoAuthError
 
 API_PUBKEY = os.getenv('GENGO_PUBKEY')
@@ -505,8 +508,6 @@ class TestGlossaryFunctions(unittest.TestCase):
         Creates the initial batch of jobs for the other test functions here
         to operate on.
         """
-        # First we'll create three jobs - one regular, and two at the same
-        # time...
         self.gengo = Gengo(public_key=API_PUBKEY,
                            private_key=API_PRIVKEY,
                            sandbox=True)
@@ -515,6 +516,14 @@ class TestGlossaryFunctions(unittest.TestCase):
         resp = self.gengo.getGlossaryList()
         self.assertEqual(resp['opstat'], 'ok')
 
+class RequestsMock(mock.Mock):
+    def assert_path_contains(self, url_part):
+        if not self.call_args or not self.call_args[0]:
+            raise AssertionError("Invalid arguments for function call")
+        if not url_part in self.call_args[0][0]:
+            raise AssertionError(url_part + " is not being called in call to Gengo API")
+        return True
+            
 
 class TestPreferredTranslatorsFunction(unittest.TestCase):
 
@@ -527,12 +536,25 @@ class TestPreferredTranslatorsFunction(unittest.TestCase):
         """
         self.gengo = Gengo(public_key=API_PUBKEY,
                            private_key=API_PRIVKEY,
-                           sandbox=False,
+                           sandbox=True,
                            )
+
+        from gengo import requests
+        self.json_mock = mock.Mock()
+        self.json_mock.json.return_value = {'opstat': 'ok'}
+        self.getMock = RequestsMock(return_value=self.json_mock)
+        self.requestsPatch = mock.patch.object(requests, 'get', self.getMock)
+        self.requestsPatch.start()
+
+    def tearDown(self):
+        self.requestsPatch.stop()
+
 
     def test_getPreferredTranslators(self):
         resp = self.gengo.getPreferredTranslators()
         self.assertEqual(resp['opstat'], 'ok')
+        #self.getMock.assert_any_call()
+        self.getMock.assert_path_contains(mockdb.apihash['getPreferredTranslators']['url'])
 
 
 if __name__ == '__main__':
