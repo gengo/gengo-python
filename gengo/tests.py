@@ -523,7 +523,8 @@ class RequestsMock(mock.Mock):
         if not self.call_args or not self.call_args[0]:
             raise AssertionError("Invalid arguments for function call")
         if not url_part in self.call_args[0][0]:
-            raise AssertionError(url_part + " is not being called in call to Gengo API")
+            raise AssertionError(
+                "{} is not being called in call to Gengo API".format(url_part))
         return True
 
 
@@ -555,7 +556,8 @@ class TestPreferredTranslatorsFunction(unittest.TestCase):
         resp = self.gengo.getPreferredTranslators()
         self.assertEqual(resp['opstat'], 'ok')
         # self.getMock.assert_any_call()
-        self.getMock.assert_path_contains(mockdb.apihash['getPreferredTranslators']['url'])
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getPreferredTranslators']['url'])
 
 
 if __name__ == '__main__':
