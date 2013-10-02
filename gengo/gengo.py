@@ -355,6 +355,7 @@ class Gengo(object):
 
             if self.debug is True:
                 print base + '?%s' % query_string
+
             return req_method(base + '?%s' % query_string,
                               headers=self.headers,
                               # Don't know why but requests is trying to verify

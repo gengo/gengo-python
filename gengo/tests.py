@@ -516,14 +516,16 @@ class TestGlossaryFunctions(unittest.TestCase):
         resp = self.gengo.getGlossaryList()
         self.assertEqual(resp['opstat'], 'ok')
 
+
 class RequestsMock(mock.Mock):
+
     def assert_path_contains(self, url_part):
         if not self.call_args or not self.call_args[0]:
             raise AssertionError("Invalid arguments for function call")
         if not url_part in self.call_args[0][0]:
             raise AssertionError(url_part + " is not being called in call to Gengo API")
         return True
-            
+
 
 class TestPreferredTranslatorsFunction(unittest.TestCase):
 
@@ -549,11 +551,10 @@ class TestPreferredTranslatorsFunction(unittest.TestCase):
     def tearDown(self):
         self.requestsPatch.stop()
 
-
     def test_getPreferredTranslators(self):
         resp = self.gengo.getPreferredTranslators()
         self.assertEqual(resp['opstat'], 'ok')
-        #self.getMock.assert_any_call()
+        # self.getMock.assert_any_call()
         self.getMock.assert_path_contains(mockdb.apihash['getPreferredTranslators']['url'])
 
 
