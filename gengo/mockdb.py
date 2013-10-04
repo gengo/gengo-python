@@ -131,10 +131,6 @@ apihash = {
         'url': '/translate/job/{{id}}/revisions/{{revision_id}}',
         'method': 'GET',
     },
-    'getTranslationJobPreviewImage': {
-        'url': '/translate/job/{{id}}/preview',
-        'method': 'GET',
-    },
 
     # Delete a job...
     'deleteTranslationJob': {
