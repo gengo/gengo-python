@@ -37,7 +37,7 @@ Official Python library for interfacing with the Gengo API.
 """
 
 __author__ = 'Gengo <api@gengo.com>'
-__version__ = '0.1.6'
+__version__ = '0.1.7'
 
 import re
 import hmac
@@ -355,6 +355,7 @@ class Gengo(object):
 
             if self.debug is True:
                 print base + '?%s' % query_string
+
             return req_method(base + '?%s' % query_string,
                               headers=self.headers,
                               # Don't know why but requests is trying to verify
