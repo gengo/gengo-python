@@ -94,11 +94,6 @@ apihash = {
         'method': 'GET',
     },
 
-    'getTranslationJobGroup': {
-        'url': '/translate/jobs/group/{{id}}',
-        'method': 'GET',
-    },
-
     # Get a quote for how much a given job will cost.
     'determineTranslationCost': {
         'url': '/translate/service/quote',
