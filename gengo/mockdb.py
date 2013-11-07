@@ -143,6 +143,10 @@ apihash = {
         'url': '/translate/service/languages',
         'method': 'GET',
     },
+    'getServiceLanguageMatrix': {
+        'url': '/translate/service/language_matrix',
+        'method': 'GET',
+    },
 
     # glossary stuff
     'getGlossaryList': {
