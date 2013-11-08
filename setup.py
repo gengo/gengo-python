@@ -95,7 +95,7 @@ setup(
     include_package_data=True,
 
     # Package dependencies.
-    install_requires=[str(ir.req) for ir in parse_requirements(dir_name + '/requirements.txt')],
+    install_requires=[str(ir.req) for ir in parse_requirements(os.path.join(dir_name, 'requirements.txt'))],
 
     # Metadata for PyPI.
     author='Gengo',
