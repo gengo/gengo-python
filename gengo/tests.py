@@ -116,6 +116,10 @@ class TestLanguageServiceMethods(unittest.TestCase):
         resp = self.gengo.getServiceLanguages()
         self.assertEqual(resp['opstat'], 'ok')
 
+    def test_getServiceLanguageMatrix(self):
+        resp = self.gengo.getServiceLanguageMatrix()
+        self.assertEqual(resp['opstat'], 'ok')
+
 
 class TestTranslationJobFlowFileUpload(unittest.TestCase):
 
