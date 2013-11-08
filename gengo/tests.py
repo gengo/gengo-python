@@ -88,13 +88,27 @@ class TestAccountMethods(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
+        from gengo import requests
+        self.json_mock = mock.Mock()
+        self.json_mock.json.return_value = {'opstat': 'ok'}
+        self.getMock = RequestsMock(return_value=self.json_mock)
+        self.requestsPatch = mock.patch.object(requests, 'get', self.getMock)
+        self.requestsPatch.start()
+
+    def tearDown(self):
+        self.requestsPatch.stop()
+
     def test_getAccountStats(self):
         stats = self.gengo.getAccountStats()
         self.assertEqual(stats['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getAccountStats']['url'])
 
     def test_getAccountBalance(self):
         balance = self.gengo.getAccountBalance()
         self.assertEqual(balance['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getAccountBalance']['url'])
 
 
 class TestLanguageServiceMethods(unittest.TestCase):
@@ -108,13 +122,33 @@ class TestLanguageServiceMethods(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
+        from gengo import requests
+        self.json_mock = mock.Mock()
+        self.json_mock.json.return_value = {'opstat': 'ok'}
+        self.getMock = RequestsMock(return_value=self.json_mock)
+        self.requestsPatch = mock.patch.object(requests, 'get', self.getMock)
+        self.requestsPatch.start()
+
+    def tearDown(self):
+        self.requestsPatch.stop()
+
     def test_getServiceLanguagePairs(self):
         resp = self.gengo.getServiceLanguagePairs()
         self.assertEqual(resp['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getServiceLanguagePairs']['url'])
 
     def test_getServiceLanguages(self):
         resp = self.gengo.getServiceLanguages()
         self.assertEqual(resp['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getServiceLanguages']['url'])
+
+    def test_getServiceLanguageMatrix(self):
+        resp = self.gengo.getServiceLanguageMatrix()
+        self.assertEqual(resp['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getServiceLanguageMatrix']['url'])
 
 
 class TestTranslationJobFlowFileUpload(unittest.TestCase):
