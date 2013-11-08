@@ -39,8 +39,7 @@ from setuptools import find_packages
 from subprocess import call
 from pip.req import parse_requirements
 
-__version__ = '0.1.10'
-dir_name = os.path.dirname(os.path.abspath(__file__))
+__version__ = '0.1.11'
 
 # Command based on Libcloud setup.py:
 # https://github.com/apache/libcloud/blob/trunk/setup.py
@@ -95,7 +94,7 @@ setup(
     include_package_data=True,
 
     # Package dependencies.
-    install_requires=[str(ir.req) for ir in parse_requirements(os.path.join(dir_name, 'requirements.txt'))],
+    install_requires=["requests == 1.2.3"],
 
     # Metadata for PyPI.
     author='Gengo',

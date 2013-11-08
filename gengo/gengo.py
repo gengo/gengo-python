@@ -37,7 +37,7 @@ Official Python library for interfacing with the Gengo API.
 """
 
 __author__ = 'Gengo <api@gengo.com>'
-__version__ = '0.1.10'
+__version__ = '0.1.11'
 
 import re
 import hmac
