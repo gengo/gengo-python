@@ -3,10 +3,6 @@ python:
   - "2.6"
   - "2.7"
 
-env:
-  global:
-    - GENGO_PUBKEY='pubkeyfortests' GENGO_PRIVKEY='privatekeyfortestuserthatcontainsonlyletters'
-
 # command to install dependencies
 install:
 - pip install -r requirements.txt --use-mirrors

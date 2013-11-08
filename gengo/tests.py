@@ -47,8 +47,8 @@ import mock
 import mockdb
 from gengo import Gengo, GengoError, GengoAuthError
 
-API_PUBKEY = os.getenv('GENGO_PUBKEY')
-API_PRIVKEY = os.getenv('GENGO_PRIVKEY')
+API_PUBKEY = 'dummypublickey'
+API_PRIVKEY = 'dummyprivatekey'
 
 
 class TestGengoCore(unittest.TestCase):
@@ -151,6 +151,44 @@ class TestLanguageServiceMethods(unittest.TestCase):
             mockdb.apihash['getServiceLanguageMatrix']['url'])
 
 
+class TestPostTranslationJobComment(unittest.TestCase):
+
+    """
+    Tests the flow of creating a job, updating one of them, getting the
+    details, and then deleting the jobs.
+    """
+    def setUp(self):
+        """
+        Creates the initial batch of jobs for the other test functions here
+        to operate on.
+        """
+        self.gengo = Gengo(public_key=API_PUBKEY,
+                           private_key=API_PRIVKEY,
+                           sandbox=True)
+
+        from gengo import requests
+        self.json_mock = mock.Mock()
+        self.json_mock.json.return_value = {'opstat': 'ok'}
+        self.getMock = RequestsMock(return_value=self.json_mock)
+        self.requestsPatch = mock.patch.object(requests, 'post', self.getMock)
+        self.requestsPatch.start()
+
+    def tearDown(self):
+        self.requestsPatch.stop()
+
+    def test_postJobComment(self):
+        """
+        Tests posting a comment to a job.
+        """
+        posted_comment = self.gengo.postTranslationJobComment(
+            id=123,
+            comment={'body': 'I love lamp oh mai gawd'})
+        self.assertEqual(posted_comment['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['postTranslationJobComment']['url']
+            .replace('{{id}}', '123'))
+
+
 class TestTranslationJobFlowFileUpload(unittest.TestCase):
 
     """
@@ -165,75 +203,16 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         self.gengo = Gengo(public_key=API_PUBKEY,
                            private_key=API_PRIVKEY,
                            sandbox=True)
-        self.created_job_ids = []
 
-        multiple_jobs_quote = {
-            'job_1': {
-                'type': 'file',
-                'file_path': './examples/testfiles/test_file1.txt',
-                'lc_src': 'en',
-                'lc_tgt': 'ja',
-                'tier': 'standard',
-            },
-            'job_2': {
-                'type': 'file',
-                'file_path': './examples/testfiles/test_file2.txt',
-                'lc_src': 'ja',
-                'lc_tgt': 'en',
-                'tier': 'standard',
-            },
-        }
+        from gengo import requests
+        self.json_mock = mock.Mock()
+        self.json_mock.json.return_value = {'opstat': 'ok'}
+        self.getMock = RequestsMock(return_value=self.json_mock)
+        self.requestsPatch = mock.patch.object(requests, 'get', self.getMock)
+        self.requestsPatch.start()
 
-        # Now that we've got the jobs, let's go ahead and see how much it'll
-        # cost.
-        cost_assessment = self.gengo.determineTranslationCost(
-            jobs=multiple_jobs_quote)
-        self.assertEqual(cost_assessment['opstat'], 'ok')
-
-        self.multiple_jobs = {}
-        for k, j in cost_assessment['response']['jobs'].iteritems():
-            self.multiple_jobs[k] = {
-                'type': 'file',
-                'identifier': j['identifier'],
-                'comment': 'Test comment for %s' % (k,),
-                'glossary_id': None,
-                'use_preferred': 1,
-                'force': 1,
-            }
-
-        jobs = self.gengo.postTranslationJobs(
-            jobs={'jobs': self.multiple_jobs, 'as_group': 0})
-        self.assertEqual(jobs['opstat'], 'ok')
-        self.assertTrue('order_id' in jobs['response'])
-        self.assertTrue('credits_used' in jobs['response'])
-        self.assertEqual(jobs['response']['job_count'], 2)
-
-        # get some order information - in v2 the jobs need to have gone
-        # through a queueing system so we wait a little bit
-        time.sleep(20)
-        resp = self.gengo.getTranslationOrderJobs(
-            id=jobs['response']['order_id'])
-        self.assertEqual(resp['response']['order']['as_group'], 0)
-        self.assertEqual(len(resp['response']['order']['jobs_available']), 2)
-        self.created_job_ids.\
-            extend(resp['response']['order']['jobs_available'])
-
-    def test_postJobComment(self):
-        """
-        Tests posting a comment to a job.
-        """
-        posted_comment = self.gengo.postTranslationJobComment(
-            id=self.created_job_ids[0],
-            comment={'body': 'I love lamp oh mai gawd'})
-        self.assertEqual(posted_comment['opstat'], 'ok')
-        job_comments = self.gengo.getTranslationJobComments(
-            id=self.created_job_ids[0])
-        self.assertEqual(posted_comment['opstat'], 'ok')
-        self.assertEqual(job_comments['opstat'], 'ok')
-        self.assertEqual(job_comments['response']['thread'][0]['body'],
-                         'Test comment for job_2')
-        self.assertEqual(job_comments['response']['thread'][1]['body'],
-                         'I love lamp oh mai gawd')
+    def tearDown(self):
+        self.requestsPatch.stop()
 
     def test_getJobDataMethods(self):
         """
@@ -247,42 +226,40 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         distribution or something.
         """
         # Pull down data about one specific job.
-        job = self.gengo.getTranslationJob(id=self.created_job_ids[0])
+        job = self.gengo.getTranslationJob(id=123)
         self.assertEqual(job['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJob']['url']
+            .replace('{{id}}', '123'))
 
         # Pull down the 10 most recently submitted jobs.
         jobs = self.gengo.getTranslationJobs()
         self.assertEqual(jobs['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJobs']['url'])
 
         # Test getting the batch that a job is in.
-        job_batch = self.gengo.getTranslationJobBatch(
-            id=self.created_job_ids[1])
+        job_batch = self.gengo.getTranslationJobBatch(id=123)
         self.assertEqual(job_batch['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJobBatch']['url']
+            .replace('{{id}}', '123'))
 
         # Pull down feedback. This should work fine, but there'll be no
         # feedback.
-        feedback = self.gengo.getTranslationJobFeedback(
-            id=self.created_job_ids[0])
+        feedback = self.gengo.getTranslationJobFeedback(id=123)
         self.assertEqual(feedback['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJobFeedback']['url']
+            .replace('{{id}}', '123'))
 
         # Lastly, pull down any revisions that definitely didn't occur due
         # to this being a simulated test.
-        revisions = self.gengo.getTranslationJobRevisions(
-            id=self.created_job_ids[0])
+        revisions = self.gengo.getTranslationJobRevisions(id=123)
         self.assertEqual(revisions['opstat'], 'ok')
-
-        # So it's worth noting here that we can't really test
-        # getTranslationJobRevision(), because no real revisions
-        # exist at this point, and a revision ID is required to pull that
-        # method off successfully. Bai now.
-
-    def tearDown(self):
-        """
-        Delete every job we've created.
-        """
-        for id in self.created_job_ids:
-            deleted_job = self.gengo.deleteTranslationJob(id=id)
-            self.assertEqual(deleted_job['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJobRevisions']['url']
+            .replace('{{id}}', '123'))
 
 
 class TestTranslationJobFlowGroupJob(unittest.TestCase):
@@ -305,58 +282,26 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
                            sandbox=True)
         self.created_job_ids = []
 
-        multiple_jobs_quote = {
-            'job_3': {
-                'type': 'text',
-                'body_src': 'This is a group job test job 1.',
-                'lc_src': 'en',
-                'lc_tgt': 'zh',
-                'tier': 'standard',
-            },
-            'job_4': {
-                'type': 'text',
-                'body_src': 'This is a group job test job 2.',
-                'lc_src': 'en',
-                'lc_tgt': 'zh',
-                'tier': 'standard',
-            },
-        }
+        from gengo import requests
+        self.json_mock = mock.Mock()
+        self.json_mock.json.return_value = {'opstat': 'ok'}
+        self.getMock = RequestsMock(return_value=self.json_mock)
+        self.requestsPatch = mock.patch.object(requests, 'get', self.getMock)
+        self.requestsPatch.start()
 
-        # Now that we've got the jobs, let's go ahead and see how much it'll
-        # cost.
-        self.jobs = jobs = self.gengo.postTranslationJobs(
-            jobs={'jobs': multiple_jobs_quote, 'as_group': 1})
-
-        self.assertEqual(jobs['opstat'], 'ok')
-        self.assertTrue('order_id' in jobs['response'])
-        self.assertTrue('credits_used' in jobs['response'])
-        self.assertEqual(jobs['response']['job_count'], 2)
-
-        time.sleep(20)
-        resp = self.gengo.getTranslationOrderJobs(
-            id=self.jobs['response']['order_id'])
-
-        self.created_job_ids.\
-            extend(resp['response']['order']['jobs_available'])
+    def tearDown(self):
+        self.requestsPatch.stop()
 
     def test_postTranslationJobs_as_group(self):
         """
         Make sure that the as_group setting gets interpreted by the API
         correctly.
         """
-        resp = self.gengo.getTranslationOrderJobs(
-            id=self.jobs['response']['order_id'])
-
-        self.assertEqual(resp['response']['order']['as_group'], 1)
-        self.assertEqual(len(resp['response']['order']['jobs_available']), 2)
-
-    def tearDown(self):
-        """
-        Delete every job we've created.
-        """
-        for id in self.created_job_ids:
-            deleted_job = self.gengo.deleteTranslationJob(id=id)
-            self.assertEqual(deleted_job['opstat'], 'ok')
+        resp = self.gengo.getTranslationOrderJobs(id=321)
+        self.assertEqual(resp['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationOrderJobs']['url']
+            .replace('{{id}}', '321'))
 
 
 class TestTranslationJobFlowMixedOrder(unittest.TestCase):
@@ -375,112 +320,26 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         self.gengo = Gengo(public_key=API_PUBKEY,
                            private_key=API_PRIVKEY,
                            sandbox=True)
-        self.created_job_ids = []
 
-        multiple_jobs_quote = {
-            'job_1': {
-                'type': 'file',
-                'file_path': './examples/testfiles/test_file1.txt',
-                'lc_src': 'en',
-                'lc_tgt': 'ja',
-                'tier': 'standard',
-            },
-            'job_2': {
-                'type': 'text',
-                'body_src': '''Liverpool Football Club is an English
-                Premier League football club based in Liverpool,
-                Merseyside. Liverpool is awesome and is the best club
-                around. Liverpool was founded in 1892 and admitted into the
-                Football League the following year. The club has played at
-                its home ground, Anfield, since its founding, and the team
-                has played in an all-red home strip since 1964.
-                Domestically, Liverpool has won eighteen league titles -
-                the second most in English football - as well as seven FA
-                Cups, a record eight League Cups and fifteen FA Community
-                Shields. Liverpool has also won more European titles than
-                any other English club, with five European Cups, three UEFA
-                Cups and three UEFA Super Cups. The most successful period
-                in Liverpool''',
-                'lc_src': 'en',
-                'lc_tgt': 'ja',
-                'tier': 'standard',
-            },
-        }
+        from gengo import requests
+        self.json_mock = mock.Mock()
+        self.json_mock.json.return_value = {'opstat': 'ok'}
+        self.getMock = RequestsMock(return_value=self.json_mock)
+        self.requestsPatch = mock.patch.object(requests, 'get', self.getMock)
+        self.requestsPatch.start()
 
-        # Now that we've got the job, let's go ahead and see how much it'll
-        # cost.
-        cost_assessment = self.gengo.determineTranslationCost(
-            jobs=multiple_jobs_quote)
-        self.assertEqual(cost_assessment['opstat'], 'ok')
-
-        multiple_jobs = {}
-        for k, j in cost_assessment['response']['jobs'].iteritems():
-            if j['type'] == 'file':
-                multiple_jobs[k] = {
-                    'type': 'file',
-                    'file_path': './examples/testfiles/test_file1.txt',
-                    'identifier': j['identifier'],
-                    'comment': 'Test comment for filejob %s' % (k,),
-                    'glossary_id': None,
-                    'use_preferred': 0,
-                    'force': 1
-                }
-            else:
-                multiple_jobs[k] = multiple_jobs_quote[k]
-                multiple_jobs[k]['comment'] = \
-                    'Test comment for textjob %s' % (k,)
-                multiple_jobs[k]['glossary_id'] = None
-                multiple_jobs[k]['use_preferred'] = 0
-                multiple_jobs[k]['force'] = 1
-
-        jobs = self.gengo.postTranslationJobs(
-            jobs=multiple_jobs)
-        self.assertEqual(jobs['opstat'], 'ok')
-        self.assertTrue('order_id' in jobs['response'])
-        self.assertTrue('credits_used' in jobs['response'])
-        self.assertEqual(jobs['response']['job_count'], 2)
-
-        cleared_queue = False
-        ping_count = 0
-
-        # Get some order information - in v2 the jobs need to have gone
-        # through a queueing system so we'll try up to 10 times, with 10 second
-        # breaks
-        while False == cleared_queue and ping_count < 10:
-            time.sleep(10)
-            resp = self.gengo.getTranslationOrderJobs(
-                id=jobs['response']['order_id'])
-
-            if len(resp['response']['order']['jobs_available']) != 2:
-                print "\nJobs still queued; pausing 10s and checking again..."
-                ping_count += 1
-                continue
-
-            cleared_queue = True
-
-        if ping_count == 10:
-            self.assertTrue(False, "API Queue not processing jobs!")
-
-        # We'll use the job ids in another test
-        self.created_job_ids.\
-            extend(resp['response']['order']['jobs_available'])
+    def tearDown(self):
+        self.requestsPatch.stop()
 
     def test_postJobComment(self):
         """
         Tests posting a comment to a job.
         """
-        posted_comment = self.gengo.postTranslationJobComment(
-            id=self.created_job_ids[0],
-            comment={'body': 'I love lamp oh mai gawd'})
-        self.assertEqual(posted_comment['opstat'], 'ok')
-        job_comments = self.gengo.getTranslationJobComments(
-            id=self.created_job_ids[0])
-        self.assertEqual(posted_comment['opstat'], 'ok')
+        job_comments = self.gengo.getTranslationJobComments(id=1)
         self.assertEqual(job_comments['opstat'], 'ok')
-        self.assertEqual(job_comments['response']['thread'][0]['body'],
-                         'Test comment for textjob job_2')
-        self.assertEqual(job_comments['response']['thread'][1]['body'],
-                         'I love lamp oh mai gawd')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJobComments']['url']
+            .replace('{{id}}', '1'))
 
     def test_getJobDataMethods(self):
         """
@@ -494,43 +353,40 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         distribution or something.
         """
         # Pull down data about one specific job...
-        job = self.gengo.getTranslationJob(id=self.created_job_ids[0])
+        job = self.gengo.getTranslationJob(id=1)
         self.assertEqual(job['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJob']['url']
+            .replace('{{id}}', '1'))
 
         # Pull down the 10 most recently submitted jobs.
         jobs = self.gengo.getTranslationJobs()
         self.assertEqual(jobs['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJobs']['url'])
 
         # Test getting the batch that a job is in...
-        job_batch = self.gengo.getTranslationJobBatch(
-            id=self.created_job_ids[1])
+        job_batch = self.gengo.getTranslationJobBatch(id=1)
         self.assertEqual(job_batch['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJobBatch']['url']
+            .replace('{{id}}', '1'))
 
         # Pull down feedback. This should work fine, but there'll be no
         # feedback.
-        feedback = self.gengo.getTranslationJobFeedback(
-            id=self.created_job_ids[0])
+        feedback = self.gengo.getTranslationJobFeedback(id=1)
         self.assertEqual(feedback['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJobFeedback']['url']
+            .replace('{{id}}', '1'))
 
         # Lastly, pull down any revisions that definitely didn't occur due
         # to this being a simulated test.
-        revisions = self.gengo.getTranslationJobRevisions(
-            id=self.created_job_ids[0])
+        revisions = self.gengo.getTranslationJobRevisions(id=1)
         self.assertEqual(revisions['opstat'], 'ok')
-
-        # So it's worth noting here that we can't really test
-        # getTranslationJobRevision(), because no real revisions
-        # exist at this point, and a revision ID is required to pull that
-        # method off successfully. Bai now.
-
-    def tearDown(self):
-        """
-        Delete every job we've created for this somewhat ridiculously
-        thorough testing scenario.
-        """
-        for id in self.created_job_ids:
-            deleted_job = self.gengo.deleteTranslationJob(id=id)
-            self.assertEqual(deleted_job['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getTranslationJobRevisions']['url']
+            .replace('{{id}}', '1'))
 
 
 class TestGlossaryFunctions(unittest.TestCase):
@@ -546,9 +402,21 @@ class TestGlossaryFunctions(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
+        from gengo import requests
+        self.json_mock = mock.Mock()
+        self.json_mock.json.return_value = {'opstat': 'ok'}
+        self.getMock = RequestsMock(return_value=self.json_mock)
+        self.requestsPatch = mock.patch.object(requests, 'get', self.getMock)
+        self.requestsPatch.start()
+
+    def tearDown(self):
+        self.requestsPatch.stop()
+
     def test_getGlossaryList(self):
         resp = self.gengo.getGlossaryList()
         self.assertEqual(resp['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['getGlossaryList']['url'])
 
 
 class RequestsMock(mock.Mock):
