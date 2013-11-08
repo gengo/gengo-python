@@ -11,7 +11,7 @@ Installation & Requirements
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Installing this library using pip is very simple:
 
-    sudo pip install gengo
+    pip install gengo
 
 Otherwise, you can install from source by getting the repo:
 
@@ -19,11 +19,11 @@ Otherwise, you can install from source by getting the repo:
 
 And then installing the library:
 
-    sudo python setup.py install
+    python setup.py install
 
 This will also install the `requests` package. If you're running on a version of Python prior to 2.6, you'll need to install simplejson as well:
 
-    sudo pip install simplejson
+    pip install simplejson
 
 
 Tests - Running Them, etc
