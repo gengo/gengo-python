@@ -43,6 +43,6 @@ gengo = Gengo(
     sandbox=False,
     debug=True
 )
-# Useful for figuring out what language paths are supported - e.g, if
-# we use 'USD' below, we'll see what languages we can translate.
+# Useful for figuring out what language pairs are supported ,
+# also you can see each unit_prices.
 print gengo.getServiceLanguageMatrix()
