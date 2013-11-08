@@ -5,7 +5,7 @@
 # noted. Details are below.
 #
 # New BSD License
-# Copyright (c) 2009-2012, myGengo, Inc.
+# Copyright (c) 2009-2013, Gengo, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -43,6 +43,6 @@ gengo = Gengo(
     sandbox=False,
     debug=True
 )
-# Useful for figuring out what language pairs are supported ,
-# also you can see each unit_prices.
+# Useful for figuring out which language pairs are supported,
+# and also for seeing individual `unit_price`s
 print gengo.getServiceLanguageMatrix()
