@@ -4,18 +4,20 @@ Gengo Python Library (for the [Gengo API](http://gengo.com/api/))
 ======================================================================================================================================================
 Translating your tools and products helps people all over the world access them; this is, of course, a
 somewhat tricky problem to solve. **[Gengo](http://gengo.com/)** is a service that offers human-translation
-(which is often a higher quality than machine translation), and an API to manage sending in work and watching
+(which is often of higher quality than machine translation), and an API to manage sending in work and watching
 jobs. This is a Python interface to make using the API simpler.
 
 Installation & Requirements
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-Installing the library is fairly simple:
+Installing this library using pip is very simple:
 
-Get the repo:
+    sudo pip install gengo
+
+Otherwise, you can install from source by getting the repo:
 
     git clone git://github.com/gengo/gengo-python.git
 
-And then install the library:
+And then installing the library:
 
     sudo python setup.py install
 
