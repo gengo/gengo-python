@@ -185,7 +185,8 @@ class TestPostTranslationJobComment(unittest.TestCase):
             comment={'body': 'I love lamp oh mai gawd'})
         self.assertEqual(posted_comment['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['postTranslationJobComment']['url'].replace('{{id}}', '123'))
+            mockdb.apihash['postTranslationJobComment']['url']
+            .replace('{{id}}', '123'))
 
 
 class TestTranslationJobFlowFileUpload(unittest.TestCase):
@@ -228,7 +229,8 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         job = self.gengo.getTranslationJob(id=123)
         self.assertEqual(job['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJob']['url'].replace('{{id}}', '123'))
+            mockdb.apihash['getTranslationJob']['url']
+            .replace('{{id}}', '123'))
 
         # Pull down the 10 most recently submitted jobs.
         jobs = self.gengo.getTranslationJobs()
@@ -240,21 +242,25 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         job_batch = self.gengo.getTranslationJobBatch(id=123)
         self.assertEqual(job_batch['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobBatch']['url'].replace('{{id}}', '123'))
+            mockdb.apihash['getTranslationJobBatch']['url']
+            .replace('{{id}}', '123'))
 
         # Pull down feedback. This should work fine, but there'll be no
         # feedback.
         feedback = self.gengo.getTranslationJobFeedback(id=123)
         self.assertEqual(feedback['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobFeedback']['url'].replace('{{id}}', '123'))
+            mockdb.apihash['getTranslationJobFeedback']['url']
+            .replace('{{id}}', '123'))
 
         # Lastly, pull down any revisions that definitely didn't occur due
         # to this being a simulated test.
         revisions = self.gengo.getTranslationJobRevisions(id=123)
         self.assertEqual(revisions['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobRevisions']['url'].replace('{{id}}', '123'))
+            mockdb.apihash['getTranslationJobRevisions']['url']
+            .replace('{{id}}', '123'))
+
 
 class TestTranslationJobFlowGroupJob(unittest.TestCase):
 
@@ -294,7 +300,9 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
         resp = self.gengo.getTranslationOrderJobs(id=321)
         self.assertEqual(resp['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationOrderJobs']['url'].replace('{{id}}', '321'))
+            mockdb.apihash['getTranslationOrderJobs']['url']
+            .replace('{{id}}', '321'))
+
 
 class TestTranslationJobFlowMixedOrder(unittest.TestCase):
 
@@ -330,7 +338,8 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         job_comments = self.gengo.getTranslationJobComments(id=1)
         self.assertEqual(job_comments['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobComments']['url'].replace('{{id}}', '1'))
+            mockdb.apihash['getTranslationJobComments']['url']
+            .replace('{{id}}', '1'))
 
     def test_getJobDataMethods(self):
         """
@@ -347,7 +356,8 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         job = self.gengo.getTranslationJob(id=1)
         self.assertEqual(job['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJob']['url'].replace('{{id}}', '1'))
+            mockdb.apihash['getTranslationJob']['url']
+            .replace('{{id}}', '1'))
 
         # Pull down the 10 most recently submitted jobs.
         jobs = self.gengo.getTranslationJobs()
@@ -359,21 +369,24 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         job_batch = self.gengo.getTranslationJobBatch(id=1)
         self.assertEqual(job_batch['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobBatch']['url'].replace('{{id}}', '1'))
+            mockdb.apihash['getTranslationJobBatch']['url']
+            .replace('{{id}}', '1'))
 
         # Pull down feedback. This should work fine, but there'll be no
         # feedback.
         feedback = self.gengo.getTranslationJobFeedback(id=1)
         self.assertEqual(feedback['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobFeedback']['url'].replace('{{id}}', '1'))
+            mockdb.apihash['getTranslationJobFeedback']['url']
+            .replace('{{id}}', '1'))
 
         # Lastly, pull down any revisions that definitely didn't occur due
         # to this being a simulated test.
         revisions = self.gengo.getTranslationJobRevisions(id=1)
         self.assertEqual(revisions['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobRevisions']['url'].replace('{{id}}', '1'))
+            mockdb.apihash['getTranslationJobRevisions']['url']
+            .replace('{{id}}', '1'))
 
 
 class TestGlossaryFunctions(unittest.TestCase):
@@ -404,6 +417,7 @@ class TestGlossaryFunctions(unittest.TestCase):
         self.assertEqual(resp['opstat'], 'ok')
         self.getMock.assert_path_contains(
             mockdb.apihash['getGlossaryList']['url'])
+
 
 class RequestsMock(mock.Mock):
 
