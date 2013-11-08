@@ -37,8 +37,9 @@ from distutils.core import Command
 from setuptools import setup
 from setuptools import find_packages
 from subprocess import call
+from pip.req import parse_requirements
 
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 
 # Command based on Libcloud setup.py:
 # https://github.com/apache/libcloud/blob/trunk/setup.py
@@ -93,7 +94,7 @@ setup(
     include_package_data=True,
 
     # Package dependencies.
-    install_requires=['requests'],
+    install_requires=[str(ir.req) for ir in parse_requirements('./requirements.txt')],
 
     # Metadata for PyPI.
     author='Gengo',
