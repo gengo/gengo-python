@@ -191,7 +191,7 @@ class Gengo(object):
             # from our api hash table.
             fn = apihash[api_call]
 
-            # we don't want to make any lasting changes to the kwargs dictionary
+            # don't make any lasting changes to the kwargs dictionary
             kwargs = copy.deepcopy(kwargs)
 
             # Do a check here for specific job sets - we need to support
