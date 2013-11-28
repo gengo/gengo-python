@@ -28,20 +28,11 @@ This will also install the `requests` package. If you're running on a version of
 
 Tests - Running Them, etc
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-Gengo has a full suite of unit tests. To run them, export your public and private keys in the shell like so:
-
-```shell
-export GENGO_PUBKEY='your public key here'
-export GENGO_PRIVKEY='your private key here'
-```
-
-Then grab the source, and from the parent directory run the tests like so:
+Gengo has a full suite of unit tests. To run them, make sure you have the `mock` library installed, and then simply run:
 
     python setup.py test
 
-Note that some of the tests rely on some deferred actions so there are timeouts (sleep) which you might have to adjust.
-
-To run a single test, such as TestTranslationJobFlowFileUpload:
+If you wish to run a single test, such as TestTranslationJobFlowFileUpload:
 
     python -m unittest -v gengo.tests.TestTranslationJobFlowFileUpload
 
