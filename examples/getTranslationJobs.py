@@ -44,4 +44,4 @@ gengo = Gengo(
 
 # Think of this as a "search my jobs" method, and it becomes very
 # self-explanatory.
-print gengo.getTranslationJobs(status="accepted", count=15)
+print gengo.getTranslationJobs(status='approved', count=15)
