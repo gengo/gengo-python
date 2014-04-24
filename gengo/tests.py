@@ -1,5 +1,3 @@
-
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 # All code provided from the http://gengo.com site, such as API example code
 # and libraries, is provided under the New BSD license unless otherwise
@@ -39,9 +37,6 @@ A set of tests for the Gengo API. They all require an internet connection.
 """
 
 import unittest
-import os
-import random
-import time
 import mock
 
 import mockdb
@@ -63,7 +58,7 @@ class TestGengoCore(unittest.TestCase):
                       sandbox=True)
         # With how we do functions, AttributeError is a bit tricky to
         # catch...
-        self.assertRaises(AttributeError, getattr, Gengo, 'bert')
+        self.assertRaises(AttributeError, getattr, gengo, 'bert')
 
     def test_GengoAuthNoCredentials(self):
         gengo = Gengo(public_key='',
@@ -424,7 +419,7 @@ class RequestsMock(mock.Mock):
     def assert_path_contains(self, url_part):
         if not self.call_args or not self.call_args[0]:
             raise AssertionError("Invalid arguments for function call")
-        if not url_part in self.call_args[0][0]:
+        if url_part not in self.call_args[0][0]:
             raise AssertionError(
                 "{} is not being called in call to Gengo API".format(url_part))
         return True
