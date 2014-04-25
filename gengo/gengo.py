@@ -36,6 +36,8 @@
 Official Python library for interfacing with the Gengo API.
 """
 
+from __future__ import print_function
+
 __author__ = 'Gengo <api@gengo.com>'
 __version__ = '0.1.14'
 
@@ -43,12 +45,15 @@ import re
 import copy
 import hmac
 import requests
+import sys
 
 from hashlib import sha1
-from urllib import urlencode, quote
+try:
+    from urllib import urlencode, quote
+except ImportError:
+    from urllib.parse import urlencode, quote
 from time import time
 from operator import itemgetter
-from string import lower
 
 # mockdb is a file with a dictionary of every API endpoint for Gengo.
 from mockdb import api_urls, apihash
@@ -59,19 +64,16 @@ from mockdb import api_urls, apihash
 try:
     # Python 2.6 and up
     import json
-    json  # silence pyflakes
 except ImportError:
     try:
         # Python 2.6 and below (2.4/2.5, 2.3 is not guranteed to work with
         # this library to begin with)
         import simplejson as json
-        json  # silence pyflakes
     except ImportError:
         try:
             # This case gets rarer by the day, but if we need to, we can
             # pull it from Django provided it's there.
             from django.utils import simplejson as json
-            json  # silence pyflakes
         except:
             raise Exception("gengo requires the simplejson library (or " +
                             "Python 2.6+) to work. " +
@@ -136,7 +138,7 @@ class Gengo(object):
         debug - a flag (True/False) which will cause the library to print
         useful debugging info.
         api_url - you can override the API url for calls if needed.
-        Version must be either append with '/%(version)s' or hardcoded ('/v2')
+        Version must be either append with '/{version}' or hardcoded ('/v2')
         """
         if api_url is None:
             self.api_url = api_urls['sandbox'] if sandbox is True else \
@@ -150,12 +152,12 @@ class Gengo(object):
                             " versions 1.1 and 2 at the moment, please " +
                             " keep api_version to 1.1 or 2")
         self.public_key = public_key
-        self.private_key = private_key
+        self.private_key = Gengo.compatibletext(private_key)
         self.headers = headers
         if self.headers is None:
             self.headers = \
                 {'User-agent': 'Gengo Python Library;' +
-                    'Version %s; http://gengo.com/' % __version__}
+                    'Version {0}; http://gengo.com/'.format(__version__)}
         self.headers['Accept'] = 'application/json'
         self.debug = debug
 
@@ -221,8 +223,9 @@ class Gengo(object):
 
             # Set up a true base URL, abstracting away the need to care
             # about the sandbox mode or API versioning at this stage.
-            base_url = self.api_url % {'version':
-                                       'v%s' % self.api_version}
+            base_url = self.api_url.format(
+                version='v{0}'.format(self.api_version)
+            )
 
             # Go through and replace any mustaches that are in our API url
             # with their appropriate key/value pairs...
@@ -230,9 +233,9 @@ class Gengo(object):
             # included and messing up our hash down the road.
             base = re.sub(
                 '\{\{(?P<m>[a-zA-Z_]+)\}\}',
-                lambda m: "%s" % kwargs.pop(m.group(1),
-                                            # In case of debugging needs
-                                            'no_argument_specified'),
+                lambda m: '{0}'.format(kwargs.pop(m.group(1),
+                                                  # In case of debugging needs
+                                                  'no_argument_specified')),
                 base_url + fn['url']
             )
 
@@ -267,6 +270,7 @@ class Gengo(object):
             # fork here...
             response = self.signAndRequestAPILatest(fn, base, query_params,
                                                     post_data, file_data)
+            response.connection.close()
             try:
                 results = response.json()
             except TypeError:
@@ -281,8 +285,9 @@ class Gengo(object):
                         'code' not in results['err']:
                     concatted_msg = ''
                     for job_key, msg_code_list in results['err'].iteritems():
-                        concatted_msg += '<%s: %s> ' % \
-                            (job_key, msg_code_list[0]['msg'])
+                        concatted_msg += '<{0}: {1}> '.format(
+                            job_key, msg_code_list[0]['msg']
+                        )
                     raise GengoError(concatted_msg,
                                      results['err'].itervalues().
                                      next()[0]['code'])
@@ -315,7 +320,7 @@ class Gengo(object):
         # sense of portability between the various
         # job-posting methods in that they can all safely rely on passing
         # dictionaries around. Huzzah!
-        req_method = requests.__getattribute__(lower(fn['method']))
+        req_method = requests.__getattribute__(fn['method'].lower())
         if fn['method'] == 'POST' or fn['method'] == 'PUT':
             if 'job' in post_data:
                 query_params['data'] = json.dumps(post_data['job'],
@@ -331,12 +336,12 @@ class Gengo(object):
                                                   separators=(',', ':'))
 
             query_hmac = hmac.new(self.private_key,
-                                  query_params['ts'],
+                                  Gengo.compatibletext(query_params['ts']),
                                   sha1)
             query_params['api_sig'] = query_hmac.hexdigest()
 
             if self.debug is True:
-                print query_params
+                print(query_params)
 
             if not file_data:
                 return req_method(base,
@@ -352,19 +357,26 @@ class Gengo(object):
                                             key=itemgetter(0)))
             if self.private_key is not None:
                 query_hmac = hmac.new(self.private_key,
-                                      query_params['ts'],
+                                      Gengo.compatibletext(query_params['ts']),
                                       sha1)
                 query_params['api_sig'] = query_hmac.hexdigest()
                 query_string = urlencode(query_params)
 
             if self.debug is True:
-                print base + '?%s' % query_string
+                print(base + '?{0}'.format(query_string))
 
-            return req_method(base + '?%s' % query_string,
+            return req_method(base + '?{0}'.format(query_string),
                               headers=self.headers,
                               # Don't know why but requests is trying to verify
                               # SSL here ...
                               verify=False)
+
+    @staticmethod
+    def compatibletext(text):
+        if sys.version_info < (3, 0, 0) or isinstance(text, bytes):
+            return text
+
+        return bytes(text, 'utf-8')
 
     @staticmethod
     def unicode2utf8(text):
