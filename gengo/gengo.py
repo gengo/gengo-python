@@ -37,7 +37,6 @@ Official Python library for interfacing with the Gengo API.
 """
 
 __author__ = 'Gengo <api@gengo.com>'
-__version__ = '0.1.14'
 
 import re
 import copy
@@ -52,6 +51,7 @@ from string import lower
 
 # mockdb is a file with a dictionary of every API endpoint for Gengo.
 from mockdb import api_urls, apihash
+from _version import __version__
 
 # There are some special setups (like a Django application) where
 # simplejson exists. Past Python 2.6, this should never
