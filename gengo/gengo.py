@@ -47,10 +47,12 @@ import hmac
 import requests
 
 from hashlib import sha1
-from urllib import urlencode, quote
+try:
+    from urllib import urlencode, quote
+except ImportError:
+    from urllib.parse import urlencode, quote
 from time import time
 from operator import itemgetter
-from string import lower
 
 # mockdb is a file with a dictionary of every API endpoint for Gengo.
 from mockdb import api_urls, apihash
@@ -317,7 +319,7 @@ class Gengo(object):
         # sense of portability between the various
         # job-posting methods in that they can all safely rely on passing
         # dictionaries around. Huzzah!
-        req_method = requests.__getattribute__(lower(fn['method']))
+        req_method = requests.__getattribute__(fn['method'].lower())
         if fn['method'] == 'POST' or fn['method'] == 'PUT':
             if 'job' in post_data:
                 query_params['data'] = json.dumps(post_data['job'],

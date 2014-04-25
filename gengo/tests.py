@@ -37,7 +37,10 @@ A set of tests for the Gengo API. They all require an internet connection.
 """
 
 import unittest
-import mock
+try:
+    import mock
+except ImportError:
+    import unittest.mock as mock
 
 import mockdb
 from gengo import Gengo, GengoError, GengoAuthError
