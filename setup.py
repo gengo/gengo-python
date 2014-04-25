@@ -64,7 +64,7 @@ class Pep8Command(Command):
             sys.exit(1)
 
         cwd = os.getcwd()
-        retcode = call(('pep8 %s/gengo/' % (cwd)).split(' '))
+        retcode = call(('pep8 {0}/gengo/'.format(cwd)).split(' '))
         sys.exit(retcode)
 
 
@@ -112,6 +112,12 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Internet'
+        'Topic :: Internet',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
     ]
 )
