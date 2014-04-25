@@ -38,7 +38,9 @@ from setuptools import setup
 from setuptools import find_packages
 from subprocess import call
 
-__version__ = '0.1.14'
+# little tricky, but this is for version number is in one place.
+__version__ = 'This value will be overridden by exec.'
+exec(open('gengo/_version.py').read())
 
 # Command based on Libcloud setup.py:
 # https://github.com/apache/libcloud/blob/trunk/setup.py
