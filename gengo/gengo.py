@@ -234,8 +234,8 @@ class Gengo(object):
             base = re.sub(
                 '\{\{(?P<m>[a-zA-Z_]+)\}\}',
                 lambda m: '{0}'.format(kwargs.pop(m.group(1),
-                                                 # In case of debugging needs
-                                                 'no_argument_specified')),
+                                                  # In case of debugging needs
+                                                  'no_argument_specified')),
                 base_url + fn['url']
             )
 
