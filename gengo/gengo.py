@@ -36,6 +36,8 @@
 Official Python library for interfacing with the Gengo API.
 """
 
+from  __future__ import print_function
+
 __author__ = 'Gengo <api@gengo.com>'
 __version__ = '0.1.14'
 
@@ -336,7 +338,7 @@ class Gengo(object):
             query_params['api_sig'] = query_hmac.hexdigest()
 
             if self.debug is True:
-                print query_params
+                print(query_params)
 
             if not file_data:
                 return req_method(base,
@@ -358,7 +360,7 @@ class Gengo(object):
                 query_string = urlencode(query_params)
 
             if self.debug is True:
-                print base + '?%s' % query_string
+                print(base + '?%s' % query_string)
 
             return req_method(base + '?%s' % query_string,
                               headers=self.headers,
