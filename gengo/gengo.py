@@ -138,7 +138,7 @@ class Gengo(object):
         debug - a flag (True/False) which will cause the library to print
         useful debugging info.
         api_url - you can override the API url for calls if needed.
-        Version must be either append with '/%(version)s' or hardcoded ('/v2')
+        Version must be either append with '/{version}' or hardcoded ('/v2')
         """
         if api_url is None:
             self.api_url = api_urls['sandbox'] if sandbox is True else \
@@ -157,7 +157,7 @@ class Gengo(object):
         if self.headers is None:
             self.headers = \
                 {'User-agent': 'Gengo Python Library;' +
-                    'Version %s; http://gengo.com/' % __version__}
+                    'Version {}; http://gengo.com/'.format(__version__)}
         self.headers['Accept'] = 'application/json'
         self.debug = debug
 
@@ -223,8 +223,7 @@ class Gengo(object):
 
             # Set up a true base URL, abstracting away the need to care
             # about the sandbox mode or API versioning at this stage.
-            base_url = self.api_url % {'version':
-                                       'v%s' % self.api_version}
+            base_url = self.api_url.format(version='v{}'.format(self.api_version))
 
             # Go through and replace any mustaches that are in our API url
             # with their appropriate key/value pairs...
@@ -232,9 +231,9 @@ class Gengo(object):
             # included and messing up our hash down the road.
             base = re.sub(
                 '\{\{(?P<m>[a-zA-Z_]+)\}\}',
-                lambda m: "%s" % kwargs.pop(m.group(1),
+                lambda m: '{}'.format(kwargs.pop(m.group(1),
                                             # In case of debugging needs
-                                            'no_argument_specified'),
+                                            'no_argument_specified')),
                 base_url + fn['url']
             )
 
@@ -283,13 +282,14 @@ class Gengo(object):
                         'code' not in results['err']:
                     concatted_msg = ''
                     for job_key, msg_code_list in results['err'].iteritems():
-                        concatted_msg += '<%s: %s> ' % \
-                            (job_key, msg_code_list[0]['msg'])
+                        concatted_msg += '<{}: {}> '.format(
+                            job_key, msg_code_list[0]['msg']
+                        )
                     raise GengoError(concatted_msg,
                                      results['err'].itervalues().
                                      next()[0]['code'])
                 raise GengoError(results['err']['msg'],
-                                 results['err']['code'])
+                                results['err']['code'])
 
             # If not, return the results
             return results
@@ -360,9 +360,9 @@ class Gengo(object):
                 query_string = urlencode(query_params)
 
             if self.debug is True:
-                print(base + '?%s' % query_string)
+                print(base + '?{}'.format(query_string))
 
-            return req_method(base + '?%s' % query_string,
+            return req_method(base + '?{}'.format(query_string),
                               headers=self.headers,
                               # Don't know why but requests is trying to verify
                               # SSL here ...
