@@ -157,7 +157,7 @@ class Gengo(object):
         if self.headers is None:
             self.headers = \
                 {'User-agent': 'Gengo Python Library;' +
-                    'Version {}; http://gengo.com/'.format(__version__)}
+                    'Version {0}; http://gengo.com/'.format(__version__)}
         self.headers['Accept'] = 'application/json'
         self.debug = debug
 
@@ -224,7 +224,7 @@ class Gengo(object):
             # Set up a true base URL, abstracting away the need to care
             # about the sandbox mode or API versioning at this stage.
             base_url = self.api_url.format(
-                version='v{}'.format(self.api_version)
+                version='v{0}'.format(self.api_version)
             )
 
             # Go through and replace any mustaches that are in our API url
@@ -233,7 +233,7 @@ class Gengo(object):
             # included and messing up our hash down the road.
             base = re.sub(
                 '\{\{(?P<m>[a-zA-Z_]+)\}\}',
-                lambda m: '{}'.format(kwargs.pop(m.group(1),
+                lambda m: '{0}'.format(kwargs.pop(m.group(1),
                                                  # In case of debugging needs
                                                  'no_argument_specified')),
                 base_url + fn['url']
@@ -285,7 +285,7 @@ class Gengo(object):
                         'code' not in results['err']:
                     concatted_msg = ''
                     for job_key, msg_code_list in results['err'].iteritems():
-                        concatted_msg += '<{}: {}> '.format(
+                        concatted_msg += '<{0}: {1}> '.format(
                             job_key, msg_code_list[0]['msg']
                         )
                     raise GengoError(concatted_msg,
@@ -363,9 +363,9 @@ class Gengo(object):
                 query_string = urlencode(query_params)
 
             if self.debug is True:
-                print(base + '?{}'.format(query_string))
+                print(base + '?{0}'.format(query_string))
 
-            return req_method(base + '?{}'.format(query_string),
+            return req_method(base + '?{0}'.format(query_string),
                               headers=self.headers,
                               # Don't know why but requests is trying to verify
                               # SSL here ...
