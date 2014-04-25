@@ -93,7 +93,7 @@ setup(
     include_package_data=True,
 
     # Package dependencies.
-    install_requires=["requests == 1.2.3"],
+    install_requires=["requests == 2.2.1"],
 
     # Metadata for PyPI.
     author='Gengo',
