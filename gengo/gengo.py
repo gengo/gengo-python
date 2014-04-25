@@ -36,7 +36,7 @@
 Official Python library for interfacing with the Gengo API.
 """
 
-from  __future__ import print_function
+from __future__ import print_function
 
 __author__ = 'Gengo <api@gengo.com>'
 __version__ = '0.1.14'
@@ -226,7 +226,9 @@ class Gengo(object):
 
             # Set up a true base URL, abstracting away the need to care
             # about the sandbox mode or API versioning at this stage.
-            base_url = self.api_url.format(version='v{}'.format(self.api_version))
+            base_url = self.api_url.format(
+                version='v{}'.format(self.api_version)
+            )
 
             # Go through and replace any mustaches that are in our API url
             # with their appropriate key/value pairs...
@@ -235,8 +237,8 @@ class Gengo(object):
             base = re.sub(
                 '\{\{(?P<m>[a-zA-Z_]+)\}\}',
                 lambda m: '{}'.format(kwargs.pop(m.group(1),
-                                            # In case of debugging needs
-                                            'no_argument_specified')),
+                                                 # In case of debugging needs
+                                                 'no_argument_specified')),
                 base_url + fn['url']
             )
 
@@ -293,7 +295,7 @@ class Gengo(object):
                                      results['err'].itervalues().
                                      next()[0]['code'])
                 raise GengoError(results['err']['msg'],
-                                results['err']['code'])
+                                 results['err']['code'])
 
             # If not, return the results
             return results
