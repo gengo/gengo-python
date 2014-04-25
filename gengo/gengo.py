@@ -45,6 +45,7 @@ import re
 import copy
 import hmac
 import requests
+import sys
 
 from hashlib import sha1
 try:
@@ -154,7 +155,7 @@ class Gengo(object):
                             " versions 1.1 and 2 at the moment, please " +
                             " keep api_version to 1.1 or 2")
         self.public_key = public_key
-        self.private_key = private_key
+        self.private_key = Gengo.compatibletext(private_key)
         self.headers = headers
         if self.headers is None:
             self.headers = \
@@ -335,7 +336,7 @@ class Gengo(object):
                                                   separators=(',', ':'))
 
             query_hmac = hmac.new(self.private_key,
-                                  query_params['ts'],
+                                  Gengo.compatibletext(query_params['ts']),
                                   sha1)
             query_params['api_sig'] = query_hmac.hexdigest()
 
@@ -356,7 +357,7 @@ class Gengo(object):
                                             key=itemgetter(0)))
             if self.private_key is not None:
                 query_hmac = hmac.new(self.private_key,
-                                      query_params['ts'],
+                                      Gengo.compatibletext(query_params['ts']),
                                       sha1)
                 query_params['api_sig'] = query_hmac.hexdigest()
                 query_string = urlencode(query_params)
@@ -369,6 +370,13 @@ class Gengo(object):
                               # Don't know why but requests is trying to verify
                               # SSL here ...
                               verify=False)
+
+    @staticmethod
+    def compatibletext(text):
+        if sys.version_info < (3, 0, 0) or isinstance(text, bytes):
+            return text
+
+        return bytes(text, 'utf-8')
 
     @staticmethod
     def unicode2utf8(text):
