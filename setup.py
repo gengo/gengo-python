@@ -98,7 +98,7 @@ setup(
     # Metadata for PyPI.
     author='Gengo',
     author_email='api@gengo.com',
-    license='LGPL License',
+    license='New BSD License',
     url='https://github.com/gengo/gengo-python',
     keywords='gengo translation language api',
     description='Official Python library for interfacing with the Gengo API.',
