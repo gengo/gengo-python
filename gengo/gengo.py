@@ -64,19 +64,16 @@ from mockdb import api_urls, apihash
 try:
     # Python 2.6 and up
     import json
-    json  # silence pyflakes
 except ImportError:
     try:
         # Python 2.6 and below (2.4/2.5, 2.3 is not guranteed to work with
         # this library to begin with)
         import simplejson as json
-        json  # silence pyflakes
     except ImportError:
         try:
             # This case gets rarer by the day, but if we need to, we can
             # pull it from Django provided it's there.
             from django.utils import simplejson as json
-            json  # silence pyflakes
         except:
             raise Exception("gengo requires the simplejson library (or " +
                             "Python 2.6+) to work. " +
