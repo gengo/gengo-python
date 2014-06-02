@@ -1,2 +1,2 @@
 include LICENSE.txt README.md
-recursive-exclude gengo/ *.pyc
+recursive-exclude gengo *.pyc
