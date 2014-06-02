@@ -1,5 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#!/usr/bin/python
+
 # All code provided from the http://gengo.com site, such as API example code
 # and libraries, is provided under the New BSD license unless otherwise
 # noted. Details are below.
@@ -44,4 +45,4 @@ gengo = Gengo(
 
 # Think of this as a "search my jobs" method, and it becomes very
 # self-explanatory.
-print gengo.getTranslationJobs(status="accepted", count=15)
+print gengo.getTranslationJobs(status='approved', count=15)

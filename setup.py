@@ -38,7 +38,9 @@ from setuptools import setup
 from setuptools import find_packages
 from subprocess import call
 
-__version__ = '0.1.15'
+# little tricky, but this is for version number is in one place.
+__version__ = 'This value will be overridden by exec.'
+exec(open('gengo/_version.py').read())
 
 # Command based on Libcloud setup.py:
 # https://github.com/apache/libcloud/blob/trunk/setup.py
@@ -64,7 +66,7 @@ class Pep8Command(Command):
             sys.exit(1)
 
         cwd = os.getcwd()
-        retcode = call(('pep8 %s/gengo/' % (cwd)).split(' '))
+        retcode = call(('pep8 {0}/gengo/'.format(cwd)).split(' '))
         sys.exit(retcode)
 
 
@@ -93,12 +95,12 @@ setup(
     include_package_data=True,
 
     # Package dependencies.
-    install_requires=["requests == 1.2.3"],
+    install_requires=["requests == 2.2.1"],
 
     # Metadata for PyPI.
     author='Gengo',
     author_email='api@gengo.com',
-    license='LGPL License',
+    license='New BSD License',
     url='https://github.com/gengo/gengo-python',
     keywords='gengo translation language api',
     description='Official Python library for interfacing with the Gengo API.',
@@ -112,6 +114,12 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Internet'
+        'Topic :: Internet',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
     ]
 )
