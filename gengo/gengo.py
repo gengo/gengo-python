@@ -265,8 +265,12 @@ class Gengo(object):
                         if j.get('type') == 'file' and 'file_path' in j:
                             file_path = j.get('file_path')
                             mimetype = j.get('mimetype')
-                            if mimetype is None:
-                                mimetype = mimetypes.guess_type(file_path)[0]
+
+                            mimetype = mimetype if mimetype else \
+                                mimetypes.guess_type(file_path)[0]
+                            mimetype = mimetype if mimetype else \
+                                'application/octet-stream'
+
                             file_data['file_' + k] = (
                                 file_path, open(file_path, 'rb'), mimetype
                             )
