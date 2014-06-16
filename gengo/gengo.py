@@ -44,6 +44,7 @@ import re
 import copy
 import hmac
 import requests
+import mimetypes
 import sys
 
 from hashlib import sha1
