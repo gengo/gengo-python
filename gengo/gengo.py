@@ -267,8 +267,9 @@ class Gengo(object):
                             mimetype = j.get('mimetype')
                             if mimetype is None:
                                 mimetype = mimetypes.guess_type(file_path)[0]
-                            file_data['file_' + k] = (file_path,
-                                open(file_path, 'rb'), mimetype)
+                            file_data['file_' + k] = (
+                                file_path, open(file_path, 'rb'), mimetype
+                            )
                             j['file_key'] = 'file_' + k
                             del j['file_path']
 
