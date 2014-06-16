@@ -262,7 +262,11 @@ class Gengo(object):
                 for k, j in jobs.items():
                     if isinstance(j, dict):
                         if j.get('type') == 'file' and 'file_path' in j:
-                            file_data['file_' + k] = open(j['file_path'], 'rb')
+                            mimetype = j.get('mimetype')
+                            if mimetype is None:
+                                mimetype = mimetypes.guess_type(j['file_path'])[0]
+                            file_data['file_' + k] = (j['file_path'],
+                                open(j['file_path'], 'rb'), mimetype)
                             j['file_key'] = 'file_' + k
                             del j['file_path']
 
