@@ -67,7 +67,7 @@ try:
     import json
 except ImportError:
     try:
-        # Python 2.6 and below (2.4/2.5, 2.3 is not guranteed to work with
+        # Python 2.6 and below (2.4/2.5, 2.3 is not guaranteed to work with
         # this library to begin with)
         import simplejson as json
     except ImportError:
@@ -168,26 +168,16 @@ class Gengo(object):
 
         Rather than list out 9 million methods for this API, we just
         keep a table (see above) of every API endpoint and their
-        corresponding function id for this library. This pretty much
-        gives unlimited flexibility in API support - there's a slight
-        chance of a performance hit here, but if this is
-        going to be your bottleneck... well, don't use Python. ;P
+        corresponding function id for this library. This gives flexibility
+        in API support.
 
         For those who don't get what's going on here, Python classes
-        have this great feature known as __getattr__().
+        have a feature known as __getattr__().
         It's called when an attribute that was called on an object
-        doesn't seem to exist - since it doesn't exist,
+        doesn't seem to exist. Since it doesn't exist,
         we can take over and find the API method in our table. We then
         return a function that downloads and parses
         what we're looking for, based on the key/values passed in.
-
-        I'll hate myself for saying this, but this is heavily inspired
-        by Ruby's "method_missing".
-
-        Note: I'm largely borrowing this technique from another API
-        library/wrapper I've written in the past (Twython).
-        If you happen to read both sources and find the same text...
-        well, that's why. ;)
         """
         def get(self, **kwargs):
             # Grab the (hopefully) existing method 'definition' to fire off
@@ -302,8 +292,8 @@ class Gengo(object):
                     raise GengoError(concatted_msg,
                                      results['err'].itervalues().
                                      next()[0]['code'])
-                raise GengoError(results['err']['msg'],
-                                 results['err']['code'])
+                raise GengoError(results['err'].get('msg'),
+                                 results['err'].get('code'))
 
             # If not, return the results
             return results
