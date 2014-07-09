@@ -271,6 +271,7 @@ class Gengo(object):
             # fork here...
             response = self.signAndRequestAPILatest(fn, base, query_params,
                                                     post_data, file_data)
+            response.raise_for_status()
             response.connection.close()
             try:
                 results = response.json()
