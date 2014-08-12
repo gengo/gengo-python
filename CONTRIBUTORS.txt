@@ -1,0 +1,17 @@
+Contributors
+============
+
+Thanks to the following contributors (in alphabetical order):
+
+ * Andrea Belvedere
+ * Corey Farwell
+ * Herman Schaaf
+ * Issam Zeibak
+ * Keisuke Uchimura
+ * Konstantinos Bairaktaris
+ * Matthew Romaine
+ * Naruse Motoki
+ * Ryan McGrath (Original author)
+ * Shawn Smith
+ * Toshiaki Takahashi
+ * Yosuke Tomita
