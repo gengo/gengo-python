@@ -10,7 +10,7 @@ Thanks to the following contributors (in alphabetical order):
  * Keisuke Uchimura
  * Konstantinos Bairaktaris
  * Matthew Romaine
- * Naruse Motoki
+ * Motoki Naruse
  * Ryan McGrath (Original author)
  * Shawn Smith
  * Toshiaki Takahashi
