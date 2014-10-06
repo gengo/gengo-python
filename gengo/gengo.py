@@ -277,6 +277,10 @@ class Gengo(object):
             except TypeError:
                 # requests<1.0
                 results = response.json
+            except ValueError:
+                if self.debug is True:
+                    print("Invalid JSON response:\n", response.text)
+                raise GengoError("Internal Server Error", 1)
 
             # See if we got any errors back that we can cleanly raise on
             if 'opstat' in results and results['opstat'] != 'ok':
