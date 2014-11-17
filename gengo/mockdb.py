@@ -123,7 +123,7 @@ apihash = {
         'method': 'GET',
     },
     'getTranslationJobRevision': {
-        'url': '/translate/job/{{id}}/revisions/{{revision_id}}',
+        'url': '/translate/job/{{id}}/revision/{{revision_id}}',
         'method': 'GET',
     },
 
