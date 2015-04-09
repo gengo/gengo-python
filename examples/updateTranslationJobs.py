@@ -6,7 +6,7 @@
 # noted. Details are below.
 #
 # New BSD License
-# Copyright (c) 2009-2012, myGengo, Inc.
+# Copyright (c) 2009-2015, Gengo, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -18,7 +18,7 @@
 # Redistributions in binary form must reproduce the above copyright notice,
 # this list of conditions and the following disclaimer in the documentation
 # and/or other materials provided with the distribution.
-# Neither the name of myGengo, Inc. nor the names of its contributors may
+# Neither the name of Gengo, Inc. nor the names of its contributors may
 # be used to endorse or promote products derived from this software
 # without specific prior written permission.
 #
@@ -55,27 +55,42 @@ gengo.updateTranslationJobs(action={
 gengo.updateTranslationJobs(action={
     'action': 'revise',
     'reason': 'This job is total bananas',
-    'job_ids': [{'job_id': 556, 'comment': 'Please change banana to gorilla'},
-                {'job_id': 553, 'comment': 'Please change banana to monkey'}],
+    'job_ids': [{
+    				'job_id': 556,
+    				'comment': 'Please change banana to gorilla'
+    			},
+                {
+                	'job_id': 553,
+                	'comment': 'Please change banana to monkey'
+                }],
 })
 
 # Reject a group of jobs
 gengo.updateTranslationJobs(action={
     'action': 'reject',
-    'job_ids': [{'job_id': 630,
-                 'reason': 'quality',
-                 'comment': 'This sentence should be in the past tense',
-                 'captcha': 'AAAA'},
-                {'job_id': 631,
-                 'reason': 'quality',
-                 'comment': 'This should have be capitalized',
-                 'captcha': 'BBBB'}
-                ],
+    'job_ids': [{
+    			    'job_id': 630,
+                    'reason': 'quality',
+                    'comment': 'This sentence should be in the past tense',
+                    'captcha': 'AAAA'
+                },
+                {
+                    'job_id': 631,
+                    'reason': 'quality',
+                    'comment': 'This should have be capitalized',
+                    'captcha': 'BBBB'
+                }],
 })
 
 # Approve a group of jobs
 gengo.updateTranslationJobs(action={
   'action': 'approve',
-  'job_ids': [{'job_id': 1077, 'comment': 'Keep up the good work'},
-              {'job_id': 629, 'comment': 'Great job!'}],
+  'job_ids': [{
+  			      'job_id': 1077,
+  				  'comment': 'Keep up the good work'
+  			  },
+              {
+              	  'job_id': 629,
+              	  'comment': 'Great job!'
+              }],
 })
