@@ -80,6 +80,12 @@ apihash = {
         'method': 'PUT',
     },
 
+    # Updating an existing translation requests.
+    'updateTranslationJobs': {
+        'url': '/translate/jobs',
+        'method': 'PUT',
+    },
+
     # Viewing existing translation requests.
     'getTranslationJob': {
         'url': '/translate/job/{{id}}',
