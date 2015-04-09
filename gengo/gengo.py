@@ -51,8 +51,6 @@ except ImportError:
 from time import time
 from operator import itemgetter
 
-
-
 # There are some special setups (like a Django application) where
 # simplejson exists. Past Python 2.6, this should never
 # cause any problems.
