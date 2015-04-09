@@ -32,6 +32,11 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# mockdb is a file with a dictionary of every API endpoint for Gengo.
+from __future__ import print_function
+from mockdb import api_urls, apihash
+from _version import __version__
+
 import re
 import copy
 import hmac
@@ -46,10 +51,7 @@ except ImportError:
 from time import time
 from operator import itemgetter
 
-# mockdb is a file with a dictionary of every API endpoint for Gengo.
-from mockdb import api_urls, apihash
-from _version import __version__
-from __future__ import print_function
+
 
 # There are some special setups (like a Django application) where
 # simplejson exists. Past Python 2.6, this should never
