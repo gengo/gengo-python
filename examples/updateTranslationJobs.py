@@ -38,10 +38,59 @@ from gengo import Gengo
 
 # Get an instance of Gengo to work with...
 gengo = Gengo(
-    public_key='your_public_key',
-    private_key='your_private_key',
-    sandbox=True,
+    public_key='foo',
+    private_key='bar',
+    sandbox=False,
+    debug=True,
+    api_url='http://api.gengo.dev/v2'
 )
 
-# Get every revision on a job. Returns a data set, iterate if need be!
-print gengo.getTranslationJobRevisions(id=42)
+# Archive all jobs
+gengo.updateTranslationJobs(action={
+    'job_ids': [4020, 1082],
+    'action': 'archive'
+})
+
+# Revise a group of jobs
+gengo.updateTranslationJobs(action={
+    'action': 'revise',
+    'reason': 'This job is total bananas',
+    'job_ids': [{
+    				'job_id': 556,
+    				'comment': 'Please change banana to gorilla'
+    			},
+                {
+                	'job_id': 553,
+                	'comment': 'Please change banana to monkey'
+                }],
+})
+
+# Reject a group of jobs
+gengo.updateTranslationJobs(action={
+    'action': 'reject',
+    'job_ids': [{
+    			    'job_id': 630,
+                    'reason': 'quality',
+                    'comment': 'This sentence should be in the past tense',
+                    'captcha': 'AAAA'
+                },
+                {
+                    'job_id': 631,
+                    'reason': 'quality',
+                    'comment': 'This should have be capitalized',
+                    'captcha': 'BBBB'
+                }],
+})
+
+# Approve a group of jobs
+gengo.updateTranslationJobs(action={
+  'action': 'approve',
+  'job_ids': [{
+  			      'job_id': 1077,
+  				  'comment': 'Keep up the good work'
+  			  },
+              {
+              	  'job_id': 629,
+              	  'comment': 'Great job!'
+              }],
+})

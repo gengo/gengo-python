@@ -32,13 +32,10 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-"""
-Official Python library for interfacing with the Gengo API.
-"""
-
+# mockdb is a file with a dictionary of every API endpoint for Gengo.
 from __future__ import print_function
-
-__author__ = 'Gengo <api@gengo.com>'
+from mockdb import api_urls, apihash
+from _version import __version__
 
 import re
 import copy
@@ -46,7 +43,6 @@ import hmac
 import requests
 import mimetypes
 import sys
-
 from hashlib import sha1
 try:
     from urllib import urlencode, quote
@@ -54,10 +50,6 @@ except ImportError:
     from urllib.parse import urlencode, quote
 from time import time
 from operator import itemgetter
-
-# mockdb is a file with a dictionary of every API endpoint for Gengo.
-from mockdb import api_urls, apihash
-from _version import __version__
 
 # There are some special setups (like a Django application) where
 # simplejson exists. Past Python 2.6, this should never
@@ -79,6 +71,13 @@ except ImportError:
             raise Exception("gengo requires the simplejson library (or " +
                             "Python 2.6+) to work. " +
                             "http://www.undefined.org/python/")
+
+
+"""
+Official Python library for interfacing with the Gengo API.
+"""
+
+__author__ = 'Gengo <api@gengo.com>'
 
 
 class GengoError(Exception):
