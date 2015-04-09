@@ -53,20 +53,27 @@ gengo.updateTranslationJobs(action={
 
 # Revise a group of jobs
 gengo.updateTranslationJobs(action={
-  'action': 'revise',
-  'reason': 'This job is total bananas',
-  'job_ids': [{'job_id': 556, 'comment': 'Please change banana to gorilla'},
-            {'job_id': 553, 'comment': 'Please change banana to monkey'}],
+    'action': 'revise',
+    'reason': 'This job is total bananas',
+    'job_ids': [{'job_id': 556, 'comment': 'Please change banana to gorilla'},
+                {'job_id': 553, 'comment': 'Please change banana to monkey'}],
 })
 
-## Reject a group of jobs
+# Reject a group of jobs
 gengo.updateTranslationJobs(action={
-  'action': 'reject',
-  'job_ids': [{'job_id': 630, 'reason': 'quality', 'comment': 'This sentence should be in the past tense', 'captcha': 'AAAA'},
-              {'job_id': 631, 'reason': 'quality', 'comment': 'This should have be capitalized', 'captcha': 'BBBB'}],
+    'action': 'reject',
+    'job_ids': [{'job_id': 630,
+                 'reason': 'quality',
+                 'comment': 'This sentence should be in the past tense',
+                 'captcha': 'AAAA'},
+                {'job_id': 631,
+                 'reason': 'quality',
+                 'comment': 'This should have be capitalized',
+                 'captcha': 'BBBB'}
+                ],
 })
 
-## Approve a group of jobs
+# Approve a group of jobs
 gengo.updateTranslationJobs(action={
   'action': 'approve',
   'job_ids': [{'job_id': 1077, 'comment': 'Keep up the good work'},
