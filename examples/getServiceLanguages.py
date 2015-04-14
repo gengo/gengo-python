@@ -41,6 +41,7 @@ gengo = Gengo(
     public_key='your public key',
     private_key='your private key',
     sandbox=False,
+    debug=True
 )
 
 # Pretty-print a list of every supported language

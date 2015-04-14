@@ -46,4 +46,4 @@ gengo = Gengo(
 )
 # Useful for figuring out which language pairs are supported,
 # and also for seeing individual `unit_price`s
-print gengo.getServiceLanguageMatrix()
+gengo.getServiceLanguageMatrix()

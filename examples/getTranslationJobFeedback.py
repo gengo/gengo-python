@@ -41,8 +41,9 @@ gengo = Gengo(
     public_key='your_public_key',
     private_key='your_private_key',
     sandbox=True,
+    debug=True
 )
 
 # Very much like grabbing a comment history. Returns a data set, iterate
 # if you want specifics!
-print gengo.getTranslationJobFeedback(id=42)
+gengo.getTranslationJobFeedback(id=42)

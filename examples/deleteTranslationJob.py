@@ -41,6 +41,7 @@ gengo = Gengo(
     public_key='your_public_key',
     private_key='your_private_key',
     sandbox=True,
+    debug=True
 )
 
 # Delete a job!
