@@ -45,4 +45,4 @@ gengo = Gengo(
 )
 
 # Delete a job!
-gengo.deleteTranslationJob(id=42)
+print(gengo.deleteTranslationJob(id=42))

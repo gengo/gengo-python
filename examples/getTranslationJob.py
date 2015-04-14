@@ -46,4 +46,4 @@ gengo = Gengo(
 
 # Get the job in question; pre_mt set to 1 will give you a machine translation
 # if the human translation isn't available yet. ;)
-gengo.getTranslationJob(id=42, pre_mt=1)
+print(gengo.getTranslationJob(id=42, pre_mt=1))

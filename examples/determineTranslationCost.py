@@ -76,4 +76,4 @@ jobs_data = {
 }
 
 # Post over our two jobs, use the same translator for both, don't pay for them
-gengo.determineTranslationCost(jobs=jobs_data)
+print(gengo.determineTranslationCost(jobs=jobs_data))

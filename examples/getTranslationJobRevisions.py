@@ -45,4 +45,4 @@ gengo = Gengo(
 )
 
 # Get every revision on a job. Returns a data set, iterate if need be!
-gengo.getTranslationJobRevisions(id=42)
+print(gengo.getTranslationJobRevisions(id=42))

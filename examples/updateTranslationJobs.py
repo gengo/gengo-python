@@ -82,7 +82,7 @@ gengo.updateTranslationJobs(action={
 })
 
 # Approve a group of jobs
-gengo.updateTranslationJobs(action={
+print(gengo.updateTranslationJobs(action={
   'action': 'approve',
   'job_ids': [{
   			      'job_id': 1077,
@@ -90,4 +90,4 @@ gengo.updateTranslationJobs(action={
               {
               	  'job_id': 629,
               }],
-})
+}))

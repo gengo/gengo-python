@@ -45,4 +45,4 @@ gengo = Gengo(
 )
 
 # Print the account stats...
-gengo.getAccountStats()
+print(gengo.getAccountStats())

@@ -46,6 +46,6 @@ gengo = Gengo(
 
 # Post a comment on a specific job; perhaps you have an update for the
 # translator or something of the sort.
-gengo.postTranslationJobComment(id=42, comment={
+print(gengo.postTranslationJobComment(id=42, comment={
     'body': 'I love lamp!',
-})
+}))

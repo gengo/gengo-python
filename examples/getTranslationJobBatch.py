@@ -46,4 +46,4 @@ gengo = Gengo(
 
 # If you have one job id, but want to get the id of every other job that
 # was submitted with it, you can do this.
-gengo.getTranslationJobBatch(id=42)
+print(gengo.getTranslationJobBatch(id=42))

@@ -47,4 +47,4 @@ gengo = Gengo(
 # Get all the comments on a specific job.
 # Note that this returns a data set, so while we just print it below, you'll
 # inevitably want to iterate over it and such.
-gengo.getTranslationJobComments(id=42)
+print(gengo.getTranslationJobComments(id=42))
