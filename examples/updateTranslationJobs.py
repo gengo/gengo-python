@@ -38,11 +38,10 @@ from gengo import Gengo
 
 # Get an instance of Gengo to work with...
 gengo = Gengo(
-    public_key='foo',
-    private_key='bar',
-    sandbox=False,
-    debug=True,
-    api_url='http://api.gengo.dev/v2'
+    public_key='your_public_key',
+    private_key='your_private_key',
+    sandbox=True,
+    debug=True
 )
 
 # Archive all jobs
@@ -55,39 +54,36 @@ gengo.updateTranslationJobs(action={
 gengo.updateTranslationJobs(action={
     'action': 'revise',
     'job_ids': [{
-    				'job_id': 556,
-    				'comment': 'Please change the word banana to gorilla'
-    			},
-                {
-                	'job_id': 553,
-                	'comment': 'Please change the word banana to monkey'
-                }],
+        'job_id': 556,
+        'comment': 'Please change the word banana to gorilla'
+    }, {
+        'job_id': 553,
+        'comment': 'Please change the word banana to monkey'
+    }],
 })
 
 # Reject a group of jobs
 gengo.updateTranslationJobs(action={
     'action': 'reject',
     'job_ids': [{
-    			    'job_id': 630,
-                    'reason': 'quality',
-                    'comment': 'This sentence should be in the past tense',
-                    'captcha': 'AAAA'
-                },
-                {
-                    'job_id': 631,
-                    'reason': 'quality',
-                    'comment': 'This should have be capitalized',
-                    'captcha': 'BBBB'
-                }],
+        'job_id': 630,
+        'reason': 'quality',
+        'comment': 'This sentence should be in the past tense',
+        'captcha': 'AAAA'
+    }, {
+        'job_id': 631,
+        'reason': 'quality',
+        'comment': 'This should have be capitalized',
+        'captcha': 'BBBB'
+    }],
 })
 
 # Approve a group of jobs
 print(gengo.updateTranslationJobs(action={
   'action': 'approve',
   'job_ids': [{
-  			      'job_id': 1077,
-  			  },
-              {
-              	  'job_id': 629,
-              }],
+      'job_id': 1077,
+  }, {
+      'job_id': 629,
+  }],
 }))
