@@ -41,4 +41,4 @@ from gengo import Gengo
 # that your data is utf-8 encoded before submitting it to Gengo;
 # if your method calls fail, this is probably the first thing you should
 # check!
-Gengo.unicode2utf8("私は")
+print(Gengo.unicode2utf8("私は"))

@@ -41,8 +41,9 @@ gengo = Gengo(
     public_key='your_public_key',
     private_key='your_private_key',
     sandbox=True,
+    debug=True
 )
 
 # Grab a specific revision - you could liken this to querying version control
 # on the Gengo side. :)
-print gengo.getTranslationJobRevision(id=42, revision_id=1)
+print(gengo.getTranslationJobRevision(id=42, revision_id=1))

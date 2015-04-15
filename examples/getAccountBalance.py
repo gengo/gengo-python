@@ -45,4 +45,4 @@ gengo = Gengo(
 )
 
 # Retrieve and print the account balance.
-print gengo.getAccountBalance()
+print(gengo.getAccountBalance())

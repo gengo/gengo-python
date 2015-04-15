@@ -41,10 +41,11 @@ gengo = Gengo(
     public_key='your_public_key',
     private_key='your_private_key',
     sandbox=True,
+    debug=True
 )
 
 # Post a comment on a specific job; perhaps you have an update for the
 # translator or something of the sort.
-gengo.postTranslationJobComment(id=42, comment={
+print(gengo.postTranslationJobComment(id=42, comment={
     'body': 'I love lamp!',
-})
+}))

@@ -46,4 +46,4 @@ gengo = Gengo(
 )
 # Useful for figuring out what language paths are supported - e.g, if
 # we use 'en' below, we'll see what languages we can translate TO from 'en'.
-print gengo.getServiceLanguagePairs(lc_src='en')
+print(gengo.getServiceLanguagePairs(lc_src='en'))

@@ -41,9 +41,10 @@ gengo = Gengo(
     public_key='your_public_key',
     private_key='your_private_key',
     sandbox=True,
+    debug=True
 )
 
 # Get all the comments on a specific job.
 # Note that this returns a data set, so while we just print it below, you'll
 # inevitably want to iterate over it and such.
-print gengo.getTranslationJobComments(id=42)
+print(gengo.getTranslationJobComments(id=42))

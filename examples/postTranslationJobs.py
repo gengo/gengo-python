@@ -41,6 +41,7 @@ gengo = Gengo(
     public_key='your_public_key',
     private_key='your_private_key',
     sandbox=True,
+    debug=True
 )
 
 # This is an exhaustive view of this object; chances are your code will never
@@ -79,4 +80,4 @@ data = {
 }
 
 # And now we post them over...
-gengo.postTranslationJobs(jobs=data)
+print(gengo.postTranslationJobs(jobs=data))

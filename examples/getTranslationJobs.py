@@ -41,8 +41,9 @@ gengo = Gengo(
     public_key='your_public_key',
     private_key='your_private_key',
     sandbox=True,
+    debug=True
 )
 
 # Think of this as a "search my jobs" method, and it becomes very
 # self-explanatory.
-print gengo.getTranslationJobs(status='approved', count=15)
+print(gengo.getTranslationJobs(status='approved', count=15))

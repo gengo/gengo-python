@@ -54,14 +54,13 @@ gengo.updateTranslationJobs(action={
 # Revise a group of jobs
 gengo.updateTranslationJobs(action={
     'action': 'revise',
-    'reason': 'This job is total bananas',
     'job_ids': [{
     				'job_id': 556,
-    				'comment': 'Please change banana to gorilla'
+    				'comment': 'Please change the word banana to gorilla'
     			},
                 {
                 	'job_id': 553,
-                	'comment': 'Please change banana to monkey'
+                	'comment': 'Please change the word banana to monkey'
                 }],
 })
 
@@ -83,14 +82,12 @@ gengo.updateTranslationJobs(action={
 })
 
 # Approve a group of jobs
-gengo.updateTranslationJobs(action={
+print(gengo.updateTranslationJobs(action={
   'action': 'approve',
   'job_ids': [{
   			      'job_id': 1077,
-  				  'comment': 'Keep up the good work'
   			  },
               {
               	  'job_id': 629,
-              	  'comment': 'Great job!'
               }],
-})
+}))

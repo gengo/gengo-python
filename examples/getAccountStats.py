@@ -41,7 +41,8 @@ gengo = Gengo(
     public_key='your_public_key',
     private_key='your_private_key',
     sandbox=False,
+    debug=True
 )
 
 # Print the account stats...
-print gengo.getAccountStats()
+print(gengo.getAccountStats())
