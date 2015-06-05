@@ -75,7 +75,7 @@ data = {
             'custom_data': 'your optional custom data, limited to 1kb.'  # OPTIONAL
         },
     },
-    'comment': 'The best is yet to come',
+    'comment': 'Please make sure each translation sounds formal.',
     'process': 1,  # OPTIONAL. 1 (true, default) / 0 (false). Whether to pay for the job(s) and make them available for translation.
     'as_group': 1,  # OPTIONAL. 1 (true) / 0 (false, default). Whether all jobs in this group should be done by one translator.
 }
