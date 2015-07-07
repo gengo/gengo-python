@@ -6,7 +6,7 @@ Only important changes are mentioned below. See `commit log <https://github.com/
 v0.1.24 (2015-07-07)
 -------------------
 
-* [Fix] Feature `#53 <https://github.com/gengo/gengo-python/pull/53>`_ Added GET and POST endpoints for Order comments
+* [Feature] `#53 <https://github.com/gengo/gengo-python/pull/53>`_ Added GET and POST endpoints for Order comments
 
 v0.1.17 (2014-06-18)
 -------------------
