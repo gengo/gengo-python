@@ -177,6 +177,17 @@ apihash = {
         'method': 'DELETE',
     },
 
+    # Deal with comments and other metadata about an Order in
+    # progress.
+    'postOrderComment': {
+        'url': '/comments/order/{{id}}',
+        'method': 'POST',
+    },
+    'getOrderComments': {
+        'url': '/comments/order/{{id}}',
+        'method': 'GET',
+    },
+
     # get list of preferred translators
     'getPreferredTranslators': {
         'url': '/account/preferred_translators',
