@@ -180,11 +180,11 @@ apihash = {
     # Deal with comments and other metadata about an Order in
     # progress.
     'postOrderComment': {
-        'url': '/comments/order/{{id}}',
+        'url': '/translate/order/{{id}}/comment',
         'method': 'POST',
     },
     'getOrderComments': {
-        'url': '/comments/order/{{id}}',
+        'url': '/translate/order/{{id}}/comments',
         'method': 'GET',
     },
 
