@@ -186,6 +186,44 @@ class TestPostTranslationJobComment(unittest.TestCase):
             mockdb.apihash['postTranslationJobComment']['url']
             .replace('{{id}}', '123'))
 
+class TestPostTranslationJobCommentWithAttachments(unittest.TestCase):
+
+    """
+    Tests the flow of creating a job, updating one of them, getting the
+    details, and then deleting the jobs.
+    """
+    def setUp(self):
+        """
+        Creates the initial batch of jobs for the other test functions here
+        to operate on.
+        """
+        self.gengo = Gengo(public_key=API_PUBKEY,
+                           private_key=API_PRIVKEY,
+                           sandbox=True)
+
+        from gengo import requests
+        self.json_mock = mock.Mock()
+        self.json_mock.json.return_value = {'opstat': 'ok'}
+        self.getMock = RequestsMock(return_value=self.json_mock)
+        self.requestsPatch = mock.patch.object(requests, 'post', self.getMock)
+        self.requestsPatch.start()
+
+    def tearDown(self):
+        self.requestsPatch.stop()
+
+    def test_postJobCommentWithAttachments(self):
+        """
+        Tests posting a comment with attachments to a job.
+        """
+        posted_comment = self.gengo.postTranslationJobCommentWithAttachments(
+            id=123,
+            comment={'body': 'I love lamp oh mai gawd'},
+            attachment=['./requirements.txt', './README.md'])
+        self.assertEqual(posted_comment['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            mockdb.apihash['postTranslationJobCommentWithAttachments']['url']
+            .replace('{{id}}', '123'))
+
 
 class TestTranslationJobFlowFileUpload(unittest.TestCase):
 
