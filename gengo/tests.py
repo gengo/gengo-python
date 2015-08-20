@@ -186,6 +186,7 @@ class TestPostTranslationJobComment(unittest.TestCase):
             mockdb.apihash['postTranslationJobComment']['url']
             .replace('{{id}}', '123'))
 
+
 class TestPostTranslationJobCommentWithAttachments(unittest.TestCase):
 
     """
