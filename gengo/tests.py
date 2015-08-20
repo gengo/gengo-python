@@ -222,8 +222,8 @@ class TestPostTranslationJobCommentWithAttachments(unittest.TestCase):
                 'body': 'I love lamp oh mai gawd'
             },
             attachment=[
-                '../examples/testfiles/test_file1.txt',
-                '../examples/testfiles/test_file2.txt'
+                './examples/testfiles/test_file1.txt',
+                './examples/testfiles/test_file2.txt'
             ]
         )
         self.assertEqual(posted_comment['opstat'], 'ok')
