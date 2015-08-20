@@ -46,10 +46,13 @@ gengo = Gengo(
 
 # Post a comment with attachments on a specific job; perhaps you have some context for the
 # translator or something of the sort.
-print(gengo.postTranslationJobCommentWithAttachments(id=42, comment={
-    'body': 'I love lamp!',
-},
-attachment=[
-    './testfiles/test_file1.txt',
-    './testfiles/test_file2.txt,
-]))
+print(gengo.postTranslationJobCommentWithAttachments(
+    id=42,
+    comment={
+        'body': 'I love lamp!',
+    },
+    attachment=[
+        './testfiles/test_file1.txt',
+        './testfiles/test_file2.txt',
+    ]
+))
