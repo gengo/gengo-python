@@ -51,7 +51,7 @@ print(gengo.postTranslationJobCommentWithAttachments(
     comment={
         'body': 'I love lamp!',
     },
-    attachment=[
+    attachments=[
         './testfiles/test_file1.txt',
         './testfiles/test_file2.txt',
     ]

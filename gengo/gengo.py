@@ -212,8 +212,8 @@ class Gengo(object):
                 post_data['action'] = kwargs.pop('action')
             if 'job_ids' in kwargs:
                 post_data['job_ids'] = kwargs.pop('job_ids')
-            if 'attachment' in kwargs:
-                post_data['attachment'] = kwargs.pop('attachment')
+            if 'attachments' in kwargs:
+                post_data['attachments'] = kwargs.pop('attachments')
 
             # Set up a true base URL, abstracting away the need to care
             # about the sandbox mode or API versioning at this stage.
@@ -272,12 +272,12 @@ class Gengo(object):
 
             # If any attachments then modify base url to include
             # private_key and file_data to include attachments as multipart
-            if 'attachment' in post_data:
+            if 'attachments' in post_data:
                 file_data = [
                     ('json', json.dumps(post_data['comment'])),
                 ]
 
-                attachments = post_data['attachment']
+                attachments = post_data['attachments']
                 for a in attachments:
                     file_data.append(('document', open(a, 'rb')))
 
