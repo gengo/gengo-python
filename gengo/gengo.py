@@ -273,7 +273,6 @@ class Gengo(object):
             # If any attachments then modify base url to include
             # private_key and file_data to include attachments as multipart
             if 'attachment' in post_data:
-                base += '?token=' + self.private_key
                 file_data = [
                     ('json', json.dumps(post_data['comment'])),
                 ]
