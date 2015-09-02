@@ -116,10 +116,6 @@ apihash = {
         'url': '/translate/job/{{id}}/comment',
         'method': 'POST',
     },
-    'postTranslationJobCommentWithAttachments': {
-        'url': '/comments/job/{{id}}',
-        'method': 'POST',
-    },
     'getTranslationJobComments': {
         'url': '/translate/job/{{id}}/comments',
         'method': 'GET',

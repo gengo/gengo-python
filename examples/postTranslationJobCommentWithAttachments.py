@@ -46,7 +46,7 @@ gengo = Gengo(
 
 # Post a comment with attachments on a specific job; perhaps you have some context for the
 # translator or something of the sort.
-print(gengo.postTranslationJobCommentWithAttachments(
+print(gengo.postTranslationJobComment(
     id=42,
     comment={
         'body': 'I love lamp!',
