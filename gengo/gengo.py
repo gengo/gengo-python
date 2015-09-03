@@ -272,6 +272,7 @@ class Gengo(object):
 
             # If any attachments then modify base url to include
             # private_key and file_data to include attachments as multipart
+            files = []
             if 'attachments' in post_data:
                 file_data = [
                     ('json', json.dumps(post_data['comment'])),
@@ -279,13 +280,20 @@ class Gengo(object):
 
                 attachments = post_data['attachments']
                 for a in attachments:
-                    file_data.append(('document', open(a, 'rb')))
+                    f = open(a, 'rb')
+                    files.append(f)
+                    file_data.append(('document', f))
 
-            # If any further APIs require their own special signing needs,
-            # fork here...
-            response = self.signAndRequestAPILatest(fn, base, query_params,
+            try:
+                # If any further APIs require their own special signing needs,
+                # fork here...
+                response = self.signAndRequestAPILatest(fn, base, query_params,
                                                     post_data, file_data)
-            response.connection.close()
+                response.connection.close()
+            finally:
+                for f in files:
+                    f.close()
+
             try:
                 results = response.json()
             except TypeError:
