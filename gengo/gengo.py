@@ -288,7 +288,7 @@ class Gengo(object):
                 # If any further APIs require their own special signing needs,
                 # fork here...
                 response = self.signAndRequestAPILatest(fn, base, query_params,
-                                                    post_data, file_data)
+                                                        post_data, file_data)
                 response.connection.close()
             finally:
                 for f in files:
