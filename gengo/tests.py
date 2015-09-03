@@ -216,19 +216,19 @@ class TestPostTranslationJobCommentWithAttachments(unittest.TestCase):
         """
         Tests posting a comment with attachments to a job.
         """
-        posted_comment = self.gengo.postTranslationJobCommentWithAttachments(
+        posted_comment = self.gengo.postTranslationJobComment(
             id=123,
             comment={
                 'body': 'I love lamp oh mai gawd'
             },
-            attachment=[
+            attachments=[
                 './examples/testfiles/test_file1.txt',
                 './examples/testfiles/test_file2.txt'
             ]
         )
         self.assertEqual(posted_comment['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['postTranslationJobCommentWithAttachments']['url']
+            mockdb.apihash['postTranslationJobComment']['url']
             .replace('{{id}}', '123'))
 
 
