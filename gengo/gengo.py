@@ -212,6 +212,8 @@ class Gengo(object):
                 post_data['action'] = kwargs.pop('action')
             if 'job_ids' in kwargs:
                 post_data['job_ids'] = kwargs.pop('job_ids')
+            if 'attachments' in kwargs:
+                post_data['attachments'] = kwargs.pop('attachments')
 
             # Set up a true base URL, abstracting away the need to care
             # about the sandbox mode or API versioning at this stage.
@@ -268,11 +270,30 @@ class Gengo(object):
                             j['file_key'] = 'file_' + k
                             del j['file_path']
 
-            # If any further APIs require their own special signing needs,
-            # fork here...
-            response = self.signAndRequestAPILatest(fn, base, query_params,
-                                                    post_data, file_data)
-            response.connection.close()
+            # If any attachments then modify base url to include
+            # private_key and file_data to include attachments as multipart
+            files = []
+            if 'attachments' in post_data:
+                file_data = [
+                    ('json', json.dumps(post_data['comment'])),
+                ]
+
+                attachments = post_data['attachments']
+                for a in attachments:
+                    f = open(a, 'rb')
+                    files.append(f)
+                    file_data.append(('document', f))
+
+            try:
+                # If any further APIs require their own special signing needs,
+                # fork here...
+                response = self.signAndRequestAPILatest(fn, base, query_params,
+                                                        post_data, file_data)
+                response.connection.close()
+            finally:
+                for f in files:
+                    f.close()
+
             try:
                 results = response.json()
             except TypeError:
