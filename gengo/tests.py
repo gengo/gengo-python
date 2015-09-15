@@ -221,7 +221,7 @@ class TestPostTranslationJobCommentWithAttachments(unittest.TestCase):
             comment={
                 'body': 'I love lamp oh mai gawd'
             },
-            attachments=[
+            files=[
                 './examples/testfiles/test_file1.txt',
                 './examples/testfiles/test_file2.txt'
             ]
