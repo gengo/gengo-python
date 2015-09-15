@@ -212,6 +212,8 @@ class Gengo(object):
                 post_data['action'] = kwargs.pop('action')
             if 'job_ids' in kwargs:
                 post_data['job_ids'] = kwargs.pop('job_ids')
+            if 'files' in kwargs:
+                post_data['files'] = kwargs.pop('files')
             if 'attachments' in kwargs:
                 post_data['attachments'] = kwargs.pop('attachments')
 
@@ -270,19 +272,19 @@ class Gengo(object):
                             j['file_key'] = 'file_' + k
                             del j['file_path']
 
-            # If any attachments then modify base url to include
-            # private_key and file_data to include attachments as multipart
-            files = []
-            if 'attachments' in post_data:
+            # If any files then modify base url to include
+            # private_key and file_data to include files as multipart
+            tmpFiles = []
+            if 'files' in post_data:
                 file_data = [
-                    ('json', json.dumps(post_data['comment'])),
+                    ('body', post_data['comment']['body']),
                 ]
 
-                attachments = post_data['attachments']
-                for a in attachments:
+                files = post_data['files']
+                for a in files:
                     f = open(a, 'rb')
-                    files.append(f)
-                    file_data.append(('document', f))
+                    tmpFiles.append(f)
+                    file_data.append(('files', f))
 
             try:
                 # If any further APIs require their own special signing needs,
@@ -291,7 +293,7 @@ class Gengo(object):
                                                         post_data, file_data)
                 response.connection.close()
             finally:
-                for f in files:
+                for f in tmpFiles:
                     f.close()
 
             try:
