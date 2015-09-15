@@ -274,7 +274,7 @@ class Gengo(object):
 
             # If any files then modify base url to include
             # private_key and file_data to include files as multipart
-            tmpFiles = []
+            tmp_files = []
             if 'files' in post_data:
                 file_data = [
                     ('body', post_data['comment']['body']),
@@ -283,7 +283,7 @@ class Gengo(object):
                 files = post_data['files']
                 for a in files:
                     f = open(a, 'rb')
-                    tmpFiles.append(f)
+                    tmp_files.append(f)
                     file_data.append(('files', f))
 
             try:
@@ -293,7 +293,7 @@ class Gengo(object):
                                                         post_data, file_data)
                 response.connection.close()
             finally:
-                for f in tmpFiles:
+                for f in tmp_files:
                     f.close()
 
             try:
