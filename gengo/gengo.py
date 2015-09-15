@@ -272,7 +272,8 @@ class Gengo(object):
 
             try:
                 # If any file_attachments then modify base url to include
-                # private_key and file_data to include file_attachments as multipart
+                # private_key and file_data to include file_attachments as
+                # multipart.
                 tmp_files = []
                 if 'file_attachments' in post_data:
                     file_data = [
