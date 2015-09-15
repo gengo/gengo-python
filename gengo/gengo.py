@@ -272,21 +272,21 @@ class Gengo(object):
                             j['file_key'] = 'file_' + k
                             del j['file_path']
 
-            # If any files then modify base url to include
-            # private_key and file_data to include files as multipart
-            tmp_files = []
-            if 'files' in post_data:
-                file_data = [
-                    ('body', post_data['comment']['body']),
-                ]
-
-                files = post_data['files']
-                for a in files:
-                    f = open(a, 'rb')
-                    tmp_files.append(f)
-                    file_data.append(('files', f))
-
             try:
+                # If any files then modify base url to include
+                # private_key and file_data to include files as multipart
+                tmp_files = []
+                if 'files' in post_data:
+                    file_data = [
+                        ('body', post_data['comment']['body']),
+                    ]
+
+                    files = post_data['files']
+                    for a in files:
+                        f = open(a, 'rb')
+                        tmp_files.append(f)
+                        file_data.append(('files', f))
+
                 # If any further APIs require their own special signing needs,
                 # fork here...
                 response = self.signAndRequestAPILatest(fn, base, query_params,
