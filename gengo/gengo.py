@@ -212,10 +212,8 @@ class Gengo(object):
                 post_data['action'] = kwargs.pop('action')
             if 'job_ids' in kwargs:
                 post_data['job_ids'] = kwargs.pop('job_ids')
-            if 'files' in kwargs:
-                post_data['files'] = kwargs.pop('files')
-            if 'attachments' in kwargs:
-                post_data['attachments'] = kwargs.pop('attachments')
+            if 'file_attachments' in kwargs:
+                post_data['file_attachments'] = kwargs.pop('file_attachments')
 
             # Set up a true base URL, abstracting away the need to care
             # about the sandbox mode or API versioning at this stage.
@@ -273,19 +271,20 @@ class Gengo(object):
                             del j['file_path']
 
             try:
-                # If any files then modify base url to include
-                # private_key and file_data to include files as multipart
+                # If any file_attachments then modify base url to include
+                # private_key and file_data to include file_attachments as multipart
                 tmp_files = []
-                if 'files' in post_data:
+                if 'file_attachments' in post_data:
                     file_data = [
                         ('body', post_data['comment']['body']),
                     ]
 
-                    files = post_data['files']
-                    for a in files:
+                    file_attachments = post_data['file_attachments']
+                    for a in file_attachments:
                         f = open(a, 'rb')
                         tmp_files.append(f)
-                        file_data.append(('files', f))
+                        # file_data.append(('file_attachments', f))
+                        file_data.append(('file_attachments', ('test.png', f, 'image/png')))
 
                 # If any further APIs require their own special signing needs,
                 # fork here...
