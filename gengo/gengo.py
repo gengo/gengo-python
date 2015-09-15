@@ -283,8 +283,7 @@ class Gengo(object):
                     for a in file_attachments:
                         f = open(a, 'rb')
                         tmp_files.append(f)
-                        # file_data.append(('file_attachments', f))
-                        file_data.append(('file_attachments', ('test.png', f, 'image/png')))
+                        file_data.append(('file_attachments', f))
 
                 # If any further APIs require their own special signing needs,
                 # fork here...
