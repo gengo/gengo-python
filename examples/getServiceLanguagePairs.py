@@ -34,7 +34,7 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .gengo import Gengo
+from gengo import Gengo
 
 # Get an instance of Gengo to work with...
 
