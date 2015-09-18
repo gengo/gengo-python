@@ -34,7 +34,10 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .gengo import Gengo
+try:
+    from .gengo import Gengo
+except (SystemError, ImportError):
+    from gengo import Gengo
 
 # This method doesn't require an instance of Gengo, it's
 # purely utility. You'll possibly end up using it to ensure

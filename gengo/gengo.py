@@ -34,8 +34,14 @@
 
 # mockdb is a file with a dictionary of every API endpoint for Gengo.
 from __future__ import print_function
-from .mockdb import api_urls, apihash
-from ._version import __version__
+try:
+    from .mockdb import api_urls, apihash
+except (SystemError, ImportError):
+    from mockdb import api_urls, apihash
+try:
+    from ._version import __version__
+except (SystemError, ImportError):
+    from _version import __version__
 
 import re
 import copy

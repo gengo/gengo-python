@@ -31,6 +31,10 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .gengo import Gengo, GengoError, GengoAuthError
+try:
+    from .gengo import Gengo, GengoError, GengoAuthError
+except (SystemError, ImportError):
+    from gengo import Gengo, GengoError, GengoAuthError
+
 
 __all__ = ['Gengo', 'GengoError', 'GengoAuthError']
