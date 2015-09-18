@@ -36,7 +36,7 @@
 from __future__ import print_function
 try:
     from .mockdb import api_urls, apihash
-except (SystemError, ImportError):
+except (SystemError, ValueError):
     from mockdb import api_urls, apihash
 try:
     from ._version import __version__

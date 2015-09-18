@@ -33,7 +33,7 @@
 
 try:
     from .gengo import Gengo, GengoError, GengoAuthError
-except (SystemError, ImportError):
+except (SystemError, ValueError):
     from gengo import Gengo, GengoError, GengoAuthError
 
 

@@ -36,7 +36,7 @@
 
 try:
     from .gengo import Gengo
-except (SystemError, ImportError):
+except (SystemError, ValueError):
     from gengo import Gengo
 from pprint import pprint
 

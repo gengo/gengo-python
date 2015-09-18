@@ -44,11 +44,11 @@ except ImportError:
 
 try:
     from . import mockdb
-except (SystemError, ImportError, ValueError):
+except (SystemError, ValueError):
     import mockdb
 try:
     from .gengo import Gengo, GengoError, GengoAuthError
-except (SystemError, ImportError):
+except (SystemError, ValueError):
     from gengo import Gengo, GengoError, GengoAuthError
 
 
@@ -95,7 +95,7 @@ class TestAccountMethods(unittest.TestCase):
 
         try:
             from .gengo import requests
-        except (SystemError, ImportError):
+        except (SystemError, ValueError):
             from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
@@ -132,7 +132,7 @@ class TestLanguageServiceMethods(unittest.TestCase):
 
         try:
             from .gengo import requests
-        except (SystemError, ImportError):
+        except (SystemError, ValueError):
             from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
@@ -179,7 +179,7 @@ class TestPostTranslationJobComment(unittest.TestCase):
 
         try:
             from .gengo import requests
-        except (SystemError, ImportError):
+        except (SystemError, ValueError):
             from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
@@ -220,7 +220,7 @@ class TestPostTranslationJobCommentWithAttachments(unittest.TestCase):
 
         try:
             from .gengo import requests
-        except (SystemError, ImportError):
+        except (SystemError, ValueError):
             from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
@@ -268,7 +268,7 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
 
         try:
             from .gengo import requests
-        except (SystemError, ImportError):
+        except (SystemError, ValueError):
             from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
@@ -349,7 +349,7 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
 
         try:
             from .gengo import requests
-        except (SystemError, ImportError):
+        except (SystemError, ValueError):
             from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
@@ -391,7 +391,7 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
 
         try:
             from .gengo import requests
-        except (SystemError, ImportError):
+        except (SystemError, ValueError):
             from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
@@ -475,7 +475,7 @@ class TestGlossaryFunctions(unittest.TestCase):
 
         try:
             from .gengo import requests
-        except (SystemError, ImportError):
+        except (SystemError, ValueError):
             from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
@@ -519,7 +519,7 @@ class TestPreferredTranslatorsFunction(unittest.TestCase):
                            )
         try:
             from .gengo import requests
-        except (SystemError, ImportError):
+        except (SystemError, ValueError):
             from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
