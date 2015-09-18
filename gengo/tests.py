@@ -44,7 +44,7 @@ except ImportError:
 
 try:
     from . import mockdb
-except (SystemError, ImportError):
+except (SystemError, ImportError, ValueError):
     import mockdb
 try:
     from .gengo import Gengo, GengoError, GengoAuthError
