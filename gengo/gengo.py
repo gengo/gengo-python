@@ -40,7 +40,7 @@ except (SystemError, ValueError):
     from mockdb import api_urls, apihash
 try:
     from ._version import __version__
-except (SystemError, ImportError):
+except (SystemError, ValueError):
     from _version import __version__
 
 import re
