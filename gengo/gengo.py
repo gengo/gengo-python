@@ -206,6 +206,8 @@ class Gengo(object):
                     post_data['jobs']['as_group'] = jobs_dict.pop('as_group')
                 if 'comment' in jobs_dict:
                     post_data['jobs']['comment'] = jobs_dict.pop('comment')
+                if 'url_attachments' in jobs_dict:
+                    post_data['jobs']['url_attachments'] = jobs_dict.pop('url_attachments')
             if 'comment' in kwargs:
                 post_data['comment'] = kwargs.pop('comment')
             if 'action' in kwargs:
@@ -269,6 +271,20 @@ class Gengo(object):
                             )
                             j['file_key'] = 'file_' + k
                             del j['file_path']
+
+            # handle order url attachments
+            order = post_data.get('jobs', {})
+            self.modifyURLAttachments(order)
+
+            # handle jobs url attachments
+            jobs = post_data.get('jobs', {}).get('jobs', {})
+            for j in jobs.items():
+                if isinstance(j, dict):
+                    self.modifyURLAttachments(j)
+
+            # handle comment url attachments
+            comments = post_data.get('comment', {})
+            self.modifyURLAttachments(comments)
 
             try:
                 # If any file_attachments then modify base url to include
@@ -399,6 +415,19 @@ class Gengo(object):
                               # Don't know why but requests is trying to verify
                               # SSL here ...
                               verify=False)
+
+    def modifyURLAttachments(self, obj):
+        """
+        modifyURLAttachments handles url attachments for a given object
+
+        obj - job or comment object
+        """
+        if 'url_attachments' in obj:
+            obj['attachments'] = []
+            for a in obj['url_attachments']:
+                obj['attachments'].append(a)
+
+            del obj['url_attachments']
 
     @staticmethod
     def compatibletext(text):
