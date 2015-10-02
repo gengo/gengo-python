@@ -425,7 +425,7 @@ class Gengo(object):
         """
         if 'url_attachments' in obj:
             if not isinstance(obj['url_attachments'], list):
-                raise GengoError("Job url attachment MUST be an array", 1)
+                raise GengoError("Job url attachment MUST be an list", 1)
 
             obj['attachments'] = []
             for a in obj['url_attachments']:
