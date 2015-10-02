@@ -207,7 +207,8 @@ class Gengo(object):
                 if 'comment' in jobs_dict:
                     post_data['jobs']['comment'] = jobs_dict.pop('comment')
                 if 'url_attachments' in jobs_dict:
-                    post_data['jobs']['url_attachments'] = jobs_dict.pop('url_attachments')
+                    post_data['jobs']['url_attachments'] =\
+                     jobs_dict.pop('url_attachments')
             if 'comment' in kwargs:
                 post_data['comment'] = kwargs.pop('comment')
             if 'action' in kwargs:
