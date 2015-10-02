@@ -276,13 +276,13 @@ class Gengo(object):
             order = post_data.get('jobs', {})
             self.modifyURLAttachments(order)
 
-            # handle jobs url attachments
+            # handle post jobs url attachments
             jobs = post_data.get('jobs', {}).get('jobs', {})
             for j in jobs.items():
                 if isinstance(j, dict):
                     self.modifyURLAttachments(j)
 
-            # handle comment url attachments
+            # handle post comment url attachments
             comments = post_data.get('comment', {})
             self.modifyURLAttachments(comments)
 
