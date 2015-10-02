@@ -278,7 +278,7 @@ class Gengo(object):
 
             # handle post jobs url attachments
             jobs = post_data.get('jobs', {}).get('jobs', {})
-            for j in jobs.items():
+            for k, j in jobs.items():
                 if isinstance(j, dict):
                     self.modifyURLAttachments(j)
 
@@ -423,6 +423,9 @@ class Gengo(object):
         obj - job or comment object
         """
         if 'url_attachments' in obj:
+            if not isinstance(obj['url_attachments'], list):
+                raise GengoError("Job url attachment MUST be an array", 1)
+
             obj['attachments'] = []
             for a in obj['url_attachments']:
                 obj['attachments'].append(a)
