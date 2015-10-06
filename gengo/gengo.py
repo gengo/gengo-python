@@ -419,9 +419,9 @@ class Gengo(object):
 
     def replaceURLAttachmentsWithAttachments(self, obj):
         """
-        This method replaces url_attachments with attachments, which is the data
-        structure the comments API wants, as url_attachments is no longer needed
-        we remove it.
+        This method replaces url_attachments with attachments, which is the
+        data structure the comments API wants, as url_attachments is no longer
+        needed we remove it.
 
         obj - job or comment object
         """
