@@ -275,17 +275,17 @@ class Gengo(object):
 
             # handle order url attachments
             order = post_data.get('jobs', {})
-            self.modifyURLAttachments(order)
+            self.replaceURLAttachmentsWithAttachments(order)
 
             # handle post jobs url attachments
             jobs = post_data.get('jobs', {}).get('jobs', {})
             for k, j in jobs.items():
                 if isinstance(j, dict):
-                    self.modifyURLAttachments(j)
+                    self.replaceURLAttachmentsWithAttachments(j)
 
             # handle post comment url attachments
             comments = post_data.get('comment', {})
-            self.modifyURLAttachments(comments)
+            self.replaceURLAttachmentsWithAttachments(comments)
 
             try:
                 # If any file_attachments then modify base url to include
@@ -417,9 +417,11 @@ class Gengo(object):
                               # SSL here ...
                               verify=False)
 
-    def modifyURLAttachments(self, obj):
+    def replaceURLAttachmentsWithAttachments(self, obj):
         """
-        modifyURLAttachments handles url attachments for a given object
+        This method replaces url_attachments with attachments, which is the data
+        structure the comments API wants, as url_attachments is no longer needed
+        we remove it.
 
         obj - job or comment object
         """
@@ -427,10 +429,7 @@ class Gengo(object):
             if not isinstance(obj['url_attachments'], list):
                 raise GengoError("Job url attachment MUST be an list", 1)
 
-            obj['attachments'] = []
-            for a in obj['url_attachments']:
-                obj['attachments'].append(a)
-
+            obj['attachments'] = obj['url_attachments']
             del obj['url_attachments']
 
     @staticmethod
