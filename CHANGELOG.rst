@@ -3,7 +3,7 @@ Changelog
 
 Only important changes are mentioned below. See `commit log <https://github.com/gengo/gengo-python/commits/master>`_ and `closed issues <https://github.com/gengo/gengo-python/issues?state=closed>`_ for full changes.
 
-v0.1.27 (2015-10-07)
+v0.1.28 (2015-10-07)
 -------------------
 
 * [Feature] `#59 <https://github.com/gengo/gengo-python/pull/59`_ Add attachments support for Order and Job comments
