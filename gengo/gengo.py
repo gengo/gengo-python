@@ -206,14 +206,17 @@ class Gengo(object):
                     post_data['jobs']['as_group'] = jobs_dict.pop('as_group')
                 if 'comment' in jobs_dict:
                     post_data['jobs']['comment'] = jobs_dict.pop('comment')
+                if 'url_attachments' in jobs_dict:
+                    post_data['jobs']['url_attachments'] =\
+                     jobs_dict.pop('url_attachments')
             if 'comment' in kwargs:
                 post_data['comment'] = kwargs.pop('comment')
             if 'action' in kwargs:
                 post_data['action'] = kwargs.pop('action')
             if 'job_ids' in kwargs:
                 post_data['job_ids'] = kwargs.pop('job_ids')
-            if 'attachments' in kwargs:
-                post_data['attachments'] = kwargs.pop('attachments')
+            if 'file_attachments' in kwargs:
+                post_data['file_attachments'] = kwargs.pop('file_attachments')
 
             # Set up a true base URL, abstracting away the need to care
             # about the sandbox mode or API versioning at this stage.
@@ -270,28 +273,43 @@ class Gengo(object):
                             j['file_key'] = 'file_' + k
                             del j['file_path']
 
-            # If any attachments then modify base url to include
-            # private_key and file_data to include attachments as multipart
-            files = []
-            if 'attachments' in post_data:
-                file_data = [
-                    ('json', json.dumps(post_data['comment'])),
-                ]
+            # handle order url attachments
+            order = post_data.get('jobs', {})
+            self.replaceURLAttachmentsWithAttachments(order)
 
-                attachments = post_data['attachments']
-                for a in attachments:
-                    f = open(a, 'rb')
-                    files.append(f)
-                    file_data.append(('document', f))
+            # handle post jobs url attachments
+            jobs = post_data.get('jobs', {}).get('jobs', {})
+            for k, j in jobs.items():
+                if isinstance(j, dict):
+                    self.replaceURLAttachmentsWithAttachments(j)
+
+            # handle post comment url attachments
+            comments = post_data.get('comment', {})
+            self.replaceURLAttachmentsWithAttachments(comments)
 
             try:
+                # If any file_attachments then modify base url to include
+                # private_key and file_data to include file_attachments as
+                # multipart.
+                tmp_files = []
+                if 'file_attachments' in post_data:
+                    file_data = [
+                        ('body', post_data['comment']['body']),
+                    ]
+
+                    file_attachments = post_data['file_attachments']
+                    for a in file_attachments:
+                        f = open(a, 'rb')
+                        tmp_files.append(f)
+                        file_data.append(('file_attachments', f))
+
                 # If any further APIs require their own special signing needs,
                 # fork here...
                 response = self.signAndRequestAPILatest(fn, base, query_params,
                                                         post_data, file_data)
                 response.connection.close()
             finally:
-                for f in files:
+                for f in tmp_files:
                     f.close()
 
             try:
@@ -398,6 +416,21 @@ class Gengo(object):
                               # Don't know why but requests is trying to verify
                               # SSL here ...
                               verify=False)
+
+    def replaceURLAttachmentsWithAttachments(self, obj):
+        """
+        This method replaces url_attachments with attachments, which is the
+        data structure the comments API wants, as url_attachments is no longer
+        needed we remove it.
+
+        obj - job or comment object
+        """
+        if 'url_attachments' in obj:
+            if not isinstance(obj['url_attachments'], list):
+                raise GengoError("Job url attachment MUST be an list", 1)
+
+            obj['attachments'] = obj['url_attachments']
+            del obj['url_attachments']
 
     @staticmethod
     def compatibletext(text):
