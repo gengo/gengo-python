@@ -6,7 +6,7 @@ Only important changes are mentioned below. See `commit log <https://github.com/
 v0.1.28 (2015-10-07)
 -------------------
 
-* [Feature] `#59 <https://github.com/gengo/gengo-python/pull/59`_ Add attachments support for Order and Job comments
+* [Feature] `#59 <https://github.com/gengo/gengo-python/pull/59>`_ Add attachments support for Order and Job comments
 
 
 v0.1.26 (2015-07-14)
