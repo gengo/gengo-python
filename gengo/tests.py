@@ -36,13 +36,15 @@
 A set of tests for the Gengo API. They all require an internet connection.
 """
 
+from __future__ import absolute_import
+
 import unittest
 try:
     import mock
 except ImportError:
     import unittest.mock as mock
 
-import mockdb
+from gengo import mockdb
 from gengo import Gengo, GengoError, GengoAuthError
 
 API_PUBKEY = 'dummypublickey'
@@ -86,7 +88,7 @@ class TestAccountMethods(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
+        from .gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -120,7 +122,7 @@ class TestLanguageServiceMethods(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
+        from .gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -164,7 +166,7 @@ class TestPostTranslationJobComment(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
+        from .gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -202,7 +204,7 @@ class TestPostTranslationJobCommentWithAttachments(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
+        from .gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -247,7 +249,7 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
+        from .gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -325,7 +327,7 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
                            sandbox=True)
         self.created_job_ids = []
 
-        from gengo import requests
+        from .gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -364,7 +366,7 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
+        from .gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -445,7 +447,7 @@ class TestGlossaryFunctions(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
+        from .gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -487,7 +489,7 @@ class TestPreferredTranslatorsFunction(unittest.TestCase):
                            sandbox=True,
                            )
 
-        from gengo import requests
+        from .gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
