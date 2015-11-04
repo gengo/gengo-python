@@ -33,7 +33,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # mockdb is a file with a dictionary of every API endpoint for Gengo.
-from __future__ import print_function
+from __future__ import absolute_import, print_function
 from mockdb import api_urls, apihash
 from _version import __version__
 
