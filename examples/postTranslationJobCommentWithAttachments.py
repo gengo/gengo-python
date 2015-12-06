@@ -53,9 +53,12 @@ print(gengo.postTranslationJobComment(
     id=42,
     comment={
         'body': 'I love lamp!',
+        'url_attachments': [
+            {
+                'url': 'https://gengo.github.io/style-guide/assets/images/logos/gengo_logo_circle_512.png',
+                'filename': 'gengo_logo_circle_512.png',
+                'mime_type': 'image/png',
+            }
+        ],
     },
-    attachments=[
-        './testfiles/test_file1.txt',
-        './testfiles/test_file2.txt',
-    ]
 ))

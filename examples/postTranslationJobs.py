@@ -61,6 +61,13 @@ data = {
 
             'auto_approve': 0,  # OPTIONAL. Hopefully self explanatory (1 = yes, 0 = no),
             'comment': 'HEY THERE TRANSLATOR',  # OPTIONAL. Comment to leave for translator.
+            'url_attachments': [  # OPTIONAL. Comment URL attachments.
+                {
+                    'url': 'https://gengo.github.io/style-guide/assets/images/logos/gengo_logo_circle_512.png',
+                    'filename': 'gengo_logo_circle_512.png',
+                    'mime_type': 'image/png',
+                },
+            ],
             'callback_url': 'http://...',  # OPTIONAL. Callback URL that updates are sent to.
             'custom_data': 'your optional custom data, limited to 1kb.'  # OPTIONAL
         },
