@@ -45,4 +45,4 @@ gengo = Gengo(
 )
 
 # Retrieve job statuses on a specific order
-print gengo.getTranslationOrderJobs(id="124")
+print(gengo.getTranslationOrderJobs(id=124))
