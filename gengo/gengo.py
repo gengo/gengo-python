@@ -34,6 +34,7 @@
 
 # mockdb is a file with a dictionary of every API endpoint for Gengo.
 from __future__ import print_function
+
 try:
     from .mockdb import api_urls, apihash
 except (SystemError, ValueError):
@@ -248,7 +249,7 @@ class Gengo(object):
             # best to familiarize yourself  with the Gengo authentication
             # API. (http://developers.gengo.com/)
             query_params = dict([k, quote(str(v).encode('utf-8'))] for k, v
-                                in kwargs.items())
+                                in list(kwargs.items()))
             if self.public_key is not None:
                 query_params['api_key'] = self.public_key
             query_params['ts'] = str(int(time()))
@@ -262,7 +263,7 @@ class Gengo(object):
             if 'upload' in fn:
                 file_data = {}
                 jobs = post_data.get('jobs', {}).get('jobs', {})
-                for k, j in jobs.items():
+                for k, j in list(jobs.items()):
                     if isinstance(j, dict):
                         if j.get('type') == 'file' and 'file_path' in j:
                             file_path = j.get('file_path')
@@ -285,7 +286,7 @@ class Gengo(object):
 
             # handle post jobs url attachments
             jobs = post_data.get('jobs', {}).get('jobs', {})
-            for k, j in jobs.items():
+            for k, j in list(jobs.items()):
                 if isinstance(j, dict):
                     self.replaceURLAttachmentsWithAttachments(j)
 
@@ -336,12 +337,12 @@ class Gengo(object):
                 if 'msg' not in results['err'] and\
                         'code' not in results['err']:
                     concatted_msg = ''
-                    for job_key, msg_code_list in results['err'].iteritems():
+                    for job_key, msg_code_list in results['err'].items():
                         concatted_msg += '<{0}: {1}> '.format(
                             job_key, msg_code_list[0]['msg']
                         )
                     raise GengoError(concatted_msg,
-                                     results['err'].itervalues().
+                                     iter(results['err'].values()).
                                      next()[0]['code'])
                 raise GengoError(results['err'].get('msg'),
                                  results['err'].get('code'))
@@ -405,7 +406,7 @@ class Gengo(object):
                                   files=file_data,
                                   data=query_params)
         else:
-            query_string = urlencode(sorted(query_params.items(),
+            query_string = urlencode(sorted(list(query_params.items()),
                                             key=itemgetter(0)))
             if self.private_key is not None:
                 query_hmac = hmac.new(self.private_key,
@@ -448,7 +449,7 @@ class Gengo(object):
     @staticmethod
     def unicode2utf8(text):
         try:
-            if isinstance(text, unicode):
+            if isinstance(text, str):
                 text = text.encode('utf-8')
         except:
             pass
