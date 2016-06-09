@@ -445,7 +445,7 @@ class Gengo(object):
         # the value as is if it's already a bytes object.
         if isinstance(text, bytes):
             return text
-        
+
         return bytes(text, 'utf-8')
 
     @staticmethod
