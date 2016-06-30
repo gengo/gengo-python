@@ -336,12 +336,14 @@ class Gengo(object):
                 if 'msg' not in results['err'] and\
                         'code' not in results['err']:
                     concatted_msg = ''
+                    code = None
                     for job_key, msg_code_list in results['err'].items():
                         concatted_msg += '<{0}: {1}> '.format(
                             job_key, msg_code_list[0]['msg']
                         )
-                    raise GengoError(concatted_msg,
-                                     list(results['err'].values())[0]['code'])
+                        if code is None:
+                            code = msg_code_list[0]['code']
+                    raise GengoError(concatted_msg, code)
                 raise GengoError(results['err'].get('msg'),
                                  results['err'].get('code'))
 
