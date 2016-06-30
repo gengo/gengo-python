@@ -336,7 +336,7 @@ class Gengo(object):
                 if 'msg' not in results['err'] and\
                         'code' not in results['err']:
                     concatted_msg = ''
-                    for job_key, msg_code_list in results['err'].iteritems():
+                    for job_key, msg_code_list in results['err'].items():
                         concatted_msg += '<{0}: {1}> '.format(
                             job_key, msg_code_list[0]['msg']
                         )
