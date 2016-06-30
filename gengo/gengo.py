@@ -341,8 +341,7 @@ class Gengo(object):
                             job_key, msg_code_list[0]['msg']
                         )
                     raise GengoError(concatted_msg,
-                                     results['err'].values().
-                                     next()[0]['code'])
+                                     next(results['err'].values()))
                 raise GengoError(results['err'].get('msg'),
                                  results['err'].get('code'))
 
