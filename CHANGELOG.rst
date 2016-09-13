@@ -3,6 +3,11 @@ Changelog
 
 Only important changes are mentioned below. See `commit log <https://github.com/gengo/gengo-python/commits/master>`_ and `closed issues <https://github.com/gengo/gengo-python/issues?state=closed>`_ for full changes.
 
+Unreleased
+----------
+
+* Removed library support for Gengo API version 1.1, which is no longer supported
+
 v0.1.28 (2015-10-07)
 -------------------
 

@@ -118,6 +118,8 @@ class GengoAuthError(GengoError):
 
 class Gengo(object):
 
+    __supported_api_versions = [2]
+
     def __init__(self, public_key=None, private_key=None, sandbox=False,
                  api_version=2, headers=None, debug=False, api_url=None):
         """
@@ -132,7 +134,7 @@ class Gengo(object):
         private_key - Your 'private' key for Gengo. Retrieve this from your
         account information if you want to do authenticated calls.
         sandbox - Whether to use the Gengo sandbox.
-        api_version - version 2 and 1.1 are supported. defaults to 2
+        api_version - API version. defaults to 2
         headers - User agent header, dictionary style ala {'User-Agent':
         'Bert'}
         debug - a flag (True/False) which will cause the library to print
@@ -146,11 +148,12 @@ class Gengo(object):
         else:
             self.api_url = api_url
 
-        self.api_version = str(api_version)
-        if self.api_version not in ('1.1', '2'):
-            raise Exception("gengo-python library only supports " +
-                            " versions 1.1 and 2 at the moment, please " +
-                            " keep api_version to 1.1 or 2")
+        self.api_version = api_version
+        if self.api_version not in self.__supported_api_versions:
+            raise GengoError("gengo-python library only supports " +
+                             "Gengo API versions {} at the moment, please " +
+                             " use a supported version".format(
+                                self.__supported_api_versions))
         self.public_key = public_key
         self.private_key = Gengo.compatibletext(private_key)
         self.headers = headers
