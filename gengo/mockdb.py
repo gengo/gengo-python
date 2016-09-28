@@ -68,6 +68,11 @@ apihash = {
         'url': '/account/balance',
         'method': 'GET',
     },
+    # retrieve authenticate user details
+    'getAccountMe': {
+        'url': '/account/me',
+        'method': 'GET',
+    },
 
     'postTranslationJobs': {
         'url': '/translate/jobs',
