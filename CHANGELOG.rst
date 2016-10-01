@@ -5,12 +5,8 @@ Only important changes are mentioned below. See `commit log <https://github.com/
 
 v0.1.29 (2016-09-30)
 -------------------
-* Add support for account/me endpoint
-
-Unreleased
-----------
-
-* Removed library support for Gengo API version 1.1, which is no longer supported
+* [Feature] `#74 <https://github.com/gengo/gengo-python/pull/74>`_ Add support for account/me endpoint
+* [Fix] `#73 <https://github.com/gengo/gengo-python/pull/73>`_ Removed library support for Gengo API version 1.1, which is no longer supported
 
 v0.1.28 (2015-10-07)
 -------------------
