@@ -3,6 +3,10 @@ Changelog
 
 Only important changes are mentioned below. See `commit log <https://github.com/gengo/gengo-python/commits/master>`_ and `closed issues <https://github.com/gengo/gengo-python/issues?state=closed>`_ for full changes.
 
+v0.1.30 (2016-10-13)
+-------------------
+* [Feature] `#76 <https://github.com/gengo/gengo-python/pull/76>`_ Don't require specific version of requests
+
 v0.1.29 (2016-09-30)
 -------------------
 * [Feature] `#74 <https://github.com/gengo/gengo-python/pull/74>`_ Add support for account/me endpoint
