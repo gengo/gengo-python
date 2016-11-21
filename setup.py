@@ -106,7 +106,7 @@ setup(
     url='https://github.com/gengo/gengo-python',
     keywords='gengo translation language api',
     description='Official Python library for interfacing with the Gengo API.',
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     cmdclass={
         'pep8': Pep8Command,
         'test': TestCommand,
