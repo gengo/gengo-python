@@ -445,7 +445,8 @@ class Gengo(object):
     @staticmethod
     def unicode2utf8(text):
         try:
-            if isinstance(text, unicode):
+            # NOQA because "unicode" is undefined in Python3
+            if isinstance(text, unicode):  # NOQA
                 text = text.encode('utf-8')
         except:
             pass
