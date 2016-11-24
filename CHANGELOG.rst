@@ -5,7 +5,7 @@ Only important changes are mentioned below. See `commit log <https://github.com/
 
 Unreleased
 ----------
-* [Removed] Drop explicit support for Pythons 2.6
+* [Removed] Drop explicit support for Python 2.6
 
 v0.1.30 (2016-10-13)
 -------------------
