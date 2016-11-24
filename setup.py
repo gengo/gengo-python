@@ -48,30 +48,6 @@ exec(open('gengo/_version.py').read())
 # https://github.com/apache/libcloud/blob/trunk/setup.py
 
 
-class Pep8Command(Command):
-    description = "Run pep8 script"
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        try:
-            import pep8
-            pep8
-        except ImportError:
-            print ('Missing "pep8" library. You can install it using pip: '
-                   'pip install pep8')
-            sys.exit(1)
-
-        cwd = os.getcwd()
-        retcode = call(('pep8 {0}/gengo/'.format(cwd)).split(' '))
-        sys.exit(retcode)
-
-
 class TestCommand(Command):
     user_options = []
 
@@ -108,7 +84,6 @@ setup(
     description='Official Python library for interfacing with the Gengo API.',
     long_description=open('README.rst').read(),
     cmdclass={
-        'pep8': Pep8Command,
         'test': TestCommand,
     },
     classifiers=[
@@ -117,7 +92,6 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Internet',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',

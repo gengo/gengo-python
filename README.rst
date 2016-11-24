@@ -41,7 +41,7 @@ Gengo has a full suite of unit tests. To run them, make sure you have the `mock`
 
 ::
 
-   python setup.py test
+   flake8 gengo
 
 If you wish to run a single test, such as TestTranslationJobFlowFileUpload:
 
