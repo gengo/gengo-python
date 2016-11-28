@@ -28,12 +28,6 @@ And then installing the library:
 
    python setup.py install
 
-This will also install the `requests` package. If you're running on a version of Python prior to 2.6, you'll need to install simplejson as well:
-
-::
-
-   pip install simplejson
-
 
 Tests - Running Them, etc
 -------------------------
