@@ -11,7 +11,7 @@ install:
 
 before_script: flake8 gengo
 # command to run tests
-script: python setup.py test
+script: nosetests --rednose --with-coverage  --cover-package=gengo
 
 notifications:
   irc: "irc.freenode.net#Gengo"

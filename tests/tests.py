@@ -42,7 +42,9 @@ try:
 except ImportError:
     import unittest.mock as mock
 
-import mockdb
+import requests
+
+import gengo.mockdb
 from gengo import Gengo, GengoError, GengoAuthError
 
 API_PUBKEY = 'dummypublickey'
@@ -86,7 +88,6 @@ class TestAccountMethods(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -100,13 +101,13 @@ class TestAccountMethods(unittest.TestCase):
         stats = self.gengo.getAccountStats()
         self.assertEqual(stats['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getAccountStats']['url'])
+            gengo.mockdb.apihash['getAccountStats']['url'])
 
     def test_getAccountBalance(self):
         balance = self.gengo.getAccountBalance()
         self.assertEqual(balance['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getAccountBalance']['url'])
+            gengo.mockdb.apihash['getAccountBalance']['url'])
 
 
 class TestLanguageServiceMethods(unittest.TestCase):
@@ -120,7 +121,6 @@ class TestLanguageServiceMethods(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -134,19 +134,19 @@ class TestLanguageServiceMethods(unittest.TestCase):
         resp = self.gengo.getServiceLanguagePairs()
         self.assertEqual(resp['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getServiceLanguagePairs']['url'])
+            gengo.mockdb.apihash['getServiceLanguagePairs']['url'])
 
     def test_getServiceLanguages(self):
         resp = self.gengo.getServiceLanguages()
         self.assertEqual(resp['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getServiceLanguages']['url'])
+            gengo.mockdb.apihash['getServiceLanguages']['url'])
 
     def test_getServiceLanguageMatrix(self):
         resp = self.gengo.getServiceLanguageMatrix()
         self.assertEqual(resp['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getServiceLanguageMatrix']['url'])
+            gengo.mockdb.apihash['getServiceLanguageMatrix']['url'])
 
 
 class TestPostTranslationJobComment(unittest.TestCase):
@@ -164,7 +164,6 @@ class TestPostTranslationJobComment(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -183,7 +182,7 @@ class TestPostTranslationJobComment(unittest.TestCase):
             comment={'body': 'I love lamp oh mai gawd'})
         self.assertEqual(posted_comment['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['postTranslationJobComment']['url']
+            gengo.mockdb.apihash['postTranslationJobComment']['url']
             .replace('{{id}}', '123'))
 
 
@@ -202,7 +201,6 @@ class TestPostTranslationJobCommentWithAttachments(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -228,7 +226,7 @@ class TestPostTranslationJobCommentWithAttachments(unittest.TestCase):
         )
         self.assertEqual(posted_comment['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['postTranslationJobComment']['url']
+            gengo.mockdb.apihash['postTranslationJobComment']['url']
             .replace('{{id}}', '123'))
 
 
@@ -247,7 +245,6 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -272,20 +269,20 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         job = self.gengo.getTranslationJob(id=123)
         self.assertEqual(job['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJob']['url']
+            gengo.mockdb.apihash['getTranslationJob']['url']
             .replace('{{id}}', '123'))
 
         # Pull down the 10 most recently submitted jobs.
         jobs = self.gengo.getTranslationJobs()
         self.assertEqual(jobs['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobs']['url'])
+            gengo.mockdb.apihash['getTranslationJobs']['url'])
 
         # Test getting the batch that a job is in.
         job_batch = self.gengo.getTranslationJobBatch(id=123)
         self.assertEqual(job_batch['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobBatch']['url']
+            gengo.mockdb.apihash['getTranslationJobBatch']['url']
             .replace('{{id}}', '123'))
 
         # Pull down feedback. This should work fine, but there'll be no
@@ -293,7 +290,7 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         feedback = self.gengo.getTranslationJobFeedback(id=123)
         self.assertEqual(feedback['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobFeedback']['url']
+            gengo.mockdb.apihash['getTranslationJobFeedback']['url']
             .replace('{{id}}', '123'))
 
         # Lastly, pull down any revisions that definitely didn't occur due
@@ -301,7 +298,7 @@ class TestTranslationJobFlowFileUpload(unittest.TestCase):
         revisions = self.gengo.getTranslationJobRevisions(id=123)
         self.assertEqual(revisions['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobRevisions']['url']
+            gengo.mockdb.apihash['getTranslationJobRevisions']['url']
             .replace('{{id}}', '123'))
 
 
@@ -325,7 +322,7 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
                            sandbox=True)
         self.created_job_ids = []
 
-        from gengo import requests
+        
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -343,7 +340,7 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
         resp = self.gengo.getTranslationOrderJobs(id=321)
         self.assertEqual(resp['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationOrderJobs']['url']
+            gengo.mockdb.apihash['getTranslationOrderJobs']['url']
             .replace('{{id}}', '321'))
 
 
@@ -364,7 +361,7 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
+        import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -381,7 +378,7 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         job_comments = self.gengo.getTranslationJobComments(id=1)
         self.assertEqual(job_comments['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobComments']['url']
+            gengo.mockdb.apihash['getTranslationJobComments']['url']
             .replace('{{id}}', '1'))
 
     def test_getJobDataMethods(self):
@@ -399,20 +396,20 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         job = self.gengo.getTranslationJob(id=1)
         self.assertEqual(job['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJob']['url']
+            gengo.mockdb.apihash['getTranslationJob']['url']
             .replace('{{id}}', '1'))
 
         # Pull down the 10 most recently submitted jobs.
         jobs = self.gengo.getTranslationJobs()
         self.assertEqual(jobs['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobs']['url'])
+            gengo.mockdb.apihash['getTranslationJobs']['url'])
 
         # Test getting the batch that a job is in...
         job_batch = self.gengo.getTranslationJobBatch(id=1)
         self.assertEqual(job_batch['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobBatch']['url']
+            gengo.mockdb.apihash['getTranslationJobBatch']['url']
             .replace('{{id}}', '1'))
 
         # Pull down feedback. This should work fine, but there'll be no
@@ -420,7 +417,7 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         feedback = self.gengo.getTranslationJobFeedback(id=1)
         self.assertEqual(feedback['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobFeedback']['url']
+            gengo.mockdb.apihash['getTranslationJobFeedback']['url']
             .replace('{{id}}', '1'))
 
         # Lastly, pull down any revisions that definitely didn't occur due
@@ -428,7 +425,7 @@ class TestTranslationJobFlowMixedOrder(unittest.TestCase):
         revisions = self.gengo.getTranslationJobRevisions(id=1)
         self.assertEqual(revisions['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getTranslationJobRevisions']['url']
+            gengo.mockdb.apihash['getTranslationJobRevisions']['url']
             .replace('{{id}}', '1'))
 
 
@@ -445,7 +442,6 @@ class TestGlossaryFunctions(unittest.TestCase):
                            private_key=API_PRIVKEY,
                            sandbox=True)
 
-        from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -459,7 +455,7 @@ class TestGlossaryFunctions(unittest.TestCase):
         resp = self.gengo.getGlossaryList()
         self.assertEqual(resp['opstat'], 'ok')
         self.getMock.assert_path_contains(
-            mockdb.apihash['getGlossaryList']['url'])
+            gengo.mockdb.apihash['getGlossaryList']['url'])
 
 
 class RequestsMock(mock.Mock):
@@ -487,7 +483,6 @@ class TestPreferredTranslatorsFunction(unittest.TestCase):
                            sandbox=True,
                            )
 
-        from gengo import requests
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
@@ -502,7 +497,7 @@ class TestPreferredTranslatorsFunction(unittest.TestCase):
         self.assertEqual(resp['opstat'], 'ok')
         # self.getMock.assert_any_call()
         self.getMock.assert_path_contains(
-            mockdb.apihash['getPreferredTranslators']['url'])
+            gengo.mockdb.apihash['getPreferredTranslators']['url'])
 
 
 if __name__ == '__main__':
