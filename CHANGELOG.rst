@@ -7,6 +7,8 @@ Unreleased
 ----------
 * [Removed] Drop explicit support for Python 2.6
 * [Fix] Fix implicit relative importing
+* [Fix] Exclude test file from main package
+* [Feature] Run UnitTest with nose
 
 v0.1.30 (2016-10-13)
 -------------------

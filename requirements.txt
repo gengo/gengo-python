@@ -1,3 +1,5 @@
 flake8
 mock
+nose
+rednose
 requests==2.2.1
