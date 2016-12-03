@@ -33,35 +33,11 @@
 #
 # Original Author: Ryan McGrath <http://venodesigns.net>
 
-import sys
-import os
-from distutils.core import Command
-from setuptools import setup
-from setuptools import find_packages
-from subprocess import call
+from setuptools import setup, find_packages
 
 # little tricky, but this is for version number is in one place.
 __version__ = 'This value will be overridden by exec.'
 exec(open('gengo/_version.py').read())
-
-# Command based on Libcloud setup.py:
-# https://github.com/apache/libcloud/blob/trunk/setup.py
-
-
-class TestCommand(Command):
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        import sys
-        import subprocess
-        errno = subprocess.call([sys.executable, 'gengo/tests.py'])
-        raise SystemExit(errno)
 
 setup(
     # Basic package information.
@@ -83,9 +59,6 @@ setup(
     keywords='gengo translation language api',
     description='Official Python library for interfacing with the Gengo API.',
     long_description=open('README.rst').read(),
-    cmdclass={
-        'test': TestCommand,
-    },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
