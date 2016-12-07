@@ -4,7 +4,7 @@ Changelog
 Only important changes are mentioned below. See `commit log <https://github.com/gengo/gengo-python/commits/master>`_ and `closed issues <https://github.com/gengo/gengo-python/issues?state=closed>`_ for full changes.
 
 v0.1.31 (2016-12-07)
-----------
+--------------------
 * [Feature] `#83 <https://github.com/gengo/gengo-python/pull/83>`_ Add support for reference_id (stealth undocumented feature)
 * [Removed] Drop explicit support for Python 2.6
 * [Fix] Fix implicit relative importing
