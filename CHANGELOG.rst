@@ -10,6 +10,7 @@ Unreleased
 * [Fix] Fix implicit relative importing
 * [Fix] Exclude test file from main package
 * [Feature] Run UnitTest with nose
+* [Fix] Fix compatibletext issue for Python 2.x
 
 v0.1.30 (2016-10-13)
 -------------------
