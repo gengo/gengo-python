@@ -420,7 +420,16 @@ class Gengo(object):
 
     @staticmethod
     def compatibletext(text):
-        if sys.version_info < (3, 0, 0) or isinstance(text, bytes):
+        if sys.version_info < (3, 0, 0):
+            # Converting to string if the "text" value data type is
+            # anything other than "str" such as unicode, int etc.
+            # Doing this because hmac.new function only takes "str"
+            # for Python version 2.x
+            return str(text)
+
+        # Converting to "bytes" again will throw TypeError, so returning
+        # the value as is if it's already a bytes object.
+        if isinstance(text, bytes):
             return text
 
         return bytes(text, 'utf-8')
