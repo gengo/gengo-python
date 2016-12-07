@@ -5,6 +5,7 @@ Only important changes are mentioned below. See `commit log <https://github.com/
 
 Unreleased
 ----------
+* [Feature] `#83 <https://github.com/gengo/gengo-python/pull/83>`_ Add support for reference_id (stealth undocumented feature)
 * [Removed] Drop explicit support for Python 2.6
 * [Fix] Fix implicit relative importing
 * [Fix] Exclude test file from main package
