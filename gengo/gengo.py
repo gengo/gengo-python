@@ -34,30 +34,37 @@
 
 # mockdb is a file with a dictionary of every API endpoint for Gengo.
 from __future__ import print_function
-from .mockdb import api_urls, apihash
-from ._version import __version__
 
-import re
 import copy
-import hmac
-import requests
-import mimetypes
-import sys
+import logging
 from hashlib import sha1
 try:
     from urllib import urlencode, quote
 except ImportError:
     from urllib.parse import urlencode, quote
-from time import time
-from operator import itemgetter
+import hmac
 import json
+import mimetypes
+from operator import itemgetter
+import re
+import sys
+from time import time
 
+import requests
+
+from .mockdb import api_urls, apihash
+from ._version import __version__
 
 """
 Official Python library for interfacing with the Gengo API.
 """
 
 __author__ = 'Gengo <api@gengo.com>'
+logging.basicConfig(format=(
+    "%(asctime)s %(levelname)-5.5s [%(name)s:%(lineno)s][%(threadName)s] "
+    "%(message)s"
+))
+logger = logging.getLogger(__name__)
 
 
 class GengoError(Exception):
@@ -298,36 +305,7 @@ class Gengo(object):
                 for f in tmp_files:
                     f.close()
 
-            try:
-                results = response.json()
-            except TypeError:
-                # requests<1.0
-                results = response.json
-            except ValueError:
-                msg = "Internal Server Error"
-                if self.debug is True:
-                    msg = "Invalid JSON response: '{0}'".format(response.text)
-                raise GengoError(msg, 1)
-
-            # See if we got any errors back that we can cleanly raise on
-            if 'opstat' in results and results['opstat'] != 'ok':
-                # In cases of multiple errors, the keys for results['err']
-                # will be the job IDs.
-                if 'msg' not in results['err'] and\
-                        'code' not in results['err']:
-                    concatted_msg = ''
-                    for job_key, msg_code_list in results['err'].iteritems():
-                        concatted_msg += '<{0}: {1}> '.format(
-                            job_key, msg_code_list[0]['msg']
-                        )
-                    raise GengoError(concatted_msg,
-                                     results['err'].itervalues().
-                                     next()[0]['code'])
-                raise GengoError(results['err'].get('msg'),
-                                 results['err'].get('code'))
-
-            # If not, return the results
-            return results
+            return self._handleResponse(response)
 
         if api_call in apihash:
             return get.__get__(self)
@@ -417,6 +395,53 @@ class Gengo(object):
 
             obj['attachments'] = obj['url_attachments']
             del obj['url_attachments']
+
+    def _raiseForMultipleErrorResponse(self, results):
+        # In cases of multiple errors, the keys for results['err'] will be the
+        # job IDs.
+        if 'msg' in results['err']:
+            return
+
+        error_codes = []
+        messages = []
+        for job_key, msg_code_list in results['err'].items():
+            messages.append(
+                '<{0}: {1}>'.format(job_key, msg_code_list[0]['msg']))
+            error_codes.append(msg_code_list[0]['code'])
+            if not self.debug:
+                continue
+
+            for message_code in msg_code_list:
+                logger.error(
+                    "Gengo returned an error, code: %s, message: %s",
+                    message_code['code'], message_code['msg']
+                )
+
+        concatted_msg = ' '.join(messages)
+        error_code = error_codes[0] if error_codes else None
+        raise GengoError(concatted_msg, error_code)
+
+    def _raiseForErrorResponse(self, results):
+        # See if we got any errors back that we can cleanly raise on
+        if 'opstat' in results and results['opstat'] != 'ok':
+            self._raiseForMultipleErrorResponse(results)
+            error = results['err']
+            raise GengoError(error.get('msg'), error.get('code'))
+
+    def _handleResponse(self, response):
+        """Return response json as dict.
+        """
+        try:
+            results = response.json()
+        except ValueError:
+            msg = "Internal Server Error"
+            if self.debug:
+                msg = "Invalid JSON response: '{0}'".format(response.text)
+            raise GengoError(msg, 1)
+
+        self._raiseForErrorResponse(results)
+
+        return results
 
     @staticmethod
     def compatibletext(text):
