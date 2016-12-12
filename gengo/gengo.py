@@ -397,11 +397,6 @@ class Gengo(object):
             del obj['url_attachments']
 
     def _raiseForMultipleErrorResponse(self, results):
-        # In cases of multiple errors, the keys for results['err'] will be the
-        # job IDs.
-        if 'msg' in results['err']:
-            return
-
         error_codes = []
         messages = []
         for job_key, msg_code_list in results['err'].items():
@@ -421,12 +416,18 @@ class Gengo(object):
         error_code = error_codes[0] if error_codes else None
         raise GengoError(concatted_msg, error_code)
 
+    def _raiseForSingleErrorResponse(self, results):
+        raise GengoError(results['err']['msg'], results['err']['code'])
+
     def _raiseForErrorResponse(self, results):
         # See if we got any errors back that we can cleanly raise on
         if 'opstat' in results and results['opstat'] != 'ok':
-            self._raiseForMultipleErrorResponse(results)
-            error = results['err']
-            raise GengoError(error.get('msg'), error.get('code'))
+            # In cases of multiple errors, the keys for results['err'] will be
+            # the job IDs.
+            if 'msg' in results['err']:
+                self._raiseForSingleErrorResponse(results)
+            else:
+                self._raiseForMultipleErrorResponse(results)
 
     def _handleResponse(self, response):
         """Return response json as dict.
