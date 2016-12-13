@@ -412,9 +412,8 @@ class Gengo(object):
                     message_code['code'], message_code['msg']
                 )
 
-        concatted_msg = ' '.join(messages)
         error_code = error_codes[0] if error_codes else None
-        raise GengoError(concatted_msg, error_code)
+        raise GengoError(' '.join(messages), error_code)
 
     def _raiseForSingleErrorResponse(self, results):
         raise GengoError(results['err']['msg'], results['err']['code'])
