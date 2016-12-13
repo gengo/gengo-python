@@ -3,6 +3,11 @@ Changelog
 
 Only important changes are mentioned below. See `commit log <https://github.com/gengo/gengo-python/commits/master>`_ and `closed issues <https://github.com/gengo/gengo-python/issues?state=closed>`_ for full changes.
 
+Unreleased
+----------
+* [Fix] Improve compatibility for Python 3 in error handling part
+
+
 v0.1.31 (2016-12-07)
 --------------------
 * [Feature] `#83 <https://github.com/gengo/gengo-python/pull/83>`_ Add support for reference_id (stealth undocumented feature)

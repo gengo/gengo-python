@@ -500,5 +500,61 @@ class TestPreferredTranslatorsFunction(unittest.TestCase):
             gengo.mockdb.apihash['getPreferredTranslators']['url'])
 
 
+class TestResponseHandling(unittest.TestCase):
+    def setUp(self):
+        self.gengo = Gengo(public_key=API_PUBKEY, private_key=API_PRIVKEY)
+        self.response = mock.Mock()
+
+    def test_handleResponse(self):
+        expect = {
+            'opstat': 'ok',
+        }
+        self.response.json.return_value = expect
+        self.assertEqual(expect, self.gengo._handleResponse(self.response))
+
+    def test_raiseForErrorResponse(self):
+        self.response.json.return_value = {
+            'opstat': 'error',
+            'err': {
+                'msg': 'Not Found',
+                'code': 404,
+            }
+        }
+
+        self.assertRaises(
+            gengo.GengoError,
+            lambda: self.gengo._handleResponse(self.response)
+        )
+
+    def test_raiseForMultipleErrorResponse(self):
+        self.response.json.return_value = {
+            'opstat': 'error',
+            'err': {
+                'job_1': [
+                    {
+                        'code': 1350,
+                        'msg': '"body_src" is a required field'
+                    },
+                    {
+                        'code': 1400,
+                        'msg': '"lc_src" is a required field'
+                    },
+                    {
+                        'code': 1450,
+                        'msg': '"lc_tgt" is a required field'
+                    },
+                    {
+                        'code': 1500,
+                        'msg': '"tier" is a required field'
+                    }
+                ]
+            }
+        }
+
+        self.assertRaises(
+            gengo.GengoError,
+            lambda: self.gengo._handleResponse(self.response)
+        )
+
 if __name__ == '__main__':
     unittest.main()
