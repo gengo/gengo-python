@@ -6,6 +6,7 @@ Only important changes are mentioned below. See `commit log <https://github.com/
 Unreleased
 ----------
 * [Fix] Improve compatibility for Python 3 in error handling part
+* [Feature] Official support Python 3.5 and 3.6
 
 
 v0.1.31 (2016-12-07)
