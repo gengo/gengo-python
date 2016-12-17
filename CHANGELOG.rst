@@ -6,6 +6,7 @@ Only important changes are mentioned below. See `commit log <https://github.com/
 Unreleased
 ----------
 * [Fix] Improve compatibility for Python 3 in error handling part
+* [Remove] Drop explicit support for Python 3.2
 
 
 v0.1.31 (2016-12-07)

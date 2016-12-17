@@ -34,7 +34,6 @@
 # Original Author: Ryan McGrath <http://venodesigns.net>
 
 from setuptools import setup, find_packages
-import sys
 
 # little tricky, but this is for version number is in one place.
 __version__ = 'This value will be overridden by exec.'
@@ -42,15 +41,12 @@ exec(open('gengo/_version.py').read())
 
 extras_require = {
     'test': [
+        'coverage',
         'flake8',
         'nose',
         'rednose',
     ]
 }
-
-# coverage doesn't support Python 3.2
-if sys.version_info < (3, 2, 0) or (3, 3, 0) <= sys.version_info:
-    extras_require['test'].append('coverage')
 
 setup(
     # Basic package information.
@@ -81,7 +77,6 @@ setup(
         'Topic :: Internet',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
     ]
