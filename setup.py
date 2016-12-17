@@ -34,10 +34,23 @@
 # Original Author: Ryan McGrath <http://venodesigns.net>
 
 from setuptools import setup, find_packages
+import sys
 
 # little tricky, but this is for version number is in one place.
 __version__ = 'This value will be overridden by exec.'
 exec(open('gengo/_version.py').read())
+
+extras_require = {
+    'test': [
+        'flake8',
+        'nose',
+        'rednose',
+    ]
+}
+
+# coverage doesn't support Python 3.2
+if sys.version_info < (3, 2, 0) or (3, 3, 0) <= sys.version_info:
+    extras_require['test'].append('coverage')
 
 setup(
     # Basic package information.
@@ -50,6 +63,7 @@ setup(
 
     # Package dependencies.
     install_requires=["requests >= 2.2.1"],
+    extras_require=extras_require,
 
     # Metadata for PyPI.
     author='Gengo',
