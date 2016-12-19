@@ -39,6 +39,15 @@ from setuptools import setup, find_packages
 __version__ = 'This value will be overridden by exec.'
 exec(open('gengo/_version.py').read())
 
+extras_require = {
+    'test': [
+        'coverage',
+        'flake8',
+        'nose',
+        'rednose',
+    ]
+}
+
 setup(
     # Basic package information.
     name='gengo',
@@ -50,6 +59,7 @@ setup(
 
     # Package dependencies.
     install_requires=["requests >= 2.2.1"],
+    extras_require=extras_require,
 
     # Metadata for PyPI.
     author='Gengo',
@@ -67,7 +77,6 @@ setup(
         'Topic :: Internet',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
     ]

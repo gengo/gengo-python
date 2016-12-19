@@ -1,17 +1,15 @@
 language: python
 python:
   - "2.7"
-  - "3.2"
   - "3.3"
   - "3.4"
 
-# command to install dependencies
 install:
-- pip install -r requirements.txt
+  - pip install -e .[test]
 
-before_script: flake8 gengo
-# command to run tests
-script: nosetests --rednose
+script:
+  - flake8 gengo
+  - nosetests --rednose --with-coverage --cover-package=gengo
 
 notifications:
   irc: "irc.freenode.net#Gengo"
