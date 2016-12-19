@@ -7,10 +7,8 @@ python:
 install:
   - pip install -e .[test]
 
-before_script:
-  - flake8 gengo
-
 script:
+  - flake8 gengo
   - nosetests --rednose --with-coverage --cover-package=gengo
 
 notifications:
