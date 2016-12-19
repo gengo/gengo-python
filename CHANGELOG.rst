@@ -6,7 +6,7 @@ Only important changes are mentioned below. See `commit log <https://github.com/
 Unreleased
 ----------
 * [Fix] Improve compatibility for Python 3 in error handling part
-* [Remove] Drop explicit support for Python 3.2
+* [Remove] Drop explicit support for Python 3.2 as the Requests library officially supports Python 2.6–2.7 & 3.3–3.5
 
 
 v0.1.31 (2016-12-07)
