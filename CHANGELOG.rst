@@ -7,7 +7,7 @@ Unreleased
 ----------
 * [Fix] Improve compatibility for Python 3 in error handling part
 * [Remove] Drop explicit support for Python 3.2 as the Requests library officially supports Python 2.6–2.7 & 3.3–3.5
-* [Feature] Official support Python 3.5 and 3.6
+* [Feature] Official support for Python 3.5 and 3.6
 
 v0.1.31 (2016-12-07)
 --------------------
