@@ -12,8 +12,8 @@ install:
 script:
   - flake8 gengo
   - nosetests --rednose --with-coverage --cover-package=gengo
-  - rst2html.py README.rst --exit-status=2
-  - rst2html.py CHANGELOG.rst --exit-status=2
+  - rst2html.py README.rst --exit-status=2 > /dev/null
+  - rst2html.py CHANGELOG.rst --exit-status=2 > /dev/null
 
 notifications:
   irc: "irc.freenode.net#Gengo"
