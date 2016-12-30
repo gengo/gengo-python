@@ -42,6 +42,7 @@ exec(open('gengo/_version.py').read())
 extras_require = {
     'test': [
         'coverage',
+        'docutils',
         'flake8',
         'nose',
         'rednose',
