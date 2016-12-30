@@ -45,6 +45,7 @@ extras_require = {
         'docutils',
         'flake8',
         'nose',
+        'Pygments',
         'rednose',
     ]
 }
