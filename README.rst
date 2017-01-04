@@ -8,6 +8,8 @@ somewhat tricky problem to solve. `Gengo <http://gengo.com/>`_ is a service that
 (which is often of higher quality than machine translation), and an API to manage sending in work and watching
 jobs. This is a Python interface to make using the API simpler.
 
+`CHANGELOG is here <https://github.com/gengo/gengo-python/blob/master/CHANGELOG.rst>`_
+
 Installation & Requirements
 ---------------------------
 Installing this library using pip is very simple:
