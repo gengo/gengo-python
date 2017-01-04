@@ -35,7 +35,6 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from gengo import Gengo
-from pprint import pprint
 
 gengo = Gengo(
     public_key='your public key',
@@ -44,5 +43,5 @@ gengo = Gengo(
     debug=True
 )
 
-# Pretty-print a list of every supported language
-pprint(gengo.getServiceLanguages())
+# Prints a list of all supported languages in Gengo
+print(gengo.getServiceLanguages())
