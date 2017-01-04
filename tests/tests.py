@@ -35,6 +35,7 @@
 """
 A set of tests for the Gengo API. They all require an internet connection.
 """
+from __future__ import absolute_import, print_function
 
 import unittest
 try:
