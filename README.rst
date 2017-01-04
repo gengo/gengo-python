@@ -70,7 +70,7 @@ Full documentation can be found `here <http://developers.gengo.com>`_, but anyon
        sandbox=True,
    )
    
-   print gengo.getAccountBalance()
+   print(gengo.getAccountBalance())
 
 All function definitions can be found inside gengo/mockdb.py as a dictionary: the key of the dictionary entry is the function name, and the parameters
 are exactly the same as specified in the `Gengo API docs <http://developers.gengo.com>`_.
