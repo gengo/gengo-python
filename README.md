@@ -1,6 +1,6 @@
 [Important] Deprecated Branch
 ======================================================================================================================================================
-[Master branch](https://github.com/gengo/gengo-python) is supporting both Python 2 and 3. No longer you don't need to use this branch for Python 3.
+[Master branch](https://github.com/gengo/gengo-python) is supporting both Python 2 and 3. You no longer need to use this branch for Python 3.
 We are going to delete this branch after the end of July 2017.
 
 [![Build Status](https://secure.travis-ci.org/gengo/gengo-python.png)](http://travis-ci.org/gengo/gengo-python)
