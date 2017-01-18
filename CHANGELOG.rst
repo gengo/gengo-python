@@ -3,11 +3,12 @@ Changelog
 
 Only important changes are mentioned below. See `commit log <https://github.com/gengo/gengo-python/commits/master>`_ and `closed issues <https://github.com/gengo/gengo-python/issues?state=closed>`_ for full changes.
 
-Unreleased
-----------
+v1.0.0 (2017-01-18)
+-------------------
 * [Fix] Improve compatibility for Python 3 in error handling part
 * [Remove] Drop explicit support for Python 3.2 as the Requests library officially supports Python 2.6–2.7 & 3.3–3.5
 * [Feature] Official support for Python 3.5 and 3.6
+* [Feature] Start Semantic Versioning
 
 v0.1.31 (2016-12-07)
 --------------------
