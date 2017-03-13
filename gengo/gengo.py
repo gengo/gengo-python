@@ -402,7 +402,9 @@ class Gengo(object):
         for job_key, msg_code_list in results['err'].items():
             messages.append(
                 '<{0}: {1}>'.format(job_key, msg_code_list[0]['msg']))
-            error_codes.append(msg_code_list[0]['code'])
+            if 'code' in msg_code_list[0]:
+                error_codes.append(msg_code_list[0]['code'])
+
             if not self.debug:
                 continue
 
@@ -416,7 +418,11 @@ class Gengo(object):
         raise GengoError(' '.join(messages), error_code)
 
     def _raiseForSingleErrorResponse(self, results):
-        raise GengoError(results['err']['msg'], results['err']['code'])
+        code = None
+        if 'code' in results['err']['code']:
+            code = results['err']['code']
+
+        raise GengoError(results['err']['msg'], code)
 
     def _raiseForErrorResponse(self, results):
         # See if we got any errors back that we can cleanly raise on
