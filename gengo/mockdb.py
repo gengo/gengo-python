@@ -73,6 +73,10 @@ apihash = {
         'url': '/account/me',
         'method': 'GET',
     },
+    'getAccountSettings': {
+        'url': '/account/settings',
+        'method': 'GET',
+    },
 
     'postTranslationJobs': {
         'url': '/translate/jobs',
