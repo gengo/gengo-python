@@ -3,6 +3,10 @@ Changelog
 
 Only important changes are mentioned below. See `commit log <https://github.com/gengo/gengo-python/commits/master>`_ and `closed issues <https://github.com/gengo/gengo-python/issues?state=closed>`_ for full changes.
 
+v1.0.1 (2017-09-28)
+-------------------
+* [Feature] Create method for account settings endpoint
+
 v1.0.0 (2017-01-18)
 -------------------
 * [Fix] Improve compatibility for Python 3 in error handling part
