@@ -110,6 +110,12 @@ class TestAccountMethods(unittest.TestCase):
         self.getMock.assert_path_contains(
             gengo.mockdb.apihash['getAccountBalance']['url'])
 
+    def test_getAccountSettings(self):
+        settings = self.gengo.getAccountSettings()
+        self.assertEqual(settings['opstat'], 'ok')
+        self.getMock.assert_path_contains(
+            gengo.mockdb.apihash['getAccountSettings']['url'])
+
 
 class TestLanguageServiceMethods(unittest.TestCase):
 
