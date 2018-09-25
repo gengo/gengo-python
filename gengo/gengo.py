@@ -416,8 +416,10 @@ class Gengo(object):
         raise GengoError(' '.join(messages), error_code)
 
     def _raiseForSingleErrorResponse(self, results):
-        message = results['err']['msg'] if 'msg' in results['err'] else 'No message given'
-        code = results['err']['code'] if 'code' in results['err'] else 'No code given'
+        message = results['err']['msg'] if 'msg' in results['err'] else \
+                                        "No message given"
+        code = results['err']['code'] if 'code' in results['err'] else \
+                                         "No code given"
         raise GengoError(message, code)
 
     def _raiseForErrorResponse(self, results):
