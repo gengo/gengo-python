@@ -416,7 +416,9 @@ class Gengo(object):
         raise GengoError(' '.join(messages), error_code)
 
     def _raiseForSingleErrorResponse(self, results):
-        raise GengoError(results['err']['msg'], results['err']['code'])
+        message = results['err']['msg'] if 'msg' in results['err'] else 'No message given'
+        code = results['err']['code'] if 'code' in results['err'] else 'No code given'
+        raise GengoError(message, code)
 
     def _raiseForErrorResponse(self, results):
         # See if we got any errors back that we can cleanly raise on
