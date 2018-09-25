@@ -417,9 +417,8 @@ class Gengo(object):
 
     def _raiseForSingleErrorResponse(self, results):
         message = results['err']['msg'] if 'msg' in results['err'] else \
-                                        "No message given"
-        code = results['err']['code'] if 'code' in results['err'] else \
-                                         "No code given"
+                                        "Internal Server Error"
+        code = results['err']['code'] if 'code' in results['err'] else 500
         raise GengoError(message, code)
 
     def _raiseForErrorResponse(self, results):
@@ -469,6 +468,6 @@ class Gengo(object):
             # NOQA because "unicode" is undefined in Python3
             if isinstance(text, unicode):  # NOQA
                 text = text.encode('utf-8')
-        except:
+        except Exception:
             pass
         return text
