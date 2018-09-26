@@ -396,13 +396,13 @@ class Gengo(object):
             obj['attachments'] = obj['url_attachments']
             del obj['url_attachments']
 
-    def _raiseForMultipleErrorResponse(self, results):
+    def _raiseForMultipleErrorResponse(self, results, status_code):
         error_codes = []
         messages = []
         for job_key, msg_code_list in results['err'].items():
             messages.append(
                 '<{0}: {1}>'.format(job_key, msg_code_list[0]['msg']))
-            error_codes.append(msg_code_list[0]['code'])
+            error_codes.append(status_code)
             if not self.debug:
                 continue
 
@@ -415,21 +415,21 @@ class Gengo(object):
         error_code = error_codes[0] if error_codes else None
         raise GengoError(' '.join(messages), error_code)
 
-    def _raiseForSingleErrorResponse(self, results):
+    def _raiseForSingleErrorResponse(self, results, status_code):
+
         message = results['err']['msg'] if 'msg' in results['err'] else \
                                         "Internal Server Error"
-        code = results['err']['code'] if 'code' in results['err'] else 500
-        raise GengoError(message, code)
+        raise GengoError(message, status_code)
 
-    def _raiseForErrorResponse(self, results):
+    def _raiseForErrorResponse(self, results, status_code):
         # See if we got any errors back that we can cleanly raise on
         if 'opstat' in results and results['opstat'] != 'ok':
             # In cases of multiple errors, the keys for results['err'] will be
             # the job IDs.
             if 'msg' in results['err']:
-                self._raiseForSingleErrorResponse(results)
+                self._raiseForSingleErrorResponse(results, status_code)
             else:
-                self._raiseForMultipleErrorResponse(results)
+                self._raiseForMultipleErrorResponse(results, status_code)
 
     def _handleResponse(self, response):
         """Return response json as dict.
@@ -441,8 +441,7 @@ class Gengo(object):
             if self.debug:
                 msg = "Invalid JSON response: '{0}'".format(response.text)
             raise GengoError(msg, 1)
-
-        self._raiseForErrorResponse(results)
+        self._raiseForErrorResponse(results, response.status_code)
 
         return results
 
