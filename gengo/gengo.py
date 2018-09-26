@@ -396,13 +396,13 @@ class Gengo(object):
             obj['attachments'] = obj['url_attachments']
             del obj['url_attachments']
 
-    def _raiseForMultipleErrorResponse(self, results, status_code):
+    def _raiseForMultipleErrorResponse(self, results):
         error_codes = []
         messages = []
         for job_key, msg_code_list in results['err'].items():
             messages.append(
                 '<{0}: {1}>'.format(job_key, msg_code_list[0]['msg']))
-            error_codes.append(status_code)
+            error_codes.append(msg_code_list[0]['code'])
             if not self.debug:
                 continue
 
@@ -429,7 +429,7 @@ class Gengo(object):
             if 'msg' in results['err']:
                 self._raiseForSingleErrorResponse(results, status_code)
             else:
-                self._raiseForMultipleErrorResponse(results, status_code)
+                self._raiseForMultipleErrorResponse(results)
 
     def _handleResponse(self, response):
         """Return response json as dict.
