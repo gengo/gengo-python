@@ -415,12 +415,12 @@ class Gengo(object):
         error_code = error_codes[0] if error_codes else None
         raise GengoError(' '.join(messages), error_code)
 
-    def _raiseForSingleErrorResponse(self, results, status_code):
+    def _raiseForSingleErrorResponse(self, results, code):
 
         message = results['err']['msg'] if 'msg' in results['err'] else \
                                         "Internal Server Error"
-        status_code = results['err']['code'] if 'code' in results['err'] else status_code
-        raise GengoError(message, status_code)
+        code = results['err']['code'] if 'code' in results['err'] else code
+        raise GengoError(message, code)
 
     def _raiseForErrorResponse(self, results, status_code):
         # See if we got any errors back that we can cleanly raise on
