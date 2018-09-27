@@ -419,6 +419,7 @@ class Gengo(object):
 
         message = results['err']['msg'] if 'msg' in results['err'] else \
                                         "Internal Server Error"
+        status_code = results['err']['code'] if 'code' in results['err'] else status_code
         raise GengoError(message, status_code)
 
     def _raiseForErrorResponse(self, results, status_code):

@@ -186,7 +186,6 @@ class TestPostTranslationJobComment(unittest.TestCase):
             gengo.mockdb.apihash['postTranslationJobComment']['url']
             .replace('{{id}}', '123'))
 
-
 class TestPostTranslationJobCommentWithAttachments(unittest.TestCase):
 
     """
@@ -519,6 +518,31 @@ class TestResponseHandling(unittest.TestCase):
             'err': {
                 'msg': 'Not Found',
                 'code': 404,
+            }
+        }
+
+        self.assertRaises(
+            gengo.GengoError,
+            lambda: self.gengo._handleResponse(self.response)
+        )
+
+    def test_handleNoCodeGiven(self):
+        self.response.json.return_value = {
+            'opstat': 'error',
+            'err': {
+                'msg': 'no rows in result set',
+            }
+        }
+
+        self.assertRaises(
+            gengo.GengoError,
+            lambda: self.gengo._handleResponse(self.response)
+        )
+
+    def test_handleNoMessageAndCodeGiven(self):
+        self.response.json.return_value = {
+            'opstat': 'error',
+            'err': {
             }
         }
 
