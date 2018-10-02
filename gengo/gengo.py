@@ -417,9 +417,21 @@ class Gengo(object):
 
     def _raiseForSingleErrorResponse(self, results, code, msg):
 
-        message = results['err']['msg'] if 'msg' in results['err'] else msg
-        code = results['err']['code'] if 'code' in results['err'] else code
+        message = self._checkForMessageInPayload(results, msg)
+        code = self._checkForCodeInPayload(results, code)
         raise GengoError(message, code)
+
+    def _checkForMessageInPayload(self, results, msg):
+        try:
+            return results['err']['msg']
+        except KeyError:
+            return msg
+
+    def _checkForCodeInPayload(self, results, status_code):
+        try:
+            return results['err']['code']
+        except KeyError:
+            return status_code
 
     def _raiseForErrorResponse(self, results, status_code):
         # See if we got any errors back that we can cleanly raise on
