@@ -415,10 +415,9 @@ class Gengo(object):
         error_code = error_codes[0] if error_codes else None
         raise GengoError(' '.join(messages), error_code)
 
-    def _raiseForSingleErrorResponse(self, results, code):
+    def _raiseForSingleErrorResponse(self, results, code, msg):
 
-        message = results['err']['msg'] if 'msg' in results['err'] else \
-                                        "Internal Server Error"
+        message = results['err']['msg'] if 'msg' in results['err'] else msg
         code = results['err']['code'] if 'code' in results['err'] else code
         raise GengoError(message, code)
 
@@ -427,8 +426,11 @@ class Gengo(object):
         if 'opstat' in results and results['opstat'] != 'ok':
             # In cases of multiple errors, the keys for results['err'] will be
             # the job IDs.
-            if 'msg' in results['err']:
-                self._raiseForSingleErrorResponse(results, status_code)
+            msg = "Internal Server Error"
+            if 'err' not in results:
+                raise GengoError(msg, status_code)
+            elif 'msg' in results['err']:
+                self._raiseForSingleErrorResponse(results, status_code, msg)
             else:
                 self._raiseForMultipleErrorResponse(results)
 

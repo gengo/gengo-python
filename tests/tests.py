@@ -551,6 +551,16 @@ class TestResponseHandling(unittest.TestCase):
             lambda: self.gengo._handleResponse(self.response)
         )
 
+    def test_handleNoErrorAttributeGiven(self):
+        self.response.json.return_value = {
+            'opstat': 'error'
+        }
+
+        self.assertRaises(
+            gengo.GengoError,
+            lambda: self.gengo._handleResponse(self.response)
+        )
+
     def test_raiseForMultipleErrorResponse(self):
         self.response.json.return_value = {
             'opstat': 'error',
