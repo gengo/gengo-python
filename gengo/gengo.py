@@ -430,8 +430,7 @@ class Gengo(object):
                 raise GengoError(msg, http_code)
             if 'msg' in results['err']:
                 self._raiseForSingleErrorResponse(results, http_code)
-            else:
-                self._raiseForMultipleErrorResponse(results)
+            self._raiseForMultipleErrorResponse(results)
 
     def _handleResponse(self, response):
         """Return response json as dict.
