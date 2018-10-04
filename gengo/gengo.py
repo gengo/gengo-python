@@ -415,27 +415,21 @@ class Gengo(object):
         error_code = error_codes[0] if error_codes else None
         raise GengoError(' '.join(messages), error_code)
 
-    def _raiseForSingleErrorResponse(self, results, code):
+    def _raiseForSingleErrorResponse(self, results, http_code):
 
-        code = self._checkForCodeInPayload(results, code)
+        code = results['err'].get('code', http_code)
         raise GengoError(results['err']['msg'], code)
 
-    def _checkForCodeInPayload(self, results, status_code):
-        try:
-            return results['err']['code']
-        except KeyError:
-            return status_code
-
-    def _raiseForErrorResponse(self, results, status_code):
+    def _raiseForErrorResponse(self, results, http_code):
         # See if we got any errors back that we can cleanly raise on
         if 'opstat' in results and results['opstat'] != 'ok':
             # In cases of multiple errors, the keys for results['err'] will be
             # the job IDs.
             msg = "Internal Server Error"
             if 'err' not in results:
-                raise GengoError(msg, status_code)
-            elif 'msg' in results['err']:
-                self._raiseForSingleErrorResponse(results, status_code)
+                raise GengoError(msg, http_code)
+            if 'msg' in results['err']:
+                self._raiseForSingleErrorResponse(results, http_code)
             else:
                 self._raiseForMultipleErrorResponse(results)
 
