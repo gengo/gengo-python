@@ -415,18 +415,21 @@ class Gengo(object):
         error_code = error_codes[0] if error_codes else None
         raise GengoError(' '.join(messages), error_code)
 
-    def _raiseForSingleErrorResponse(self, results):
-        raise GengoError(results['err']['msg'], results['err']['code'])
+    def _raiseForSingleErrorResponse(self, results, http_code):
 
-    def _raiseForErrorResponse(self, results):
+        code = results['err'].get('code', http_code)
+        raise GengoError(results['err']['msg'], code)
+
+    def _raiseForErrorResponse(self, results, http_code):
         # See if we got any errors back that we can cleanly raise on
         if 'opstat' in results and results['opstat'] != 'ok':
             # In cases of multiple errors, the keys for results['err'] will be
             # the job IDs.
+            if 'err' not in results:
+                raise GengoError("Internal Server Error", http_code)
             if 'msg' in results['err']:
-                self._raiseForSingleErrorResponse(results)
-            else:
-                self._raiseForMultipleErrorResponse(results)
+                self._raiseForSingleErrorResponse(results, http_code)
+            self._raiseForMultipleErrorResponse(results)
 
     def _handleResponse(self, response):
         """Return response json as dict.
@@ -438,8 +441,7 @@ class Gengo(object):
             if self.debug:
                 msg = "Invalid JSON response: '{0}'".format(response.text)
             raise GengoError(msg, 1)
-
-        self._raiseForErrorResponse(results)
+        self._raiseForErrorResponse(results, response.status_code)
 
         return results
 
@@ -465,6 +467,6 @@ class Gengo(object):
             # NOQA because "unicode" is undefined in Python3
             if isinstance(text, unicode):  # NOQA
                 text = text.encode('utf-8')
-        except:
+        except Exception:
             pass
         return text
