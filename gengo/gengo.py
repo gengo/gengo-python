@@ -425,9 +425,8 @@ class Gengo(object):
         if 'opstat' in results and results['opstat'] != 'ok':
             # In cases of multiple errors, the keys for results['err'] will be
             # the job IDs.
-            msg = "Internal Server Error"
             if 'err' not in results:
-                raise GengoError(msg, http_code)
+                raise GengoError("Internal Server Error", http_code)
             if 'msg' in results['err']:
                 self._raiseForSingleErrorResponse(results, http_code)
             self._raiseForMultipleErrorResponse(results)

@@ -541,9 +541,7 @@ class TestResponseHandling(unittest.TestCase):
 
     def test_handleNoMessageAndCodeGiven(self):
         self.response.json.return_value = {
-            'opstat': 'error',
-            'err': {
-            }
+            'opstat': 'error','err': {}
         }
 
         self.assertRaises(
@@ -552,9 +550,7 @@ class TestResponseHandling(unittest.TestCase):
         )
 
     def test_handleNoErrorAttributeGiven(self):
-        self.response.json.return_value = {
-            'opstat': 'error'
-        }
+        self.response.json.return_value = { 'opstat': 'error' }
 
         self.assertRaises(
             gengo.GengoError,
