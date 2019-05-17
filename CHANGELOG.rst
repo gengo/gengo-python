@@ -3,6 +3,10 @@ Changelog
 
 Only important changes are mentioned below. See `commit log <https://github.com/gengo/gengo-python/commits/master>`_ and `closed issues <https://github.com/gengo/gengo-python/issues?state=closed>`_ for full changes.
 
+v1.1.0 (2019-05-17)
+-------------------
+* [Removed] Drop support for Python 3.3
+
 v1.0.1 (2018-09-05)
 -------------------
 * [Fix] Exception Handling for returned payloads without `code` attribute.
