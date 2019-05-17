@@ -222,7 +222,7 @@ class Gengo(object):
             # NOTE: We pop() here because we don't want the extra data
             # included and messing up our hash down the road.
             base = re.sub(
-                '\{\{(?P<m>[a-zA-Z_]+)\}\}',
+                r'\{\{(?P<m>[a-zA-Z_]+)\}\}',
                 lambda m: '{0}'.format(kwargs.pop(m.group(1),
                                                   # In case of debugging needs
                                                   'no_argument_specified')),

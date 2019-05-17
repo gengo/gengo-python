@@ -69,12 +69,10 @@ gengo.updateTranslationJobs(action={
         'job_id': 630,
         'reason': 'quality',
         'comment': 'This sentence should be in the past tense',
-        'captcha': 'AAAA'
     }, {
         'job_id': 631,
         'reason': 'quality',
         'comment': 'This should have be capitalized',
-        'captcha': 'BBBB'
     }],
 })
 

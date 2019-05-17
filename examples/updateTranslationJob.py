@@ -44,12 +44,11 @@ gengo = Gengo(
     debug=True
 )
 
-# Update a job that has an id of 42, and reject it, cite the reason,
-# add a comment, and throw up some captcha stuff. See the docs for
+# Update a job that has an id of 42, and reject it, cite the reason
+# and add a comment. See the docs for
 # more information pertaining to this method, it can do quite a bit. :)
 print(gengo.updateTranslationJob(id=42, action={
     'action': 'reject',
     'reason': 'quality',
     'comment': 'My grandmother does better.',
-    'captcha': 'bert'
 }))
