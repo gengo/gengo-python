@@ -138,9 +138,9 @@ class Gengo(object):
         self.api_version = api_version
         if self.api_version not in self.__supported_api_versions:
             raise GengoError("gengo-python library only supports " +
-                             "Gengo API versions {} at the moment, please " +
-                             " use a supported version".format(
-                                self.__supported_api_versions))
+                             "Gengo API versions {} at the moment, ".format(
+                                 self.__supported_api_versions) +
+                             "please use a supported version")
         self.public_key = public_key
         self.private_key = Gengo.compatibletext(private_key)
         self.headers = headers
