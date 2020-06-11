@@ -52,7 +52,6 @@ If you have questions or comments and would like to reach us directly, please fe
 developers!
 
 * Email: api [at] gengo dot com
-* Twitter: `@gengoit <https://twitter.com/gengoit>`_
 * IRC: `#gengo <irc://irc.freenode.net/gengo>`_
 
 If you come across any issues, please file them on the `Github project issue tracker <https://github.com/gengo/gengo-python/issues>`_. Thanks!
