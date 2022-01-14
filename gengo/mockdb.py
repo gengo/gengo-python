@@ -115,6 +115,13 @@ apihash = {
         # file upload. for now this is tied to jobs data only.
     },
 
+    # Post an MTPE (pretranslated) job
+    'postMtpeJob': {
+        'url': '/translate/jobs/mtpe',
+        'method': 'POST',
+        'upload': True,
+    },
+
     # Deal with comments and other metadata about a TranslationJob in
     # progress.
     'postTranslationJobComment': {

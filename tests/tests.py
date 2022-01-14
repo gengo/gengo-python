@@ -38,6 +38,7 @@ A set of tests for the Gengo API. They all require an internet connection.
 from __future__ import absolute_import, print_function
 
 import unittest
+from unittest.mock import mock_open
 try:
     import mock
 except ImportError:
@@ -149,6 +150,56 @@ class TestLanguageServiceMethods(unittest.TestCase):
         self.getMock.assert_path_contains(
             gengo.mockdb.apihash['getServiceLanguageMatrix']['url'])
 
+class TestPostMtpeJob(unittest.TestCase):
+
+    """
+    Tests submission of MTPE (pretranslated) job.
+    """
+    def setUp(self):
+        """
+        Creates the initial batch of jobs for the other test functions here
+        to operate on.
+        """
+        self.gengo = Gengo(public_key=API_PUBKEY,
+                           private_key=API_PRIVKEY,
+                           sandbox=True)
+
+        self.json_mock = mock.Mock()
+        self.json_mock.json.return_value = {'opstat': 'ok'}
+        self.getMock = RequestsMock(return_value=self.json_mock)
+        self.requestsPatch = mock.patch.object(requests, 'post', self.getMock)
+        self.requestsPatch.start()
+
+    def tearDown(self):
+        self.requestsPatch.stop()
+
+    @mock.patch('mimetypes.guess_type', return_value=('application/octet-stream', 'utf-8'))
+    @mock.patch('builtins.open', new_callable=mock.mock_open(read_data='1'))
+    def test_postMtpeJob(self, *_):
+        """
+        Tests posting an MTPE job.
+        """
+        mtpe_job = self.gengo.postMtpeJob(
+            jobs={
+                'jobs': {
+                    'job_1': {
+                        'type': 'file',
+                        'lc_src': 'en',
+                        'lc_tgt': 'ja',
+                        'tier': 'standard',
+                        'slug': 'MTPE test',
+                        'file_path': '/home/me/gengo-job-1234-en-abcdef12.xlz',
+                        'metadata': {
+                            'charge_to': 99,
+                            'includes_tgt': True
+                        }
+                    }
+                }
+            }
+        )
+
+        self.assertEqual(mtpe_job['opstat'], 'ok')
+        self.getMock.assert_path_contains(gengo.mockdb.apihash['postMtpeJob']['url'])
 
 class TestPostTranslationJobComment(unittest.TestCase):
 
@@ -322,7 +373,6 @@ class TestTranslationJobFlowGroupJob(unittest.TestCase):
                            sandbox=True)
         self.created_job_ids = []
 
-        
         self.json_mock = mock.Mock()
         self.json_mock.json.return_value = {'opstat': 'ok'}
         self.getMock = RequestsMock(return_value=self.json_mock)
